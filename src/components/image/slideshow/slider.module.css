@@ -1,0 +1,58 @@
+.slideContainer {
+  position: relative;
+}
+
+.slide, .plainSlide {
+  display: none;
+  background-color: unset;
+  border: none;
+}
+
+.slide {
+  object-fit: contain;
+  width: 100vw;
+  height: auto;
+}
+
+.plainSlide {
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.slide.active, .plainSlide.active {
+  display: block;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+/* desktop */
+@media (min-width: 769px) {
+  .next,
+  .prev {
+    display: block;
+    position: absolute;
+    top: 40%;
+    padding: 3rem;
+    text-align: center;
+    z-index: 2;
+    cursor: pointer;
+  }
+
+  .next {
+    right: 10px;
+  }
+
+  .prev {
+    left: 10px;
+  }
+}

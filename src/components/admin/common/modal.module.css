@@ -1,0 +1,28 @@
+.modalOverlay {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+}
+
+.modalBox {
+  position: absolute;
+  background: #efefef;
+  color: var(--color-dark);
+  max-height: 97%;
+  padding:1em;
+  border-radius: 0.2rem;
+  overflow: scroll;
+  user-select: none;
+  text-align: center;
+}
+
+.modalBox h2 {
+  padding-bottom: 1em;
+}

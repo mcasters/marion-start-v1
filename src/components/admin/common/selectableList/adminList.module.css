@@ -1,0 +1,37 @@
+.listWrapper {
+  font-size: var(--font-size-micro);
+  text-align: center;
+  overflow: scroll;
+}
+
+.itemListWrapper {
+  height: 600px;
+}
+
+.categoryListWrapper {
+  height: 300px;
+}
+
+.itemList {
+  border-bottom: 1px dotted var(--color-light);
+  padding-left: 1em;
+  display: flex;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  overflow: hidden;
+}
+
+.part1 {
+  flex: 30%;
+  text-align: left;
+  font-weight: bold;
+}
+.part2, .part3, .part4 {
+  flex: 15%;
+}
+
+.itemImage,
+.itemIcon {
+  width: 10%;
+}
