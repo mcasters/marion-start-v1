@@ -1,8 +1,8 @@
 import {
   createRootRouteWithContext,
   HeadContent,
-  Link,
   Scripts,
+  useLocation,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import * as React from "react";
@@ -10,8 +10,19 @@ import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary";
 import { NotFound } from "~/components/NotFound";
 import appCss from "~/styles/app.css?url";
 import { seo } from "~/utils/seo";
-import { Session, StructTheme } from "~/lib/type";
+import { HomeLayout, Session, StructTheme } from "~/lib/type";
 import { useAlert } from "~/context/alertProvider";
+import { getHomeLayout } from "~/utils/commonUtils";
+import { ROUTES } from "~/constants/specific/routes";
+import { hexToRgb } from "~/utils/themeUtils";
+import s from "~/components/layout/layout.module.css";
+import AuthStatus from "~/components/auth/authStatus";
+import AdminNav from "~/components/layout/admin/adminNav";
+import HomeHeader from "~/components/layout/homeHeader";
+import { KEY_META } from "~/constants/admin";
+import Header from "~/components/layout/header";
+import Footer from "~/components/layout/footer";
+import { getHomeText } from "~/server-functions/content";
 
 interface MyRouterContext {
   metas: Map<string, string>;
@@ -21,6 +32,7 @@ interface MyRouterContext {
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
+  loader: () => getHomeText(),
   head: () => ({
     meta: [
       {
@@ -65,97 +77,109 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  const { session } = Route.useRouteContext();
-  console.log("__root :", session);
+  const introduction = Route.useLoaderData();
+  const { metas, theme, session } = Route.useRouteContext();
+  const location = useLocation();
+  const path = location.pathname;
+  const isPlainHomeLayout = getHomeLayout(metas) === HomeLayout.PLAIN;
+  const isHome = path === ROUTES.HOME;
+  const isWork =
+    path === ROUTES.PAINTING ||
+    path === ROUTES.SCULPTURE ||
+    path === ROUTES.DRAWING;
+  const themePage = isHome ? "home" : isWork ? "work" : "other";
+  const gradientRgbObject = hexToRgb(theme.home.menu1.background);
+  const gradientRgb = `${gradientRgbObject?.r},${gradientRgbObject?.g},${gradientRgbObject?.b}`;
+
   return (
     <html>
       <head>
         <HeadContent />
       </head>
       <body>
-        <div className="p-2 flex gap-2 text-lg">
-          <Link
-            to="/"
-            activeProps={{
-              className: "font-bold",
-            }}
-            activeOptions={{ exact: true }}
-          >
-            Home
-          </Link>{" "}
-          <Link
-            to="/posts"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            Posts
-          </Link>{" "}
-          <Link
-            to="/users"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            Users
-          </Link>{" "}
-          <Link
-            to="/route-a"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            Pathless Layout
-          </Link>{" "}
-          <Link
-            to="/presentation"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            Présentation
-          </Link>{" "}
-          <Link
-            to="/peintures"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            Peintures
-          </Link>{" "}
-          <Link
-            to="/sculptures"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            Sculptures
-          </Link>{" "}
-          <Link
-            to="/dessins"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            Dessins
-          </Link>{" "}
-          <Link
-            to="/admin"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            Admin
-          </Link>{" "}
-          <Link
-            // @ts-expect-error
-            to="/this-route-does-not-exist"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            This Route Does Not Exist
-          </Link>
+        <div
+          className={s.wrapper}
+          style={{
+            backgroundColor: theme[themePage].main.background,
+            color: theme[themePage].main.text,
+          }}
+        >
+          <div
+            className={s.line}
+            style={{ backgroundColor: theme.general.lineColor }}
+          ></div>
+          {session && session.email && <AuthStatus email={session.email} />}
+          {isHome && !isPlainHomeLayout && (
+            <div
+              className={s.gradient}
+              style={{
+                background: `
+          linear-gradient(
+            to top,
+            rgba(${gradientRgb}, 0) 0%,
+            rgba(${gradientRgb}, 0.013) 8.1%,
+            rgba(${gradientRgb}, 0.049) 15.5%,
+            rgba(${gradientRgb}, 0.104) 22.5%,
+            rgba(${gradientRgb}, 0.175) 29%,
+            rgba(${gradientRgb}, 0.259) 35.3%,
+            rgba(${gradientRgb}, 0.352) 41.2%,
+            rgba(${gradientRgb}, 0.45) 47.1%,
+            rgba(${gradientRgb}, 0.55) 52.9%,
+            rgba(${gradientRgb}, 0.648) 58.8%,
+            rgba(${gradientRgb}, 0.741) 64.7%,
+            rgba(${gradientRgb}, 0.825) 71%,
+            rgba(${gradientRgb}, 0.896) 77.5%,
+            rgba(${gradientRgb}, 0.951) 84.5%,
+            rgba(${gradientRgb}, 0.987) 91.9%,
+            rgb(${gradientRgb}) 100%
+          )`,
+              }}
+            ></div>
+          )}
+          {path === ROUTES.ADMIN ? (
+            <AdminNav />
+          ) : isHome ? (
+            <HomeHeader
+              isPlainHomeLayout={isPlainHomeLayout}
+              title={metas.get(KEY_META.OWNER) || ""}
+              introduction={introduction ?? ""}
+            />
+          ) : (
+            <Header themePage={themePage} />
+          )}
+          <main className={isHome ? undefined : s.main}>{children}</main>
+          <Footer themePage={themePage} />
+          <style>{`
+          a,
+          .buttonLink,
+          .iconButton {
+            color: ${theme[themePage].main.link};
+          }
+
+          .icon {
+            fill: ${theme[themePage].main.link};
+          }
+
+          a:hover,
+          .buttonLink:hover,
+          .iconButton:hover {
+            color: ${theme[themePage].main.linkHover};
+          }
+
+          .icon:hover {
+            fill: ${theme[themePage].main.linkHover};
+          }
+
+          .selected,
+          ::selection {
+            background: ${theme[themePage].menu2.link};
+            color: antiquewhite;
+          }
+
+          .selected .icon {
+            fill: antiquewhite;
+          }
+        `}</style>
         </div>
         <hr />
         {children}

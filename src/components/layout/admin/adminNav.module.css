@@ -1,0 +1,43 @@
+.nav {
+  position: fixed;
+  top: var(--line-height);
+  left: 0;
+  width: 100%;
+  height: 90px;
+  background-color: var(--link-color-xdark);
+  border-bottom: solid var(--color-xdark) 1px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  z-index: 2;
+  user-select: none;
+  line-height: 1.4;
+}
+
+.nav span {
+  color: var(--link-color-dark);
+  letter-spacing: 7px;
+  font-size: var(--font-size-title1);
+}
+
+.nav ul {
+  list-style: none;
+}
+
+.nav li {
+  display: inline-block;
+  width: 100px;
+  margin: 0.6em auto;
+}
+
+.link {
+  color: var(--link-color-light);
+  display: inline-block;
+}
+
+.link:hover {
+  color: var(--link-color-xlight);
+}
+
+.link.active {
+  color: var(--link-color-xlight);
+}
