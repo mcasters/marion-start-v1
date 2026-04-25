@@ -1,11 +1,14 @@
+@import '@fontsource-variable/eb-garamond';
+@import "@fontsource/cormorant-sc";
+
 :root {
   /*
    * Typography
    * ======================================================================== */
 
-  --font-family-serif: var(--font-serif-garamond); /* declared in rooLayout*/
-  --font-family-serif-caps: var(--font-serif-cormorant-caps); /* declared in rooLayout*/
-  --font-family-sans: Tahoma;
+  --font-family-serif: EB Garamond Variable, serif;
+  --font-family-serif-caps: Cormorant SC, serif;
+  --font-family-sans: Tahoma, sans-serif;
 
   /*
   * Font size
