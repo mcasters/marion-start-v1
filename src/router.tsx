@@ -4,16 +4,19 @@ import { DefaultCatchBoundary } from "./components/DefaultCatchBoundary";
 import { NotFound } from "./components/NotFound";
 import { getMetas } from "~/server-functions/meta";
 import { getSession } from "~/server-functions/auth";
-import { getActiveTheme } from "~/server-functions/theme";
+import { getActiveTheme, getPresetColors } from "~/server-functions/theme";
+import { getStructHexaTheme } from "~/utils/themeUtils";
 
 export async function getRouter() {
+  const theme = await getActiveTheme();
+  const presetColors = await getPresetColors();
   return createRouter({
     routeTree,
     defaultPreload: "intent",
     context: {
       metas: await getMetas(),
       session: await getSession(),
-      theme: await getActiveTheme(),
+      theme: getStructHexaTheme(theme, presetColors),
       alert: undefined!,
     },
     defaultErrorComponent: DefaultCatchBoundary,

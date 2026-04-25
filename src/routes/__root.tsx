@@ -84,10 +84,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   const isPlainHomeLayout = getHomeLayout(metas) === HomeLayout.PLAIN;
   const isHome = path === ROUTES.HOME;
   const isWork =
-    path === ROUTES.PAINTING ||
-    path === ROUTES.SCULPTURE ||
-    path === ROUTES.DRAWING;
-  const themePage = isHome ? "home" : isWork ? "work" : "other";
+    path.startsWith(ROUTES.PAINTING) ||
+    path.startsWith(ROUTES.SCULPTURE) ||
+    path.startsWith(ROUTES.DRAWING);
+  const page = isHome ? "home" : isWork ? "work" : "other";
   const gradientRgbObject = hexToRgb(theme.home.menu1.background);
   const gradientRgb = `${gradientRgbObject?.r},${gradientRgbObject?.g},${gradientRgbObject?.b}`;
 
@@ -100,8 +100,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <div
           className={s.wrapper}
           style={{
-            backgroundColor: theme[themePage].main.background,
-            color: theme[themePage].main.text,
+            backgroundColor: theme[page].main.background,
+            color: theme[page].main.text,
           }}
         >
           <div
@@ -145,34 +145,34 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               introduction={introduction ?? ""}
             />
           ) : (
-            <Header themePage={themePage} />
+            <Header themePage={page} />
           )}
           <main className={isHome ? undefined : s.main}>{children}</main>
-          <Footer themePage={themePage} />
+          <Footer themePage={page} />
           <style>{`
           a,
           .buttonLink,
           .iconButton {
-            color: ${theme[themePage].main.link};
+            color: ${theme[page].main.link};
           }
 
           .icon {
-            fill: ${theme[themePage].main.link};
+            fill: ${theme[page].main.link};
           }
 
           a:hover,
           .buttonLink:hover,
           .iconButton:hover {
-            color: ${theme[themePage].main.linkHover};
+            color: ${theme[page].main.linkHover};
           }
 
           .icon:hover {
-            fill: ${theme[themePage].main.linkHover};
+            fill: ${theme[page].main.linkHover};
           }
 
           .selected,
           ::selection {
-            background: ${theme[themePage].menu2.link};
+            background: ${theme[page].menu2.link};
             color: antiquewhite;
           }
 

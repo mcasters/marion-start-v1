@@ -12,7 +12,7 @@ function RouteComponent() {
   const { categories, years } = Route.useLoaderData();
   return (
     <>
-      <h1 className="hidden">Les peintures</h1>
+      <h1 className="hidden">Les sculptures</h1>
       <WorkHome type={TYPE.SCULPTURE} categories={categories} years={years} />
     </>
   );

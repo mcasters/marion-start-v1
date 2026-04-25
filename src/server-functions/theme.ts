@@ -1,17 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
-import { PresetColor, StructTheme, Theme } from "~/lib/type";
+import { PresetColor, Theme } from "~/lib/type";
 import { db } from "~/db";
 import { eq } from "drizzle-orm";
 import { THEME } from "~/constants/admin";
-import {
-  getBasePresetColorData,
-  getBaseThemeData,
-  getStructuredTheme,
-} from "~/utils/themeUtils";
+import { getBasePresetColorData, getBaseThemeData } from "~/utils/themeUtils";
 import { presetColor, theme } from "~/db/schema";
 
 export const getActiveTheme = createServerFn().handler(
-  async (): Promise<StructTheme> => {
+  async (): Promise<Theme> => {
     let activeTheme = await db.query.theme.findFirst({
       where: { isActive: true },
     });
@@ -41,7 +37,7 @@ export const getActiveTheme = createServerFn().handler(
         where: { isActive: true },
       });
     }
-    return getStructuredTheme(activeTheme!);
+    return activeTheme!;
   },
 );
 

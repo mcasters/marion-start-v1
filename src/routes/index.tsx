@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
+import Slideshow from "~/components/image/slideshow/slideshow";
+import { getHomeImages } from "~/server-functions/content";
 
 export const Route = createFileRoute("/")({
+  loader: () => getHomeImages(),
   component: Home,
 });
 
 function Home() {
-  return (
-    <div className="p-2">
-      <h3>Welcome Home!!!</h3>
-    </div>
-  );
+  const images = Route.useLoaderData();
+  return <Slideshow images={images} />;
 }
