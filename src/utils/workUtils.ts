@@ -1,4 +1,3 @@
-
 import { TYPE } from "~/db/schema";
 import {
   AdminCategory,
@@ -15,8 +14,6 @@ import {
   WorkImage,
 } from "~/lib/type";
 import { getNoCategory, transformValueToKey } from "~/utils/commonUtils";
-
-
 
 export const createPaintingData = (
   formData: FormData,
