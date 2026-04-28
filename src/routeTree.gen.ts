@@ -16,7 +16,7 @@ import { Route as PostsRouteImport } from './routes/posts'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DeferredRouteImport } from './routes/deferred'
 import { Route as ContactRouteImport } from './routes/contact'
-import { Route as PathlessLayoutRouteImport } from './routes/_pathlessLayout'
+import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UsersIndexRouteImport } from './routes/users.index'
 import { Route as SculpturesIndexRouteImport } from './routes/sculptures/index'
@@ -75,8 +75,9 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PathlessLayoutRoute = PathlessLayoutRouteImport.update({
-  id: '/_pathlessLayout',
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -110,9 +111,9 @@ const DessinsIndexRoute = DessinsIndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
-  id: '/admin/',
-  path: '/admin/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 const UsersUserIdRoute = UsersUserIdRouteImport.update({
   id: '/$userId',
@@ -131,8 +132,8 @@ const ApiUsersRoute = ApiUsersRouteImport.update({
 } as any)
 const PathlessLayoutNestedLayoutRoute =
   PathlessLayoutNestedLayoutRouteImport.update({
-    id: '/_nested-layout',
-    getParentRoute: () => PathlessLayoutRoute,
+    id: '/_pathlessLayout/_nested-layout',
+    getParentRoute: () => rootRouteImport,
   } as any)
 const SculpturesCategorieCategoryKeyRoute =
   SculpturesCategorieCategoryKeyRouteImport.update({
@@ -198,6 +199,7 @@ const ImagesLibraryChar123FolderChar125FilenameRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/contact': typeof ContactRoute
   '/deferred': typeof DeferredRoute
   '/login': typeof LoginRoute
@@ -257,7 +259,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/_pathlessLayout': typeof PathlessLayoutRouteWithChildren
+  '/admin': typeof AdminRouteRouteWithChildren
   '/contact': typeof ContactRoute
   '/deferred': typeof DeferredRoute
   '/login': typeof LoginRoute
@@ -291,6 +293,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/contact'
     | '/deferred'
     | '/login'
@@ -349,7 +352,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/_pathlessLayout'
+    | '/admin'
     | '/contact'
     | '/deferred'
     | '/login'
@@ -382,7 +385,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  PathlessLayoutRoute: typeof PathlessLayoutRouteWithChildren
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
   ContactRoute: typeof ContactRoute
   DeferredRoute: typeof DeferredRoute
   LoginRoute: typeof LoginRoute
@@ -390,8 +393,8 @@ export interface RootRouteChildren {
   PresentationRoute: typeof PresentationRoute
   RedirectRoute: typeof RedirectRoute
   UsersRoute: typeof UsersRouteWithChildren
+  PathlessLayoutNestedLayoutRoute: typeof PathlessLayoutNestedLayoutRouteWithChildren
   ApiUsersRoute: typeof ApiUsersRouteWithChildren
-  AdminIndexRoute: typeof AdminIndexRoute
   DessinsIndexRoute: typeof DessinsIndexRoute
   PeinturesIndexRoute: typeof PeinturesIndexRoute
   SculpturesIndexRoute: typeof SculpturesIndexRoute
@@ -456,11 +459,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_pathlessLayout': {
-      id: '/_pathlessLayout'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof PathlessLayoutRouteImport
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -507,10 +510,10 @@ declare module '@tanstack/react-router' {
     }
     '/admin/': {
       id: '/admin/'
-      path: '/admin'
+      path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
     '/users/$userId': {
       id: '/users/$userId'
@@ -538,7 +541,7 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof PathlessLayoutNestedLayoutRouteImport
-      parentRoute: typeof PathlessLayoutRoute
+      parentRoute: typeof rootRouteImport
     }
     '/sculptures/categorie/$categoryKey': {
       id: '/sculptures/categorie/$categoryKey'
@@ -620,34 +623,16 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface PathlessLayoutNestedLayoutRouteChildren {
-  PathlessLayoutNestedLayoutRouteARoute: typeof PathlessLayoutNestedLayoutRouteARoute
-  PathlessLayoutNestedLayoutRouteBRoute: typeof PathlessLayoutNestedLayoutRouteBRoute
+interface AdminRouteRouteChildren {
+  AdminIndexRoute: typeof AdminIndexRoute
 }
 
-const PathlessLayoutNestedLayoutRouteChildren: PathlessLayoutNestedLayoutRouteChildren =
-  {
-    PathlessLayoutNestedLayoutRouteARoute:
-      PathlessLayoutNestedLayoutRouteARoute,
-    PathlessLayoutNestedLayoutRouteBRoute:
-      PathlessLayoutNestedLayoutRouteBRoute,
-  }
-
-const PathlessLayoutNestedLayoutRouteWithChildren =
-  PathlessLayoutNestedLayoutRoute._addFileChildren(
-    PathlessLayoutNestedLayoutRouteChildren,
-  )
-
-interface PathlessLayoutRouteChildren {
-  PathlessLayoutNestedLayoutRoute: typeof PathlessLayoutNestedLayoutRouteWithChildren
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminIndexRoute: AdminIndexRoute,
 }
 
-const PathlessLayoutRouteChildren: PathlessLayoutRouteChildren = {
-  PathlessLayoutNestedLayoutRoute: PathlessLayoutNestedLayoutRouteWithChildren,
-}
-
-const PathlessLayoutRouteWithChildren = PathlessLayoutRoute._addFileChildren(
-  PathlessLayoutRouteChildren,
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
 )
 
 interface PostsRouteChildren {
@@ -674,6 +659,24 @@ const UsersRouteChildren: UsersRouteChildren = {
 
 const UsersRouteWithChildren = UsersRoute._addFileChildren(UsersRouteChildren)
 
+interface PathlessLayoutNestedLayoutRouteChildren {
+  PathlessLayoutNestedLayoutRouteARoute: typeof PathlessLayoutNestedLayoutRouteARoute
+  PathlessLayoutNestedLayoutRouteBRoute: typeof PathlessLayoutNestedLayoutRouteBRoute
+}
+
+const PathlessLayoutNestedLayoutRouteChildren: PathlessLayoutNestedLayoutRouteChildren =
+  {
+    PathlessLayoutNestedLayoutRouteARoute:
+      PathlessLayoutNestedLayoutRouteARoute,
+    PathlessLayoutNestedLayoutRouteBRoute:
+      PathlessLayoutNestedLayoutRouteBRoute,
+  }
+
+const PathlessLayoutNestedLayoutRouteWithChildren =
+  PathlessLayoutNestedLayoutRoute._addFileChildren(
+    PathlessLayoutNestedLayoutRouteChildren,
+  )
+
 interface ApiUsersRouteChildren {
   ApiUsersUserIdRoute: typeof ApiUsersUserIdRoute
 }
@@ -688,7 +691,7 @@ const ApiUsersRouteWithChildren = ApiUsersRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  PathlessLayoutRoute: PathlessLayoutRouteWithChildren,
+  AdminRouteRoute: AdminRouteRouteWithChildren,
   ContactRoute: ContactRoute,
   DeferredRoute: DeferredRoute,
   LoginRoute: LoginRoute,
@@ -696,8 +699,8 @@ const rootRouteChildren: RootRouteChildren = {
   PresentationRoute: PresentationRoute,
   RedirectRoute: RedirectRoute,
   UsersRoute: UsersRouteWithChildren,
+  PathlessLayoutNestedLayoutRoute: PathlessLayoutNestedLayoutRouteWithChildren,
   ApiUsersRoute: ApiUsersRouteWithChildren,
-  AdminIndexRoute: AdminIndexRoute,
   DessinsIndexRoute: DessinsIndexRoute,
   PeinturesIndexRoute: PeinturesIndexRoute,
   SculpturesIndexRoute: SculpturesIndexRoute,

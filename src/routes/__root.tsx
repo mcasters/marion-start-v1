@@ -1,17 +1,19 @@
 import {
   createRootRouteWithContext,
   HeadContent,
+  Outlet,
   Scripts,
   useLocation,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import * as React from "react";
+import { ReactNode } from "react";
 import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary";
 import { NotFound } from "~/components/NotFound";
 import appCss from "~/styles/app.css?url";
 import { seo } from "~/utils/seo";
 import { HomeLayout, Session, StructTheme } from "~/lib/type";
-import { useAlert } from "~/context/alertProvider";
+import { useAlert } from "~/components/admin/context/alertProvider";
 import { getHomeLayout } from "~/utils/commonUtils";
 import { ROUTES } from "~/constants/specific/routes";
 import { hexToRgb } from "~/utils/themeUtils";
@@ -23,16 +25,18 @@ import { KEY_META } from "~/constants/admin";
 import Header from "~/components/layout/header";
 import Footer from "~/components/layout/footer";
 import { getHomeText } from "~/server-functions/content";
+import { useAdminContext } from "~/components/admin/context/adminProvider";
 
 interface MyRouterContext {
   metas: Map<string, string>;
   session: Session | null;
-  theme: StructTheme;
-  alert: ReturnType<typeof useAlert>;
+  structTheme: StructTheme;
+  useAlert: ReturnType<typeof useAlert>;
+  adminContext: ReturnType<typeof useAdminContext>;
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-  loader: () => getHomeText(),
+  loader: async () => await getHomeText(),
   head: () => ({
     meta: [
       {
@@ -76,9 +80,17 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   shellComponent: RootDocument,
 });
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootComponent() {
+  return (
+    <RootDocument>
+      <Outlet />
+    </RootDocument>
+  );
+}
+
+function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   const introduction = Route.useLoaderData();
-  const { metas, theme, session } = Route.useRouteContext();
+  const { metas, structTheme, session } = Route.useRouteContext();
   const location = useLocation();
   const path = location.pathname;
   const isPlainHomeLayout = getHomeLayout(metas) === HomeLayout.PLAIN;
@@ -88,7 +100,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     path.startsWith(ROUTES.SCULPTURE) ||
     path.startsWith(ROUTES.DRAWING);
   const page = isHome ? "home" : isWork ? "work" : "other";
-  const gradientRgbObject = hexToRgb(theme.home.menu1.background);
+  const gradientRgbObject = hexToRgb(structTheme.home.menu1.background);
   const gradientRgb = `${gradientRgbObject?.r},${gradientRgbObject?.g},${gradientRgbObject?.b}`;
 
   return (
@@ -100,13 +112,13 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <div
           className={s.wrapper}
           style={{
-            backgroundColor: theme[page].main.background,
-            color: theme[page].main.text,
+            backgroundColor: structTheme[page].main.background,
+            color: structTheme[page].main.text,
           }}
         >
           <div
             className={s.line}
-            style={{ backgroundColor: theme.general.lineColor }}
+            style={{ backgroundColor: structTheme.general.lineColor }}
           ></div>
           {session && session.email && <AuthStatus email={session.email} />}
           {isHome && !isPlainHomeLayout && (
@@ -153,26 +165,26 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           a,
           .buttonLink,
           .iconButton {
-            color: ${theme[page].main.link};
+            color: ${structTheme[page].main.link};
           }
 
           .icon {
-            fill: ${theme[page].main.link};
+            fill: ${structTheme[page].main.link};
           }
 
           a:hover,
           .buttonLink:hover,
           .iconButton:hover {
-            color: ${theme[page].main.linkHover};
+            color: ${structTheme[page].main.linkHover};
           }
 
           .icon:hover {
-            fill: ${theme[page].main.linkHover};
+            fill: ${structTheme[page].main.linkHover};
           }
 
           .selected,
           ::selection {
-            background: ${theme[page].menu2.link};
+            background: ${structTheme[page].menu2.link};
             color: antiquewhite;
           }
 

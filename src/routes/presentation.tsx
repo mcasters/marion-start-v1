@@ -25,7 +25,6 @@ function RouteComponent() {
           width={image.width}
           height={image.height}
           alt={`Photo de ${process.env.TITLE}`}
-          priority
           displayWidth={{ small: 80, large: 35 }}
           displayHeight={{ small: 40, large: 40 }}
         />

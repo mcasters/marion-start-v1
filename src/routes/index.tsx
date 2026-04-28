@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import Slideshow from "~/components/image/slideshow/slideshow";
 import { getHomeImages } from "~/server-functions/content";
+import Slideshow from "~/components/image/slideshow/slideshow";
 
 export const Route = createFileRoute("/")({
   loader: () => getHomeImages(),

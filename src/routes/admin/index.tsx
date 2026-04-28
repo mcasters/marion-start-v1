@@ -1,26 +1,36 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
-import { getSession } from "~/server-functions/auth";
+import { createFileRoute } from "@tanstack/react-router";
+import s from "~/components/admin/admin.module.css";
+import { getMessages } from "~/server-functions/message";
+import { KEY_META } from "~/constants/admin";
+import { InputForm } from "~/components/admin/text/inputForm";
+import ChatMessages from "~/components/admin/chatMessage/chatMessages";
+import AdminTheme from "~/components/admin/theme/adminTheme";
 
 export const Route = createFileRoute("/admin/")({
-  beforeLoad: async ({ location }) => {
-    const session = await getSession();
-    console.log("session before load admin ", session);
-    if (!session) {
-      throw redirect({
-        to: "/login",
-        search: { redirect: location.href },
-      });
-    }
-    return { session };
-  },
+  loader: async () => await getMessages(),
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { session } = Route.useRouteContext();
+  const messages = Route.useLoaderData();
+  const { metas } = Route.useRouteContext();
   return (
-    <div>
-      Hello admin : <p>{String(session)}</p>
+    <div className={s.adminWrapper}>
+      <h1 className={s.title1}>Administration générale</h1>
+      <h2 className={s.title2}>Gestion du thème</h2>
+      <AdminTheme />
+      <div className="separate" />
+      <h2 className={s.title2}>Pied de page du site</h2>
+      <InputForm
+        dbKey={KEY_META.FOOTER}
+        text={metas.get(KEY_META.FOOTER) || ""}
+        isMeta
+      />
+      <div className="separate" />
+      <h2 className={s.title2}>
+        Tchat (si t'as des questions ou des remarques)
+      </h2>
+      <ChatMessages dbMessages={messages} />
     </div>
   );
 }
