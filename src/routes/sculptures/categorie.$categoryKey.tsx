@@ -6,8 +6,8 @@ import WorkPage from "~/components/work/workPage";
 import { getSculptureWorksByCategory } from "~/server-functions/sculptures";
 
 export const Route = createFileRoute("/sculptures/categorie/$categoryKey")({
-  loader: ({ params: { categoryKey } }) =>
-    getSculptureWorksByCategory({ data: categoryKey }),
+  loader: async ({ params: { categoryKey } }) =>
+    await getSculptureWorksByCategory({ data: categoryKey }),
   errorComponent: PostErrorComponent,
   component: RouteComponent,
   notFoundComponent: () => {

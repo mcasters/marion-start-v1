@@ -6,8 +6,8 @@ import { TYPE } from "~/db/schema";
 import WorkPage from "~/components/work/workPage";
 
 export const Route = createFileRoute("/peintures/categorie/$categoryKey")({
-  loader: ({ params: { categoryKey } }) =>
-    getPaintingsByCategory({ data: categoryKey }),
+  loader: async ({ params: { categoryKey } }) =>
+    await getPaintingsByCategory({ data: categoryKey }),
   errorComponent: PostErrorComponent,
   component: RouteComponent,
   notFoundComponent: () => {

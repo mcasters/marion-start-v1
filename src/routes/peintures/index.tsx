@@ -4,7 +4,7 @@ import WorkHome from "~/components/work/workHome";
 import { TYPE } from "~/db/schema";
 
 export const Route = createFileRoute("/peintures/")({
-  loader: () => getPaintingCategories(),
+  loader: async () => await getPaintingCategories(),
   component: RouteComponent,
 });
 

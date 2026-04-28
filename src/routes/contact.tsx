@@ -6,7 +6,7 @@ import s from "~/styles/page.module.css";
 import InstagramIcon from "~/components/icons/instagramIcon";
 
 export const Route = createFileRoute("/contact")({
-  loader: () => getContactContent(),
+  loader: async () => await getContactContent(),
   component: RouteComponent,
 });
 

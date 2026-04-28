@@ -6,8 +6,8 @@ import WorkPage from "~/components/work/workPage";
 import { getDrawingsByCategory } from "~/server-functions/drawings";
 
 export const Route = createFileRoute("/dessins/categorie/$categoryKey")({
-  loader: ({ params: { categoryKey } }) =>
-    getDrawingsByCategory({ data: categoryKey }),
+  loader: async ({ params: { categoryKey } }) =>
+    await getDrawingsByCategory({ data: categoryKey }),
   errorComponent: PostErrorComponent,
   component: RouteComponent,
   notFoundComponent: () => {

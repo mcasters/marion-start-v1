@@ -5,7 +5,7 @@ import s from "~/styles/page.module.css";
 import FormattedPhoto from "~/components/image/formattedPhoto";
 
 export const Route = createFileRoute("/presentation")({
-  loader: () => getPresentationContent(),
+  loader: async () => await getPresentationContent(),
   component: RouteComponent,
 });
 

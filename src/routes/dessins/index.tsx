@@ -4,7 +4,7 @@ import { TYPE } from "~/db/schema";
 import { getDrawingCategories } from "~/server-functions/drawings";
 
 export const Route = createFileRoute("/dessins/")({
-  loader: () => getDrawingCategories(),
+  loader: async () => await getDrawingCategories(),
   component: RouteComponent,
 });
 

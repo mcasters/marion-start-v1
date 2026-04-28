@@ -3,7 +3,7 @@ import { getHomeImages } from "~/server-functions/content";
 import Slideshow from "~/components/image/slideshow/slideshow";
 
 export const Route = createFileRoute("/")({
-  loader: () => getHomeImages(),
+  loader: async () => await getHomeImages(),
   component: Home,
 });
 

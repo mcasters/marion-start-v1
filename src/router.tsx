@@ -17,8 +17,6 @@ export async function getRouter() {
       metas: await getMetas(),
       session: await getSession(),
       structTheme: getStructHexaTheme(theme, presetColors),
-      useAlert: undefined!,
-      adminContext: undefined!,
     },
     defaultErrorComponent: DefaultCatchBoundary,
     defaultNotFoundComponent: () => <NotFound />,

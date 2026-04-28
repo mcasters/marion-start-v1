@@ -13,30 +13,24 @@ import { NotFound } from "~/components/NotFound";
 import appCss from "~/styles/app.css?url";
 import { seo } from "~/utils/seo";
 import { HomeLayout, Session, StructTheme } from "~/lib/type";
-import { useAlert } from "~/components/admin/context/alertProvider";
 import { getHomeLayout } from "~/utils/commonUtils";
 import { ROUTES } from "~/constants/specific/routes";
 import { hexToRgb } from "~/utils/themeUtils";
-import s from "~/components/layout/layout.module.css";
-import AuthStatus from "~/components/auth/authStatus";
-import AdminNav from "~/components/layout/admin/adminNav";
-import HomeHeader from "~/components/layout/homeHeader";
-import { KEY_META } from "~/constants/admin";
-import Header from "~/components/layout/header";
 import Footer from "~/components/layout/footer";
-import { getHomeText } from "~/server-functions/content";
-import { useAdminContext } from "~/components/admin/context/adminProvider";
+import Header from "~/components/layout/header";
+import { KEY_META } from "~/constants/admin";
+import HomeHeader from "~/components/layout/homeHeader";
+import AdminNav from "~/components/layout/admin/adminNav";
+import AuthStatus from "~/components/auth/authStatus";
+import s from "~/components/layout/layout.module.css";
 
 interface MyRouterContext {
   metas: Map<string, string>;
   session: Session | null;
   structTheme: StructTheme;
-  useAlert: ReturnType<typeof useAlert>;
-  adminContext: ReturnType<typeof useAdminContext>;
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-  loader: async () => await getHomeText(),
   head: () => ({
     meta: [
       {
@@ -77,20 +71,11 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   }),
   errorComponent: DefaultCatchBoundary,
   notFoundComponent: () => <NotFound />,
-  shellComponent: RootDocument,
+  component: RootComponent,
 });
 
 function RootComponent() {
-  return (
-    <RootDocument>
-      <Outlet />
-    </RootDocument>
-  );
-}
-
-function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
-  const introduction = Route.useLoaderData();
-  const { metas, structTheme, session } = Route.useRouteContext();
+  const { metas, session, structTheme } = Route.useRouteContext();
   const location = useLocation();
   const path = location.pathname;
   const isPlainHomeLayout = getHomeLayout(metas) === HomeLayout.PLAIN;
@@ -104,28 +89,24 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   const gradientRgb = `${gradientRgbObject?.r},${gradientRgbObject?.g},${gradientRgbObject?.b}`;
 
   return (
-    <html>
-      <head>
-        <HeadContent />
-      </head>
-      <body>
+    <RootDocument>
+      <div
+        className={s.wrapper}
+        style={{
+          backgroundColor: structTheme[page].main.background,
+          color: structTheme[page].main.text,
+        }}
+      >
         <div
-          className={s.wrapper}
-          style={{
-            backgroundColor: structTheme[page].main.background,
-            color: structTheme[page].main.text,
-          }}
-        >
+          className={s.line}
+          style={{ backgroundColor: structTheme.general.lineColor }}
+        ></div>
+        {session && session.email && <AuthStatus email={session.email} />}
+        {isHome && !isPlainHomeLayout && (
           <div
-            className={s.line}
-            style={{ backgroundColor: structTheme.general.lineColor }}
-          ></div>
-          {session && session.email && <AuthStatus email={session.email} />}
-          {isHome && !isPlainHomeLayout && (
-            <div
-              className={s.gradient}
-              style={{
-                background: `
+            className={s.gradient}
+            style={{
+              background: `
           linear-gradient(
             to top,
             rgba(${gradientRgb}, 0) 0%,
@@ -145,23 +126,25 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
             rgba(${gradientRgb}, 0.987) 91.9%,
             rgb(${gradientRgb}) 100%
           )`,
-              }}
-            ></div>
-          )}
-          {path === ROUTES.ADMIN ? (
-            <AdminNav />
-          ) : isHome ? (
-            <HomeHeader
-              isPlainHomeLayout={isPlainHomeLayout}
-              title={metas.get(KEY_META.OWNER) || ""}
-              introduction={introduction ?? ""}
-            />
-          ) : (
-            <Header themePage={page} />
-          )}
-          <main className={isHome ? undefined : s.main}>{children}</main>
-          <Footer themePage={page} />
-          <style>{`
+            }}
+          ></div>
+        )}
+        {path === ROUTES.ADMIN ? (
+          <AdminNav />
+        ) : isHome ? (
+          <HomeHeader
+            isPlainHomeLayout={isPlainHomeLayout}
+            title={metas.get(KEY_META.OWNER) || ""}
+            introduction={""}
+          />
+        ) : (
+          <Header themePage={page} />
+        )}
+        <main className={isHome ? undefined : s.main}>
+          <Outlet />
+        </main>
+        <Footer themePage={page} />
+        <style>{`
           a,
           .buttonLink,
           .iconButton {
@@ -192,8 +175,19 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
             fill: antiquewhite;
           }
         `}</style>
-        </div>
-        <hr />
+      </div>
+    </RootDocument>
+  );
+}
+
+function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
+  return (
+    <html>
+      <head>
+        <HeadContent />
+      </head>
+      <body>
+        {children}
         <TanStackRouterDevtools position="bottom-right" />
         <Scripts />
       </body>

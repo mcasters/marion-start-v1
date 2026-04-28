@@ -6,7 +6,8 @@ import WorkPage from "~/components/work/workPage";
 import { TYPE } from "~/db/schema";
 
 export const Route = createFileRoute("/peintures/annee/$year")({
-  loader: ({ params: { year } }) => getPaintingWorksByYear({ data: year }),
+  loader: async ({ params: { year } }) =>
+    await getPaintingWorksByYear({ data: year }),
   errorComponent: PostErrorComponent,
   component: RouteComponent,
   notFoundComponent: () => {

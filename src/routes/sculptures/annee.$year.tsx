@@ -6,7 +6,8 @@ import { TYPE } from "~/db/schema";
 import { getSculptureWorksByYear } from "~/server-functions/sculptures";
 
 export const Route = createFileRoute("/sculptures/annee/$year")({
-  loader: ({ params: { year } }) => getSculptureWorksByYear({ data: year }),
+  loader: async ({ params: { year } }) =>
+    await getSculptureWorksByYear({ data: year }),
   errorComponent: PostErrorComponent,
   component: RouteComponent,
   notFoundComponent: () => {
