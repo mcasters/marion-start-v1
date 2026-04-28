@@ -1,5 +1,3 @@
-"use client";
-
 import s from "./workLayout.module.css";
 import { EnhancedImage, Layout, Work } from "~/lib/type";
 import React, { useMemo, useState } from "react";

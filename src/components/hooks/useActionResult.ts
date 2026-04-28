@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useAlert } from "~/context/alertProvider";
+import { useAlert } from "~/components/admin/context/alertProvider";
 
 export default function useActionResult(
   state: {

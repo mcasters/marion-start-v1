@@ -1,5 +1,3 @@
-"use client";
-
 import { LAYOUT as L } from "~/constants/layout.js";
 import Nav_1 from "~/components/layout/nav_1/nav_1";
 import Nav_2 from "~/components/layout/nav_2/nav_2";
@@ -19,7 +17,7 @@ export default function HomeHeader({
   title,
   introduction,
 }: Props) {
-  const { theme } = Route.useRouteContext();
+  const { structTheme } = Route.useRouteContext();
   const { isUpTo: titleGone, ref: titleRef } = useElementIsUpTo(L.LINE_HEIGHT);
   const { isUpTo: introGone, ref: introRef } = useElementIsUpTo(
     L.LINE_HEIGHT + L.NAV_1_HEIGHT,
@@ -31,7 +29,7 @@ export default function HomeHeader({
         <h1
           className={s.title}
           style={{
-            color: theme.general.titleColor,
+            color: structTheme.general.titleColor,
           }}
         >
           {title}
@@ -48,7 +46,7 @@ export default function HomeHeader({
         ref={introRef}
         className={s.intro}
         style={{
-          color: theme.home.main.text,
+          color: structTheme.home.main.text,
         }}
       >
         <p>{introduction}</p>

@@ -1,5 +1,3 @@
-"use client";
-
 import { Lightbox as YetLightbox } from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import "yet-another-react-lightbox/plugins/captions.css";
@@ -22,7 +20,7 @@ export default function Lightbox({
   onClose,
   isSmall,
 }: Props) {
-  const { theme } = Route.useRouteContext();
+  const { structTheme } = Route.useRouteContext();
   const noButtonNav = isSmall || enhancedImages.length < 2;
 
   return (
@@ -49,11 +47,11 @@ export default function Lightbox({
       }}
       styles={{
         container: {
-          backgroundColor: theme.general.lightbox,
-          color: theme.general.lightboxText,
+          backgroundColor: structTheme.general.lightbox,
+          color: structTheme.general.lightboxText,
           padding: "0px",
         },
-        icon: { color: theme.general.lightboxText },
+        icon: { color: structTheme.general.lightboxText },
       }}
       plugins={[Zoom]}
       zoom={{

@@ -8,14 +8,16 @@ import { DEVICE } from "~/constants/image";
 import s from "~/components/image/slideshow/slider.module.css";
 import ArrowPrev from "~/components/icons/arrowPrev";
 import ArrowNext from "~/components/icons/arrowNext";
-import { Route } from "~/routes/__root";
+import { getRouteApi } from "@tanstack/react-router";
+
+const routeApi = getRouteApi("/");
 
 type Props = {
   images: Image[];
 };
 
 export default function Slideshow({ images }: Props) {
-  const { metas } = Route.useRouteContext();
+  const { metas } = routeApi.useRouteContext();
   const isPlainHomeLayout = getHomeLayout(metas) === HomeLayout.PLAIN;
   const window = useWindowRect();
   const isSmall = window.innerWidth < DEVICE.SMALL;

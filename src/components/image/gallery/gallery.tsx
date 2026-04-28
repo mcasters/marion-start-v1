@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useMemo, useState } from "react";
 import { EnhancedImage, Post, Work } from "~/lib/type";
 import s from "./gallery.module.css";

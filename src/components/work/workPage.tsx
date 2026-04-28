@@ -1,5 +1,3 @@
-"use client";
-
 import { Category, ItemDarkBackground, Layout, Work } from "~/lib/type";
 import React from "react";
 import s from "~/components/work/workPage.module.css";

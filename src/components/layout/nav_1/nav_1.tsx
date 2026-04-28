@@ -1,5 +1,3 @@
-"use client";
-
 import { MENU_1_ITEMS } from "~/constants/specific/routes";
 import s from "~/components/layout/nav_1/nav_1.module.css";
 import { getDarkerColor } from "~/utils/themeUtils";
@@ -14,7 +12,7 @@ type Props = {
 };
 
 export default function Nav_1({ fixed, themePage }: Props) {
-  const { metas, theme } = Route.useRouteContext();
+  const { metas, structTheme } = Route.useRouteContext();
   const location = useLocation();
   const isPlainHomeLayout = getHomeLayout(metas) === HomeLayout.PLAIN;
 
@@ -22,9 +20,11 @@ export default function Nav_1({ fixed, themePage }: Props) {
     <nav
       className={fixed ? `${s.fixed} ${s.nav} nav1` : `${s.nav} nav1`}
       style={{
-        backgroundColor: fixed ? theme[themePage].menu1.background : undefined,
+        backgroundColor: fixed
+          ? structTheme[themePage].menu1.background
+          : undefined,
         borderBottomColor: fixed
-          ? getDarkerColor(theme[themePage].menu1.background, -40)
+          ? getDarkerColor(structTheme[themePage].menu1.background, -40)
           : undefined,
       }}
     >
@@ -34,7 +34,7 @@ export default function Nav_1({ fixed, themePage }: Props) {
           style={{
             borderBottomColor: fixed
               ? undefined
-              : getDarkerColor(theme.home.menu1.background, -20),
+              : getDarkerColor(structTheme.home.menu1.background, -20),
           }}
         >
           {MENU_1_ITEMS.map((item) => {
@@ -58,13 +58,13 @@ export default function Nav_1({ fixed, themePage }: Props) {
       </div>
       <style>{`
         .nav1 a {
-          color: ${theme[themePage].menu1.link};
+          color: ${structTheme[themePage].menu1.link};
         }
         .nav1 a:hover {
-          color: ${theme[themePage].menu1.linkHover};
+          color: ${structTheme[themePage].menu1.linkHover};
         }
         .nav1 a.active {
-          border-bottom: solid 2px ${theme[themePage].menu1.linkHover};
+          border-bottom: solid 2px ${structTheme[themePage].menu1.linkHover};
         }
       `}</style>
     </nav>

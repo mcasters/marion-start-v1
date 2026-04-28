@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import s from "~/components/work/workHome.module.css";
 import { TYPE } from "~/db/schema";

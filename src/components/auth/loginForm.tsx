@@ -1,5 +1,3 @@
-"use client";
-
 import s from "./authentication.module.css";
 import { loginFn } from "~/server-functions/auth";
 import React, { useState } from "react";

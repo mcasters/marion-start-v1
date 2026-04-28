@@ -11,7 +11,6 @@ interface Props {
   width: number;
   height: number;
   alt: string;
-  priority: boolean;
   displayWidth: { small: number; large: number };
   displayHeight: { small: number; large: number };
   withLightbox?: boolean;
@@ -22,7 +21,6 @@ export default function FormattedPhoto({
   width,
   height,
   alt,
-  priority,
   displayWidth,
   displayHeight,
   withLightbox = false,
