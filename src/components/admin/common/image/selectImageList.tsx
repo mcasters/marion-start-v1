@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useState } from "react";
+import { useState } from "react";
 import s from "~/components/admin/admin.module.css";
 import { TYPE } from "~/db/schema";
 

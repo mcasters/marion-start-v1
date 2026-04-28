@@ -1,4 +1,3 @@
-import React from "react";
 import { Theme } from "~/lib/type";
 import { useAdminContext } from "~/components/admin/context/adminProvider";
 

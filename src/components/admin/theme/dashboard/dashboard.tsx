@@ -1,4 +1,3 @@
-import React from "react";
 import s from "../adminTheme.module.css";
 import { THEME_LABEL } from "~/constants/admin";
 import { getStructuredTheme } from "~/utils/themeUtils";

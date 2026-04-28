@@ -1,5 +1,3 @@
-"use client";
-
 import React, { ReactElement, useEffect, useState } from "react";
 import { Admin } from "~/lib/type";
 import s from "~/components/admin/common/selectableList/adminList.module.css";

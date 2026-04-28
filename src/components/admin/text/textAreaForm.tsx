@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import SubmitButton from "~/components/admin/common/button/submitButton";
 import CancelButton from "~/components/admin/common/button/cancelButton";
 import { KeyMeta } from "~/lib/type";
@@ -6,7 +6,7 @@ import s from "../admin.module.css";
 import { LABEL } from "~/db/schema";
 import { updateMeta } from "~/server-functions/meta";
 import { updateContent } from "~/server-functions/content";
-import { Route } from "~/routes/admin";
+import { useAlert } from "~/components/admin/context/alertProvider";
 
 interface Props {
   dbKey: LABEL | KeyMeta;
@@ -22,7 +22,7 @@ export default function TextAreaForm({
   title,
   metaLayout = false,
 }: Props) {
-  const { useAlert } = Route.useRouteContext();
+  const alert = useAlert();
   const [_text, set_text] = useState<string>(text);
 
   const handleSubmit = async (e: React.SubmitEvent) => {
@@ -30,7 +30,7 @@ export default function TextAreaForm({
     const res = isMeta
       ? await updateMeta({ data: { key: dbKey, text: _text } })
       : await updateContent({ data: { key: dbKey, text: _text } });
-    useAlert(res.message, res.isError);
+    alert(res.message, res.isError);
   };
 
   return (

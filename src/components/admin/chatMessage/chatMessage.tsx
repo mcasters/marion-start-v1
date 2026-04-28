@@ -1,10 +1,9 @@
-import React from "react";
 import s from "./chatMessage.module.css";
 import { Message } from "~/lib/type";
 import MoreIcon from "~/components/icons/moreIcon";
 import useOnClickOutside from "~/components/hooks/useOnClickOutside";
 import { deleteMessage } from "~/server-functions/message";
-import { Route } from "~/routes/__root";
+import { rootRouteId, useRouteContext } from "@tanstack/react-router";
 
 type Props = {
   message: Message;
@@ -16,7 +15,7 @@ type Props = {
 };
 
 export default function ChatMessage({ message, editableMessage }: Props) {
-  const { structTheme } = Route.useRouteContext();
+  const { structTheme } = useRouteContext({ from: rootRouteId });
   const { ref } = useOnClickOutside(
     editableMessage ? () => editableMessage.openMenu(false) : undefined,
   );

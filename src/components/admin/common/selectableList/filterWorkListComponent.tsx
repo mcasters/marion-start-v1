@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import s from "~/components/admin/admin.module.css";
 import { AdminCategory, Work } from "~/lib/type";
 import { filterWorks, getYearsFromWorks } from "~/utils/commonUtils";

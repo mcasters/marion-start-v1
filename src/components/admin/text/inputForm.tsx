@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import SubmitButton from "~/components/admin/common/button/submitButton";
 import CancelButton from "~/components/admin/common/button/cancelButton";
 import { KeyMeta } from "~/lib/type";

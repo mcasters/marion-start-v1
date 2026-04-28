@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import s from "~/components/admin/theme/adminTheme.module.css";
 import { OnlyString, Theme } from "~/lib/type";
 import ColorPicker from "~/components/admin/theme/dashboard/colorPicker";

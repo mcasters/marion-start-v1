@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import s from "../adminTheme.module.css";
 import {
   THEME_GEN_TARGET_LABEL,

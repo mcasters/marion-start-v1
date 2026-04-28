@@ -1,8 +1,5 @@
-"use client";
-
 import DeleteButton from "~/components/admin/common/button/deleteButton";
 import s from "~/components/admin/common/selectableList/adminList.module.css";
-import React from "react";
 
 interface Props {
   part1: string;

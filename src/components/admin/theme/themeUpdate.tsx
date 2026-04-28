@@ -1,13 +1,12 @@
-import React from "react";
 import { THEME } from "~/constants/admin";
 import { updateTheme } from "~/server-functions/theme";
-import { Route } from "~/routes/admin";
+import { useAlert } from "~/components/admin/context/alertProvider";
+import { useAdminContext } from "~/components/admin/context/adminProvider";
 
 export default function ThemeUpdate() {
-  const {
-    useAlert,
-    adminContext: { workTheme, setIsSaved, isSaved, setThemes, themes },
-  } = Route.useRouteContext();
+  const { workTheme, setIsSaved, isSaved, setThemes, themes } =
+    useAdminContext();
+  const alert = useAlert();
 
   const handleUpdate = async () => {
     const res = await updateTheme({ data: workTheme });
@@ -18,7 +17,7 @@ export default function ThemeUpdate() {
       setThemes(updatedThemes);
       setIsSaved(true);
     }
-    useAlert(res.message, res.isError);
+    alert(res.message, res.isError);
   };
 
   return (

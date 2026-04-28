@@ -1,16 +1,13 @@
-import React from "react";
 import { Theme } from "~/lib/type";
-import { Route } from "~/routes/admin";
+import { useAdminContext } from "~/components/admin/context/adminProvider";
 
 export default function ThemeCancel() {
-  const {
-    adminContext: { workTheme, setWorkTheme, setIsSaved, isSaved, themes },
-  } = Route.useRouteContext();
+  const { workTheme, setWorkTheme, setIsSaved, isSaved, themes } =
+    useAdminContext();
 
   return (
     <button
-      onClick={(e) => {
-        e.preventDefault();
+      onClick={() => {
         setWorkTheme(themes.find((t) => t.id === workTheme.id) as Theme);
         setIsSaved(true);
       }}

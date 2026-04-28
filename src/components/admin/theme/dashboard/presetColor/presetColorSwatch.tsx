@@ -1,5 +1,4 @@
 import s from "~/components/admin/theme/adminTheme.module.css";
-import React from "react";
 import Modal from "~/components/admin/common/modal";
 import DeleteIcon from "~/components/icons/deleteIcon";
 import { BASE_PRESET_COLOR } from "~/constants/specific";

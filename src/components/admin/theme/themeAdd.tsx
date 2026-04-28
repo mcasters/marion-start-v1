@@ -1,17 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { createTheme } from "~/server-functions/theme";
-import { Route } from "~/routes/admin";
+import { useAdminContext } from "~/components/admin/context/adminProvider";
+import { useAlert } from "~/components/admin/context/alertProvider";
 
 export default function ThemeAdd() {
-  const {
-    adminContext: { workTheme, setWorkTheme, setThemes, themes, setIsSaved },
-    useAlert,
-  } = Route.useRouteContext();
+  const { workTheme, setWorkTheme, setThemes, themes, setIsSaved } =
+    useAdminContext();
+  const alert = useAlert();
   const [themeName, setThemeName] = useState<string>("");
 
   const handleAdd = async () => {
-    if (themeName === "")
-      useAlert("Le nom du nouveau thème est manquant", true);
+    if (themeName === "") alert("Le nom du nouveau thème est manquant", true);
     else {
       const { theme, message, isError } = await createTheme({
         data: {
@@ -26,7 +25,7 @@ export default function ThemeAdd() {
         setIsSaved(true);
         setThemeName("");
       }
-      useAlert(message, isError);
+      alert(message, isError);
     }
   };
 

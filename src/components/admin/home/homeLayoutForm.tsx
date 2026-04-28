@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import s from "~/components/admin/admin.module.css";
 import { getHomeLayout } from "~/utils/commonUtils";
 import { KEY_META } from "~/constants/admin";
 import { updateMeta } from "~/server-functions/meta";
-import { Route } from "~/routes/admin";
+import { useAlert } from "~/components/admin/context/alertProvider";
+import { rootRouteId, useRouteContext } from "@tanstack/react-router";
 
 export function HomeLayoutForm() {
-  const { metas, useAlert } = Route.useRouteContext();
+  const { metas } = useRouteContext({ from: rootRouteId });
+  const alert = useAlert();
   const [value, setValue] = useState<string>(getHomeLayout(metas).toString());
 
   const handleChange = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -16,7 +18,7 @@ export function HomeLayoutForm() {
     const res = await updateMeta({
       data: { key: KEY_META.HOME_LAYOUT, text: value },
     });
-    useAlert(res.message, res.isError);
+    alert(res.message, res.isError);
   };
 
   return (

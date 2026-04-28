@@ -1,5 +1,3 @@
-"use client";
-
 import s from "~/components/admin/admin.module.css";
 import ThemeSelect from "~/components/admin/theme/ThemeSelect";
 import ThemeActivate from "~/components/admin/theme/themeActivate";

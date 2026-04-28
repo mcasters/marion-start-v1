@@ -21,7 +21,6 @@ export default function ThemeActivate() {
     );
     alert(res.message, res.isError);
   };
-  console.log("coucou ddddd");
   return (
     <>
       <button

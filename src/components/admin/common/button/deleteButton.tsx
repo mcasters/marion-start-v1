@@ -1,5 +1,5 @@
 import DeleteIcon from "~/components/icons/deleteIcon";
-import { Route } from "~/routes/admin";
+import { useAlert } from "~/components/admin/context/alertProvider";
 
 export type DeleteButtonProps = {
   onDelete?: () => void;
@@ -14,7 +14,7 @@ export default function DeleteButton({
   deleteAction,
   disabled = false,
 }: DeleteButtonProps) {
-  const { useAlert } = Route.useRouteContext();
+  const alert = useAlert();
 
   return (
     <button
@@ -25,7 +25,7 @@ export default function DeleteButton({
               e.preventDefault();
               if (confirm("Sûr de vouloir supprimer ?")) {
                 const res = await deleteAction();
-                useAlert(res.message, res.isError);
+                alert(res.message, res.isError);
               }
             }
           : onDelete

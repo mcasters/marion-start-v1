@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import s from "~/components/admin/theme/adminTheme.module.css";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 
