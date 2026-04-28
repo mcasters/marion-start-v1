@@ -89,21 +89,20 @@ export const getPresentationContent = createServerFn().handler(
   },
 );
 
-export async function updateContent(
-  initialState: any,
-  formData: FormData,
-): Promise<{ message: string; isError: boolean }> {
-  const label = formData.get("key") as LABEL;
-  const text = formData.get("text") as string;
+export const updateContent = createServerFn({ method: "POST" })
+  .inputValidator((data: { key: string; text: string }) => data)
+  .handler(async ({ data }) => {
+    try {
+      await db
+        .update(content)
+        .set({ text: data.text })
+        .where(eq(content.label, data.key as LABEL));
 
-  try {
-    await db.update(content).set({ text }).where(eq(content.label, label));
-
-    return { message: "Enregistré", isError: false };
-  } catch (e) {
-    return { message: "Erreur à l'enregistrement", isError: true };
-  }
-}
+      return { message: "Enregistré", isError: false };
+    } catch (e) {
+      return { message: "Erreur à l'enregistrement", isError: true };
+    }
+  });
 
 export async function updateImageContent(
   initialState: any,
