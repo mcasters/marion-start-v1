@@ -1,5 +1,3 @@
-"use client";
-
 import { ADMIN_MENU } from "~/constants/specific/routes";
 import s from "~/components/layout/admin/adminNav.module.css";
 import { Link, useLocation } from "@tanstack/react-router";

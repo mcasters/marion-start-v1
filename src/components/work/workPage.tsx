@@ -5,7 +5,7 @@ import { getWorkLayout } from "~/utils/commonUtils";
 import WorkLayout from "~/components/work/workLayout";
 import Gallery from "~/components/image/gallery/gallery";
 import { TYPE } from "~/db/schema";
-import { Route } from "~/routes/__root";
+import { rootRouteId, useRouteContext } from "@tanstack/react-router";
 
 interface Props {
   tag: string;
@@ -14,7 +14,7 @@ interface Props {
   type: TYPE.PAINTING | TYPE.SCULPTURE | TYPE.DRAWING;
 }
 export default function WorkPage({ tag, works, category, type }: Props) {
-  const { metas } = Route.useRouteContext();
+  const { metas } = useRouteContext({ from: rootRouteId });
   const [itemLayout, itemDarkBackground] = getWorkLayout(metas, type);
 
   return (

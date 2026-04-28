@@ -4,7 +4,7 @@ import Nav_2 from "~/components/layout/nav_2/nav_2";
 import s from "./layout.module.css";
 import React from "react";
 import useElementIsUpTo from "~/components/hooks/useElementIsUpTo";
-import { Route } from "~/routes/__root";
+import { rootRouteId, useRouteContext } from "@tanstack/react-router";
 
 type Props = {
   isPlainHomeLayout: boolean;
@@ -17,7 +17,7 @@ export default function HomeHeader({
   title,
   introduction,
 }: Props) {
-  const { structTheme } = Route.useRouteContext();
+  const { structTheme } = useRouteContext({ from: rootRouteId });
   const { isUpTo: titleGone, ref: titleRef } = useElementIsUpTo(L.LINE_HEIGHT);
   const { isUpTo: introGone, ref: introRef } = useElementIsUpTo(
     L.LINE_HEIGHT + L.NAV_1_HEIGHT,

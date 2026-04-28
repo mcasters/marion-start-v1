@@ -4,8 +4,7 @@ import { KEY_META } from "~/constants/admin";
 import React from "react";
 import LogoIconT from "~/components/icons/logoIconT";
 import LogoIconM from "~/components/icons/logoIconM";
-import { Link } from "@tanstack/react-router";
-import { Route } from "~/routes/__root";
+import { Link, rootRouteId, useRouteContext } from "@tanstack/react-router";
 
 interface Props {
   fixed: boolean;
@@ -13,7 +12,7 @@ interface Props {
 }
 
 export default function Nav_2({ fixed, themePage }: Props) {
-  const { metas, structTheme } = Route.useRouteContext();
+  const { metas, structTheme } = useRouteContext({ from: rootRouteId });
   const owner = metas.get(KEY_META.OWNER);
 
   return (

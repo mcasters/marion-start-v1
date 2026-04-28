@@ -5,7 +5,7 @@ import "yet-another-react-lightbox/styles.css";
 import { EnhancedImage, Work } from "~/lib/type";
 import { LightboxSlide } from "~/components/image/lightbox/lightboxSlide";
 import { getSizeText } from "~/utils/commonUtils";
-import { Route } from "~/routes/__root";
+import { rootRouteId, useRouteContext } from "@tanstack/react-router";
 
 type Props = {
   enhancedImages: EnhancedImage[];
@@ -20,7 +20,7 @@ export default function Lightbox({
   onClose,
   isSmall,
 }: Props) {
-  const { structTheme } = Route.useRouteContext();
+  const { structTheme } = useRouteContext({ from: rootRouteId });
   const noButtonNav = isSmall || enhancedImages.length < 2;
 
   return (

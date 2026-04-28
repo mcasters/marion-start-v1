@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect } from "react";
 import { useAlert } from "~/components/admin/context/alertProvider";
 

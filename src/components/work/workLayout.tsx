@@ -6,7 +6,7 @@ import Lightbox from "~/components/image/lightbox/lightbox";
 import { KEY_META } from "~/constants/admin";
 import { DEVICE, IMAGE_INFO } from "~/constants/image";
 import useWindowRect from "~/components/hooks/useWindowRect";
-import { Route } from "~/routes/__root";
+import { rootRouteId, useRouteContext } from "@tanstack/react-router";
 
 interface Props {
   work: Work;
@@ -14,7 +14,7 @@ interface Props {
   priority: boolean;
 }
 export default function WorkLayout({ work, layout, priority }: Props) {
-  const { metas } = Route.useRouteContext();
+  const { metas } = useRouteContext({ from: rootRouteId });
   const isSmall = useWindowRect().innerWidth < DEVICE.SMALL;
   const [index, setIndex] = useState(-1);
   const _width = isSmall

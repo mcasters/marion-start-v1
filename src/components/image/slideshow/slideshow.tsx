@@ -1,5 +1,3 @@
-"use client";
-
 import { HomeLayout, Image } from "~/lib/type";
 import { useEffect, useMemo, useState } from "react";
 import { getHomeLayout } from "~/utils/commonUtils";
@@ -8,7 +6,11 @@ import { DEVICE } from "~/constants/image";
 import s from "~/components/image/slideshow/slider.module.css";
 import ArrowPrev from "~/components/icons/arrowPrev";
 import ArrowNext from "~/components/icons/arrowNext";
-import { getRouteApi } from "@tanstack/react-router";
+import {
+  getRouteApi,
+  rootRouteId,
+  useRouteContext,
+} from "@tanstack/react-router";
 
 const routeApi = getRouteApi("/");
 
@@ -17,7 +19,7 @@ type Props = {
 };
 
 export default function Slideshow({ images }: Props) {
-  const { metas } = routeApi.useRouteContext();
+  const { metas } = useRouteContext({ from: rootRouteId });
   const isPlainHomeLayout = getHomeLayout(metas) === HomeLayout.PLAIN;
   const window = useWindowRect();
   const isSmall = window.innerWidth < DEVICE.SMALL;

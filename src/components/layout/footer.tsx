@@ -2,16 +2,16 @@ import s from "~/components/layout/layout.module.css";
 import { ROUTES } from "~/constants/specific/routes";
 import { KEY_META } from "~/constants/admin";
 import React from "react";
-import { Link } from "@tanstack/react-router";
-import { Route } from "~/routes/__root";
+import { Link, rootRouteId, useRouteContext } from "@tanstack/react-router";
 
 type Props = {
   themePage: "work" | "home" | "other";
 };
 
 export default function Footer({ themePage }: Props) {
-  const { metas, structTheme, session } = Route.useRouteContext();
-
+  const { metas, structTheme, session } = useRouteContext({
+    from: rootRouteId,
+  });
   return (
     <footer
       className={s.footer}

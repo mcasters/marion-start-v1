@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import Lightbox from "~/components/image/lightbox/lightbox";
 import useWindowRect from "~/components/hooks/useWindowRect";

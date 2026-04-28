@@ -3,8 +3,12 @@ import s from "~/components/layout/nav_1/nav_1.module.css";
 import { getDarkerColor } from "~/utils/themeUtils";
 import { getHomeLayout } from "~/utils/commonUtils";
 import { HomeLayout } from "~/lib/type";
-import { Link, useLocation } from "@tanstack/react-router";
-import { Route } from "~/routes/__root";
+import {
+  Link,
+  rootRouteId,
+  useLocation,
+  useRouteContext,
+} from "@tanstack/react-router";
 
 type Props = {
   fixed: boolean;
@@ -12,7 +16,7 @@ type Props = {
 };
 
 export default function Nav_1({ fixed, themePage }: Props) {
-  const { metas, structTheme } = Route.useRouteContext();
+  const { metas, structTheme } = useRouteContext({ from: rootRouteId });
   const location = useLocation();
   const isPlainHomeLayout = getHomeLayout(metas) === HomeLayout.PLAIN;
 

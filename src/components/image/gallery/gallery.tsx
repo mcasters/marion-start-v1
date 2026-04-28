@@ -6,14 +6,14 @@ import useWindowRect from "~/components/hooks/useWindowRect";
 import { DEVICE } from "~/constants/image";
 import { KEY_META } from "~/constants/admin";
 import { getEnhancedImages } from "~/utils/imageUtils";
-import { Route } from "~/routes/__root";
+import { rootRouteId, useRouteContext } from "@tanstack/react-router";
 
 interface Props {
   items: Work[] | Post[];
 }
 
 export default function Gallery({ items }: Props) {
-  const { metas } = Route.useRouteContext();
+  const { metas } = useRouteContext({ from: rootRouteId });
   const [index, setIndex] = useState(-1);
   const isSmall = useWindowRect().innerWidth < DEVICE.SMALL;
   const enhancedImages: EnhancedImage[] = useMemo(() => {
