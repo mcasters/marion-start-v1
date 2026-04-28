@@ -1,5 +1,3 @@
-"use client";
-
 import React, {
   ChangeEvent,
   HTMLProps,
@@ -12,7 +10,7 @@ import s from "./image.module.css";
 import ArrowDown from "~/components/icons/arrowDown";
 import DeleteButton from "~/components/admin/common/button/deleteButton";
 import { constraintImage, validateFile } from "~/utils/imageUtils";
-import {Route} from "~/routes/admin";
+import { useAlert } from "~/components/admin/context/alertProvider";
 
 interface Props extends HTMLProps<HTMLInputElement> {
   filesPath: string[];
@@ -33,7 +31,7 @@ export default function ImageInput({
   required = false,
   title = "",
 }: Props): JSX.Element {
-  const { alert } = Route.useRouteContext();
+  const alert = useAlert();
   const [acceptSmallImage, setAcceptSmallImage] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const [filenamesToDelete, setFilenamesToDelete] = useState<string[]>([]);

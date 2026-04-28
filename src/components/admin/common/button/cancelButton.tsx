@@ -1,5 +1,3 @@
-"use client";
-
 interface Props {
   onCancel: () => void;
   text?: string;

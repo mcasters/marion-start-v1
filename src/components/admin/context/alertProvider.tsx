@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import AlertModal from "~/components/admin/common/alertModal/alertModal";
+import AlertModal from "~/components/admin/context/alertModal/alertModal";
 
 export type AlertContextType = (
   message: string,

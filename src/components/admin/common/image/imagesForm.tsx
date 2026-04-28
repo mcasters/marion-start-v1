@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useActionState, useState } from "react";
-import s from "@/components/admin/admin.module.css";
+import s from "~/components/admin/admin.module.css";
 import { Image } from "~/lib/type";
 import ImageInput from "~/components/admin/common/image/imageInput";
 import useActionResult from "~/components/hooks/useActionResult";

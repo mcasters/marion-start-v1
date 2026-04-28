@@ -1,4 +1,3 @@
-"use client";
 import Modal from "~/components/admin/common/modal";
 import useModal from "~/components/hooks/useModal";
 import { ReactNode } from "react";

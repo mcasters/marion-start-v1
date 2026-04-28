@@ -1,8 +1,5 @@
-"use client";
-
-import React from "react";
 import DeleteIcon from "~/components/icons/deleteIcon";
-import {Route} from "~/routes/admin";
+import { Route } from "~/routes/admin";
 
 export type DeleteButtonProps = {
   onDelete?: () => void;
@@ -17,7 +14,7 @@ export default function DeleteButton({
   deleteAction,
   disabled = false,
 }: DeleteButtonProps) {
-  const { alert } = Route.useRouteContext();
+  const { useAlert } = Route.useRouteContext();
 
   return (
     <button
@@ -28,7 +25,7 @@ export default function DeleteButton({
               e.preventDefault();
               if (confirm("Sûr de vouloir supprimer ?")) {
                 const res = await deleteAction();
-                alert(res.message, res.isError);
+                useAlert(res.message, res.isError);
               }
             }
           : onDelete
