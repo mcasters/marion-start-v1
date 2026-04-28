@@ -1,0 +1,167 @@
+.adminWrapper {
+  padding: 0 1em 1em;
+}
+
+/* desktop */
+@media (min-width: 769px) {
+  .adminWrapper {
+    padding: 0 4em 3em;
+  }
+
+  .container {
+    max-width: 50vw;
+    margin: 0 auto;
+  }
+}
+
+.title1 {
+  font-size: var(--font-size-title0);
+  padding-bottom: 1.2em;
+}
+
+.title2 {
+  font-size: var(--font-size-title2);
+  padding-bottom: 1em;
+}
+
+.title2WithInfo {
+  font-size: var(--font-size-title2);
+  line-height: 1;
+}
+
+.title2WithInfo + p {
+  margin-bottom: 2em;
+}
+
+.title3 {
+  font-size: var(--font-size-title3);
+  padding-bottom: 10px;
+  text-align: left;
+}
+
+.filterContainer {
+  display: flex;
+  column-gap: 0.5em;
+}
+
+.filter {
+  flex: auto;
+  text-align: left;
+}
+
+.filter select {
+  margin: 0;
+}
+
+.columnWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 1em;
+}
+
+.flexPart {
+  display: flex;
+  flex-wrap: nowrap;
+  column-gap: 5px;
+}
+
+.withMarginTop {
+  margin-top: 20px;
+}
+
+.flexPart label {
+  min-width: 90px;
+}
+
+.flexPart .optionInput {
+  margin-top: 10px;
+}
+
+.buttonSection {
+  text-align: center;
+}
+
+.metaForm {
+  display: grid;
+  gap: 1em;
+  padding: 1em 6em;
+  grid-template-columns: 5fr 1fr 1fr;
+  grid-auto-rows: min-content;
+}
+
+.metaForm input, .metaForm label, .metaForm textarea {
+  margin-bottom: 0;
+}
+.metaForm button{
+  min-width: unset;
+  align-self: end;
+  margin: 0;
+}
+
+/* SelectImageList */
+
+.selectList {
+  max-height: 400px;
+  width: 300px;
+  margin: auto;
+  line-height: 122px;
+  vertical-align: middle;
+  position: relative;
+  background: white;
+  color: var(--color-dark);
+  overflow: scroll;
+  border-collapse: collapse;
+  border-bottom: 1px solid var(--color-dark);
+  border-top: 1px solid var(--color-dark);
+  text-align: center;
+}
+
+.option, .selectedOption {
+  padding: 5px;
+  border-bottom: 1px dotted var(--color-light);
+  transition: background-color 0.4s ease;
+}
+
+.option:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: background-color 0.4s ease;
+}
+
+.selectedOption:hover {
+  opacity: 60%;
+}
+
+/* End Select Image */
+
+/* Select Layout item */
+.layoutForm {
+  text-align: left;
+}
+
+.buttonLayout, .buttonDarkBackground  {
+  background: unset;
+  border: solid 6px transparent;
+  margin-right: 10px;
+}
+
+.buttonDarkBackground {
+  background: #ffffff;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 0 2px #6c6c6c ;
+}
+
+.buttonLayoutSelected {
+  border-color: #be0f02;
+}
+
+.layoutLabel {
+  display: flex;
+  align-items: center;
+  font-family: unset;
+  letter-spacing: unset;
+  font-size: var(--font-size-min);
+  padding: 0;
+  margin: 0;
+}
