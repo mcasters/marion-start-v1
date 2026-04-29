@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { getSculptureCategories } from "~/server-functions/sculptures";
+import { getSculptureCategoriesFn } from "~/server-functions/sculptures";
 import WorkHome from "~/components/work/workHome";
 import { TYPE } from "~/db/schema";
 
 export const Route = createFileRoute("/sculptures/")({
-  loader: async () => await getSculptureCategories(),
+  loader: async () => await getSculptureCategoriesFn(),
   component: RouteComponent,
 });
 

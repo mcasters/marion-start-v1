@@ -2,7 +2,7 @@ import { useState } from "react";
 import s from "~/components/admin/admin.module.css";
 import { getHomeLayout } from "~/utils/commonUtils";
 import { KEY_META } from "~/constants/admin";
-import { updateMeta } from "~/server-functions/meta";
+import { updateMetaFn } from "~/server-functions/meta";
 import { useAlert } from "~/components/admin/context/alertProvider";
 import { rootRouteId, useRouteContext } from "@tanstack/react-router";
 
@@ -15,7 +15,7 @@ export function HomeLayoutForm() {
     e.preventDefault();
     const value = e.currentTarget.value;
     setValue(value);
-    const res = await updateMeta({
+    const res = await updateMetaFn({
       data: { key: KEY_META.HOME_LAYOUT, text: value },
     });
     alert(res.message, res.isError);

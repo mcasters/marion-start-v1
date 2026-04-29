@@ -4,7 +4,7 @@ import s from "~/components/admin/theme/adminTheme.module.css";
 import { DragListElement, PresetColor } from "~/lib/type";
 import { useAdminContext } from "~/components/admin/context/adminProvider";
 import { useAlert } from "~/components/admin/context/alertProvider";
-import { updatePresetColorsOrder } from "~/server-functions/theme";
+import { updatePresetColorsOrderFn } from "~/server-functions/theme";
 
 export default function PresetColorDashboard() {
   const { themes, presetColors, setPresetColors } = useAdminContext();
@@ -24,7 +24,7 @@ export default function PresetColorDashboard() {
 
   const handleChangeOrder = async (map: Map<number, number>) => {
     const { message, isError, updatedPresetColors } =
-      await updatePresetColorsOrder({ data: map });
+      await updatePresetColorsOrderFn({ data: map });
     if (!isError && updatedPresetColors) setPresetColors(updatedPresetColors);
     alert(message, isError);
   };

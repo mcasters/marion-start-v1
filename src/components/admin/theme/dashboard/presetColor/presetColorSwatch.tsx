@@ -7,7 +7,10 @@ import useModal from "~/components/hooks/useModal";
 import { PresetColor } from "~/lib/type";
 import { useAlert } from "~/components/admin/context/alertProvider";
 import { useAdminContext } from "~/components/admin/context/adminProvider";
-import { deletePresetColor, updatePresetColor } from "~/server-functions/theme";
+import {
+  deletePresetColorFn,
+  updatePresetColorFn,
+} from "~/server-functions/theme";
 
 interface Props {
   presetColor: PresetColor;
@@ -23,7 +26,7 @@ export default function PresetColorSwatch({ presetColor, count }: Props) {
   const handleDelete = async () => {
     if (confirm("Sûr de vouloir supprimé ?")) {
       const { updatedPresetColors, updatedThemes, message, isError } =
-        await deletePresetColor({ data: { id: presetColor.id } });
+        await deletePresetColorFn({ data: { id: presetColor.id } });
       if (updatedThemes && updatedPresetColors) {
         setPresetColors(updatedPresetColors);
         setThemes(updatedThemes);
@@ -41,7 +44,7 @@ export default function PresetColorSwatch({ presetColor, count }: Props) {
       ...presetColor,
       color,
     } as PresetColor;
-    const { message, isError } = await updatePresetColor({
+    const { message, isError } = await updatePresetColorFn({
       data: updatedPresetColor,
     });
     if (!isError) {

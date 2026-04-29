@@ -1,5 +1,5 @@
 import { THEME } from "~/constants/admin";
-import { updateTheme } from "~/server-functions/theme";
+import { updateThemeFn } from "~/server-functions/theme";
 import { useAlert } from "~/components/admin/context/alertProvider";
 import { useAdminContext } from "~/components/admin/context/adminProvider";
 
@@ -9,7 +9,7 @@ export default function ThemeUpdate() {
   const alert = useAlert();
 
   const handleUpdate = async () => {
-    const res = await updateTheme({ data: workTheme });
+    const res = await updateThemeFn({ data: workTheme });
     if (!res.isError) {
       const updatedThemes = themes.map((t) =>
         t.id === workTheme.id ? workTheme : t,

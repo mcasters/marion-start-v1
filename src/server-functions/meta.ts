@@ -3,7 +3,7 @@ import { db } from "~/db";
 import { meta } from "~/db/schema";
 import { eq } from "drizzle-orm";
 
-export const getMetas = createServerFn().handler(
+export const getMetasFn = createServerFn().handler(
   async (): Promise<Map<string, string>> => {
     const metas = await db.query.meta.findMany({
       columns: { id: false },
@@ -14,7 +14,7 @@ export const getMetas = createServerFn().handler(
   },
 );
 
-export const getMetasByKey = createServerFn({ method: "POST" })
+export const getMetasByKeyFn = createServerFn({ method: "POST" })
   .inputValidator((d: string[]) => d)
   .handler(async ({ data }): Promise<Map<string, string>> => {
     const metas = await db.query.meta.findMany({
@@ -28,7 +28,7 @@ export const getMetasByKey = createServerFn({ method: "POST" })
     return map;
   });
 
-export const updateMeta = createServerFn({ method: "POST" })
+export const updateMetaFn = createServerFn({ method: "POST" })
   .inputValidator(
     (data: {
       key: string;

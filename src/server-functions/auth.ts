@@ -1,5 +1,3 @@
-"use server";
-
 import bcrypt from "bcryptjs";
 import { Session } from "~/lib/type";
 import { db } from "~/db";
@@ -20,7 +18,7 @@ function useAppSession() {
   });
 }
 
-export const getSession = createServerFn({ method: "GET" }).handler(
+export const getSessionFn = createServerFn({ method: "GET" }).handler(
   async () => {
     const session = await useAppSession();
     return session.data.userId ? (session.data as Session) : null;

@@ -1,16 +1,16 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { AdminProvider } from "~/components/admin/context/adminProvider";
 import {
-  getActiveTheme,
-  getPresetColors,
+  getActiveThemeFn,
+  getPresetColorsFn,
   getThemes,
 } from "~/server-functions/theme";
 import * as React from "react";
 import { AlertProvider } from "~/components/admin/context/alertProvider";
-import { getSession } from "~/server-functions/auth";
+import { getSessionFn } from "~/server-functions/auth";
 
 export const Route = createFileRoute("/admin")({
-  beforeLoad: async () => await getSession(),
+  beforeLoad: async () => await getSessionFn(),
   loader: async ({ context }) => {
     if (!context.session)
       throw redirect({
@@ -18,8 +18,8 @@ export const Route = createFileRoute("/admin")({
       });
     const themes = await getThemes();
     const activeTheme =
-      themes.find((t) => t.isActive) || (await getActiveTheme());
-    const presetColors = await getPresetColors();
+      themes.find((t) => t.isActive) || (await getActiveThemeFn());
+    const presetColors = await getPresetColorsFn();
     return { themes, activeTheme, presetColors };
   },
   component: RouteComponent,

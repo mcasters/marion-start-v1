@@ -10,7 +10,7 @@ import {
 import { notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
-export const getSculptureCategories = createServerFn().handler(
+export const getSculptureCategoriesFn = createServerFn().handler(
   async (): Promise<{
     categories: SculptureCategory[];
     years: number[];
@@ -41,7 +41,7 @@ export const getSculptureCategories = createServerFn().handler(
   },
 );
 
-export const getSculptureWorksByYear = createServerFn({ method: "POST" })
+export const getSculptureWorksByYearFn = createServerFn({ method: "POST" })
   .inputValidator((d: string) => d)
   .handler(async ({ data }) => {
     const rows = await db
@@ -64,7 +64,7 @@ export const getSculptureWorksByYear = createServerFn({ method: "POST" })
     return { works, year: data };
   });
 
-export const getSculptureWorksByCategory = createServerFn({ method: "POST" })
+export const getSculptureWorksByCategoryFn = createServerFn({ method: "POST" })
   .inputValidator((d: string) => d)
   .handler(async ({ data }) => {
     let category: SculptureCategory | undefined;

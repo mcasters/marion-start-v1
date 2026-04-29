@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { getPaintingCategories } from "~/server-functions/paintings";
+import { getPaintingCategoriesFn } from "~/server-functions/paintings";
 import WorkHome from "~/components/work/workHome";
 import { TYPE } from "~/db/schema";
 
 export const Route = createFileRoute("/peintures/")({
-  loader: async () => await getPaintingCategories(),
+  loader: async () => await getPaintingCategoriesFn(),
   component: RouteComponent,
 });
 

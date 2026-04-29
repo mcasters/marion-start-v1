@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { getContactContent } from "~/server-functions/content";
+import { getContactContentFn } from "~/server-functions/content";
 import { KEY_META } from "~/constants/admin";
 import { LABEL } from "~/db/schema";
 import s from "~/styles/page.module.css";
 import InstagramIcon from "~/components/icons/instagramIcon";
 
 export const Route = createFileRoute("/contact")({
-  loader: async () => await getContactContent(),
+  loader: async () => await getContactContentFn(),
   component: RouteComponent,
 });
 

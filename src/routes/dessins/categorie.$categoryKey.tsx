@@ -3,11 +3,11 @@ import { NotFound } from "~/components/NotFound";
 import { PostErrorComponent } from "~/components/PostError";
 import { TYPE } from "~/db/schema";
 import WorkPage from "~/components/work/workPage";
-import { getDrawingsByCategory } from "~/server-functions/drawings";
+import { getDrawingsByCategoryFn } from "~/server-functions/drawings";
 
 export const Route = createFileRoute("/dessins/categorie/$categoryKey")({
   loader: async ({ params: { categoryKey } }) =>
-    await getDrawingsByCategory({ data: categoryKey }),
+    await getDrawingsByCategoryFn({ data: categoryKey }),
   errorComponent: PostErrorComponent,
   component: RouteComponent,
   notFoundComponent: () => {

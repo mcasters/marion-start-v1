@@ -6,7 +6,7 @@ import ChatMessage from "~/components/admin/chatMessage/chatMessage";
 import { getEmptyMessage } from "~/utils/commonUtils";
 import useMenuManagement from "~/components/hooks/useMenuManagement";
 import useActionResult from "~/components/hooks/useActionResult";
-import { addMessage, updateMessage } from "~/server-functions/message";
+import { addMessageFn, updateMessageFn } from "~/server-functions/message";
 import { rootRouteId, useRouteContext } from "@tanstack/react-router";
 
 type Props = {
@@ -19,7 +19,7 @@ export default function ChatMessages({ dbMessages }: Props) {
   const [message, setMessage] = useState<Message>(getEmptyMessage());
   const { indexOpen, toggle } = useMenuManagement();
   const [state, action] = useActionState(
-    message?.id !== 0 ? updateMessage : addMessage,
+    message?.id !== 0 ? updateMessageFn : addMessageFn,
     null,
   );
   useActionResult(state, () => setMessage(getEmptyMessage()), false);

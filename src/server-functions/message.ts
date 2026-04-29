@@ -3,7 +3,7 @@ import { message, user } from "~/db/schema";
 import { desc, eq } from "drizzle-orm";
 import { createServerFn } from "@tanstack/react-start";
 
-export const getMessages = createServerFn().handler(async () => {
+export const getMessagesFn = createServerFn().handler(async () => {
   return db
     .select({
       id: message.id,
@@ -17,42 +17,59 @@ export const getMessages = createServerFn().handler(async () => {
     .orderBy(desc(message.date));
 });
 
-export const addMessage = async (initialState: any, formData: FormData) => {
-  const rawFormData = Object.fromEntries(formData);
-  const text = rawFormData.text as string;
-  const userId = Number(rawFormData.userId as string);
-  try {
-    await db.insert(message).values({
-      date: new Date(),
-      text,
-      userId,
-    });
-
-    return { message: "Message ajouté", isError: false };
-  } catch (e) {
-    return { message: `Erreur à l'enregistrement`, isError: true };
-  }
-};
-export const updateMessage = async (initialState: any, formData: FormData) => {
-  const rawFormData = Object.fromEntries(formData);
-  const id = Number(rawFormData.id as string);
-  const text = rawFormData.text as string;
-  try {
-    await db
-      .update(message)
-      .set({
+export const addMessageFn = createServerFn({ method: "POST" })
+  .inputValidator((data) => {
+    if (!(data instanceof FormData)) {
+      throw new Error("Expected FormData");
+    }
+    return {
+      text: data.get("text")?.toString() || "",
+      userId: data.get("userId")?.toString() || "0",
+    };
+  })
+  .handler(async ({ data }) => {
+    const { userId, text } = data;
+    try {
+      await db.insert(message).values({
+        date: new Date(),
         text,
-        dateUpdated: new Date(),
-      })
-      .where(eq(message.id, id));
+        userId: Number(userId),
+      });
 
-    return { message: "Message modifié", isError: false };
-  } catch (e) {
-    return { message: `Erreur à l'enregistrement`, isError: true };
-  }
-};
+      return { message: "Message ajouté", isError: false };
+    } catch (e) {
+      return { message: `Erreur à l'enregistrement`, isError: true };
+    }
+  });
 
-export const deleteMessage = createServerFn({ method: "POST" })
+export const updateMessageFn = createServerFn({ method: "POST" })
+  .inputValidator((data) => {
+    if (!(data instanceof FormData)) {
+      throw new Error("Expected FormData");
+    }
+    return {
+      id: data.get("id")?.toString() || "0",
+      text: data.get("text")?.toString() || "",
+    };
+  })
+  .handler(async ({ data }) => {
+    const { id, text } = data;
+    try {
+      await db
+        .update(message)
+        .set({
+          text,
+          dateUpdated: new Date(),
+        })
+        .where(eq(message.id, Number(id)));
+
+      return { message: "Message modifié", isError: false };
+    } catch (e) {
+      return { message: `Erreur à l'enregistrement`, isError: true };
+    }
+  });
+
+export const deleteMessageFn = createServerFn({ method: "POST" })
   .inputValidator((data: { id: number }) => data)
   .handler(async ({ data }) => {
     try {

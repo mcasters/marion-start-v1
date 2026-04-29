@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import s from "~/components/admin/admin.module.css";
-import { getMessages } from "~/server-functions/message";
+import { getMessagesFn } from "~/server-functions/message";
 import { KEY_META } from "~/constants/admin";
 import { InputForm } from "~/components/admin/text/inputForm";
 import ChatMessages from "~/components/admin/chatMessage/chatMessages";
 import AdminTheme from "~/components/admin/theme/adminTheme";
 
 export const Route = createFileRoute("/admin/")({
-  loader: async () => await getMessages(),
+  loader: async () => await getMessagesFn(),
   component: RouteComponent,
 });
 

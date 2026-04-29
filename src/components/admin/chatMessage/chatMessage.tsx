@@ -2,7 +2,7 @@ import s from "./chatMessage.module.css";
 import { Message } from "~/lib/type";
 import MoreIcon from "~/components/icons/moreIcon";
 import useOnClickOutside from "~/components/hooks/useOnClickOutside";
-import { deleteMessage } from "~/server-functions/message";
+import { deleteMessageFn } from "~/server-functions/message";
 import { rootRouteId, useRouteContext } from "@tanstack/react-router";
 
 type Props = {
@@ -63,7 +63,7 @@ export default function ChatMessage({ message, editableMessage }: Props) {
                 </button>
                 <button
                   onClick={async () => {
-                    await deleteMessage({ data: { id: message.id } });
+                    await deleteMessageFn({ data: { id: message.id } });
                     editableMessage.openMenu(false);
                   }}
                   className={s.menuItemButton}

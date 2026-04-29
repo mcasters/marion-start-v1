@@ -7,7 +7,7 @@ import { getNoCategory } from "~/utils/commonUtils";
 import { createWorkObject } from "~/utils/workUtils";
 import { asc } from "drizzle-orm";
 
-export const getDrawingCategories = createServerFn().handler(
+export const getDrawingCategoriesFn = createServerFn().handler(
   async (): Promise<{ categories: DrawingCategory[]; years: number[] }> => {
     const categories = await db.query.drawingCategory.findMany({
       where: { drawings: true },
@@ -35,7 +35,7 @@ export const getDrawingCategories = createServerFn().handler(
   },
 );
 
-export const getDrawingWorksByYear = createServerFn({ method: "POST" })
+export const getDrawingWorksByYearFn = createServerFn({ method: "POST" })
   .inputValidator((d: string) => d)
   .handler(async ({ data }) => {
     const dbData = await db.query.drawing.findMany({
@@ -55,7 +55,7 @@ export const getDrawingWorksByYear = createServerFn({ method: "POST" })
     return { works, year: data };
   });
 
-export const getDrawingsByCategory = createServerFn({ method: "POST" })
+export const getDrawingsByCategoryFn = createServerFn({ method: "POST" })
   .inputValidator((d: string) => d)
   .handler(async ({ data }) => {
     let category: DrawingCategory | undefined;

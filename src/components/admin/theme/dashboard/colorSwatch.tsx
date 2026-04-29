@@ -7,7 +7,7 @@ import { colorNameToHex } from "~/utils/themeUtils";
 import useModal from "~/components/hooks/useModal";
 import { useAlert } from "~/components/admin/context/alertProvider";
 import { useAdminContext } from "~/components/admin/context/adminProvider";
-import { createPresetColor } from "~/server-functions/theme";
+import { createPresetColorFn } from "~/server-functions/theme";
 
 interface Props {
   dbKey: string;
@@ -41,7 +41,7 @@ export default function ColorSwatch({ dbKey, fullLabel }: Props) {
     nameColor: string,
     hexColor: string,
   ) => {
-    const res = await createPresetColor({
+    const res = await createPresetColorFn({
       data: {
         name: nameColor,
         color: hexColor,

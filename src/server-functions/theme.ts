@@ -6,7 +6,7 @@ import { THEME } from "~/constants/admin";
 import { getBasePresetColorData, getBaseThemeData } from "~/utils/themeUtils";
 import { presetColor, theme } from "~/db/schema";
 
-export const getActiveTheme = createServerFn().handler(
+export const getActiveThemeFn = createServerFn().handler(
   async (): Promise<Theme> => {
     let activeTheme = await db.query.theme.findFirst({
       where: { isActive: true },
@@ -41,7 +41,7 @@ export const getActiveTheme = createServerFn().handler(
   },
 );
 
-export const getPresetColors = createServerFn().handler(
+export const getPresetColorsFn = createServerFn().handler(
   async (): Promise<PresetColor[]> => {
     const presetColors = await db.query.presetColor.findMany();
 
@@ -79,7 +79,7 @@ export const activateThemeFn = createServerFn({ method: "POST" })
     }
   });
 
-export const createTheme = createServerFn({ method: "POST" })
+export const createThemeFn = createServerFn({ method: "POST" })
   .inputValidator((data: Theme) => data)
   .handler(async ({ data }) => {
     try {
@@ -109,7 +109,7 @@ export const createTheme = createServerFn({ method: "POST" })
     }
   });
 
-export const updateTheme = createServerFn({ method: "POST" })
+export const updateThemeFn = createServerFn({ method: "POST" })
   .inputValidator((data: Theme) => data)
   .handler(async ({ data }) => {
     try {
@@ -121,7 +121,7 @@ export const updateTheme = createServerFn({ method: "POST" })
     }
   });
 
-export const deleteTheme = createServerFn({ method: "POST" })
+export const deleteThemeFn = createServerFn({ method: "POST" })
   .inputValidator((data: { id: number }) => data)
   .handler(async ({ data }) => {
     try {
@@ -157,7 +157,7 @@ export const deleteTheme = createServerFn({ method: "POST" })
     }
   });
 
-export const createPresetColor = createServerFn({ method: "POST" })
+export const createPresetColorFn = createServerFn({ method: "POST" })
   .inputValidator(
     (data: { name: string; color: string; displayOrder: number }) => data,
   )
@@ -201,7 +201,7 @@ export const createPresetColor = createServerFn({ method: "POST" })
     }
   });
 
-export const updatePresetColor = createServerFn({ method: "POST" })
+export const updatePresetColorFn = createServerFn({ method: "POST" })
   .inputValidator((data: PresetColor) => data)
   .handler(async ({ data }) => {
     try {
@@ -221,7 +221,7 @@ export const updatePresetColor = createServerFn({ method: "POST" })
     }
   });
 
-export const updatePresetColorsOrder = createServerFn({ method: "POST" })
+export const updatePresetColorsOrderFn = createServerFn({ method: "POST" })
   .inputValidator((data: Map<number, number>) => data)
   .handler(async ({ data }) => {
     try {
@@ -250,7 +250,7 @@ export const updatePresetColorsOrder = createServerFn({ method: "POST" })
     }
   });
 
-export const deletePresetColor = createServerFn({ method: "POST" })
+export const deletePresetColorFn = createServerFn({ method: "POST" })
   .inputValidator((data: { id: number }) => data)
   .handler(async ({ data }) => {
     try {

@@ -4,8 +4,8 @@ import CancelButton from "~/components/admin/common/button/cancelButton";
 import { KeyMeta } from "~/lib/type";
 import s from "../admin.module.css";
 import { LABEL } from "~/db/schema";
-import { updateMeta } from "~/server-functions/meta";
-import { updateContent } from "~/server-functions/content";
+import { updateMetaFn } from "~/server-functions/meta";
+import { updateContentFn } from "~/server-functions/content";
 import { useAlert } from "~/components/admin/context/alertProvider";
 
 interface Props {
@@ -28,8 +28,8 @@ export default function TextAreaForm({
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     const res = isMeta
-      ? await updateMeta({ data: { key: dbKey, text: _text } })
-      : await updateContent({ data: { key: dbKey, text: _text } });
+      ? await updateMetaFn({ data: { key: dbKey, text: _text } })
+      : await updateContentFn({ data: { key: dbKey, text: _text } });
     alert(res.message, res.isError);
   };
 

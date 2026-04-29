@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createTheme } from "~/server-functions/theme";
+import { createThemeFn } from "~/server-functions/theme";
 import { useAdminContext } from "~/components/admin/context/adminProvider";
 import { useAlert } from "~/components/admin/context/alertProvider";
 
@@ -12,7 +12,7 @@ export default function ThemeAdd() {
   const handleAdd = async () => {
     if (themeName === "") alert("Le nom du nouveau thème est manquant", true);
     else {
-      const { theme, message, isError } = await createTheme({
+      const { theme, message, isError } = await createThemeFn({
         data: {
           ...workTheme,
           name: themeName,

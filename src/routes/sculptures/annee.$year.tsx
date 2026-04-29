@@ -3,11 +3,11 @@ import { NotFound } from "~/components/NotFound";
 import { PostErrorComponent } from "~/components/PostError";
 import WorkPage from "~/components/work/workPage";
 import { TYPE } from "~/db/schema";
-import { getSculptureWorksByYear } from "~/server-functions/sculptures";
+import { getSculptureWorksByYearFn } from "~/server-functions/sculptures";
 
 export const Route = createFileRoute("/sculptures/annee/$year")({
   loader: async ({ params: { year } }) =>
-    await getSculptureWorksByYear({ data: year }),
+    await getSculptureWorksByYearFn({ data: year }),
   errorComponent: PostErrorComponent,
   component: RouteComponent,
   notFoundComponent: () => {

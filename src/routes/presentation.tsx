@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { getPresentationContent } from "~/server-functions/content";
+import { getPresentationContentFn } from "~/server-functions/content";
 import { LABEL } from "~/db/schema";
 import s from "~/styles/page.module.css";
 import FormattedPhoto from "~/components/image/formattedPhoto";
 
 export const Route = createFileRoute("/presentation")({
-  loader: async () => await getPresentationContent(),
+  loader: async () => await getPresentationContentFn(),
   component: RouteComponent,
 });
 

@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { NotFound } from "~/components/NotFound";
 import { PostErrorComponent } from "~/components/PostError";
-import { getPaintingsByCategory } from "~/server-functions/paintings";
+import { getPaintingsByCategoryFn } from "~/server-functions/paintings";
 import { TYPE } from "~/db/schema";
 import WorkPage from "~/components/work/workPage";
 
 export const Route = createFileRoute("/peintures/categorie/$categoryKey")({
   loader: async ({ params: { categoryKey } }) =>
-    await getPaintingsByCategory({ data: categoryKey }),
+    await getPaintingsByCategoryFn({ data: categoryKey }),
   errorComponent: PostErrorComponent,
   component: RouteComponent,
   notFoundComponent: () => {

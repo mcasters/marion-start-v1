@@ -1,6 +1,6 @@
 import { THEME } from "~/constants/admin";
 import { Theme } from "~/lib/type";
-import { deleteTheme } from "~/server-functions/theme";
+import { deleteThemeFn } from "~/server-functions/theme";
 import { useAdminContext } from "~/components/admin/context/adminProvider";
 import { useAlert } from "~/components/admin/context/alertProvider";
 
@@ -9,7 +9,7 @@ export default function ThemeDelete() {
   const alert = useAlert();
 
   const handleDelete = async () => {
-    const { message, isError, updatedThemes } = await deleteTheme({
+    const { message, isError, updatedThemes } = await deleteThemeFn({
       data: { id: workTheme.id },
     });
     if (updatedThemes) {
