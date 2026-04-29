@@ -71,7 +71,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   }),
   errorComponent: DefaultCatchBoundary,
   notFoundComponent: () => <NotFound />,
-  component: RootComponent,
+  shellComponent: RootComponent,
 });
 
 function RootComponent() {

@@ -14,10 +14,8 @@ export const getBaseThemeData = () => {
 export const getBasePresetColorData = () => {
   return BASE_PRESET_COLOR;
 };
-export const themeToHexa = (
-  theme: Theme,
-  presetColors: PresetColor[],
-): Theme => {
+
+const themeToHexa = (theme: Theme, presetColors: PresetColor[]): Theme => {
   const updatedTheme = theme;
   Object.entries(theme).forEach(([key, value]) => {
     if (typeof value === "string" && value.charAt(0) !== "#") {
@@ -30,6 +28,28 @@ export const themeToHexa = (
   });
   return updatedTheme;
 };
+
+export const getStructuredTheme = (theme: Theme): StructTheme => {
+  const structuredTheme = {};
+  Object.entries(theme).forEach(([key, value]) => {
+    const stringSplit = key.split("_");
+
+    if (stringSplit.length === 3) {
+      const [page, pagePart, target] = stringSplit;
+      createNestedObject(structuredTheme, page, pagePart)[target] = value;
+    } else if (stringSplit.length === 2) {
+      const [page, target] = stringSplit;
+      createNestedObject(structuredTheme, page)[target] = value;
+    }
+  });
+  return structuredTheme as StructTheme;
+};
+
+export const getStructHexaTheme = (
+  theme: Theme,
+  presetColors: PresetColor[],
+): StructTheme => getStructuredTheme(themeToHexa(theme, presetColors));
+
 export const colorNameToHex = (
   colorName: string,
   presetColors: PresetColor[],
@@ -82,22 +102,6 @@ const createNestedObject = (obj, key, ...keys) => {
     : obj;
 };
 
-export const getStructuredTheme = (theme: Theme): StructTheme => {
-  const structuredTheme = {};
-  Object.entries(theme).forEach(([key, value]) => {
-    const stringSplit = key.split("_");
-
-    if (stringSplit.length === 3) {
-      const [page, pagePart, target] = stringSplit;
-      createNestedObject(structuredTheme, page, pagePart)[target] = value;
-    } else if (stringSplit.length === 2) {
-      const [page, target] = stringSplit;
-      createNestedObject(structuredTheme, page)[target] = value;
-    }
-  });
-  return structuredTheme as StructTheme;
-};
-
 export const sortList = (
   list: DragListElement[],
   sourceIndex: number,
@@ -118,7 +122,3 @@ export const sortList = (
   list.forEach((item, index) => map.set(item.id, index));
   return { map, newIndex };
 };
-export const getStructHexaTheme = (
-  theme: Theme,
-  presetColors: PresetColor[],
-): StructTheme => getStructuredTheme(themeToHexa(theme, presetColors));
