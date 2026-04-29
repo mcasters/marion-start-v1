@@ -1,5 +1,5 @@
 import {
-  createRootRouteWithContext,
+  createRootRoute,
   HeadContent,
   Outlet,
   Scripts,
@@ -12,10 +12,10 @@ import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary";
 import { NotFound } from "~/components/NotFound";
 import appCss from "~/styles/app.css?url";
 import { seo } from "~/utils/seo";
-import { HomeLayout, Session, StructTheme } from "~/lib/type";
+import { HomeLayout } from "~/lib/type";
 import { getHomeLayout } from "~/utils/commonUtils";
 import { ROUTES } from "~/constants/specific/routes";
-import { hexToRgb } from "~/utils/themeUtils";
+import { getStructHexaTheme, hexToRgb } from "~/utils/themeUtils";
 import Footer from "~/components/layout/footer";
 import Header from "~/components/layout/header";
 import { KEY_META } from "~/constants/admin";
@@ -23,14 +23,20 @@ import HomeHeader from "~/components/layout/homeHeader";
 import AdminNav from "~/components/layout/admin/adminNav";
 import AuthStatus from "~/components/auth/authStatus";
 import s from "~/components/layout/layout.module.css";
+import { getActiveThemeFn, getPresetColorsFn } from "~/server-functions/theme";
+import { getMetasFn } from "~/server-functions/meta";
+import { getSessionFn } from "~/server-functions/auth";
 
-interface MyRouterContext {
-  metas: Map<string, string>;
-  session: Session | null;
-  structTheme: StructTheme;
-}
-
-export const Route = createRootRouteWithContext<MyRouterContext>()({
+export const Route = createRootRoute({
+  beforeLoad: async () => {
+    const theme = await getActiveThemeFn();
+    const presetColors = await getPresetColorsFn();
+    return {
+      metas: await getMetasFn(),
+      session: await getSessionFn(),
+      structTheme: getStructHexaTheme(theme, presetColors),
+    };
+  },
   head: () => ({
     meta: [
       {

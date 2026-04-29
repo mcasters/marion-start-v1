@@ -10,7 +10,9 @@ import { AlertProvider } from "~/components/admin/context/alertProvider";
 import { getSessionFn } from "~/server-functions/auth";
 
 export const Route = createFileRoute("/admin")({
-  beforeLoad: async () => await getSessionFn(),
+  beforeLoad: async () => {
+    return { session: await getSessionFn() };
+  },
   loader: async ({ context }) => {
     if (!context.session)
       throw redirect({
