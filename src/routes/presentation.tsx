@@ -3,14 +3,19 @@ import { getPresentationContentFn } from "~/server-functions/content";
 import { LABEL } from "~/db/schema";
 import s from "~/styles/page.module.css";
 import FormattedPhoto from "~/components/image/formattedPhoto";
+import { KEY_META } from "~/constants/admin";
 
 export const Route = createFileRoute("/presentation")({
-  loader: async () => await getPresentationContentFn(),
+  loader: async ({ context }) => {
+    const content = await getPresentationContentFn();
+    const owner = context.metas.get(KEY_META.OWNER);
+    return { content, owner };
+  },
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const content = Route.useLoaderData();
+  const { content, owner } = Route.useLoaderData();
   const image = content.get(LABEL.PRESENTATION)?.image;
   const demarche = content.get(LABEL.DEMARCHE)?.text;
   const inspiration = content.get(LABEL.INSPIRATION)?.text;
@@ -24,7 +29,7 @@ function RouteComponent() {
           filename={image.filename}
           width={image.width}
           height={image.height}
-          alt={`Photo de ${process.env.TITLE}`}
+          alt={`Photo de ${owner}`}
           displayWidth={{ small: 80, large: 35 }}
           displayHeight={{ small: 40, large: 40 }}
         />
