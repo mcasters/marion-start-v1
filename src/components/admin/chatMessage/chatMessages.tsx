@@ -1,11 +1,10 @@
-import { useActionState, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import style from "~/components/admin/admin.module.css";
 import s from "./chatMessage.module.css";
 import { Message } from "~/lib/type";
 import ChatMessage from "~/components/admin/chatMessage/chatMessage";
 import { getEmptyMessage } from "~/utils/commonUtils";
 import useMenuManagement from "~/components/hooks/useMenuManagement";
-import useActionResult from "~/components/hooks/useActionResult";
 import { addMessageFn, updateMessageFn } from "~/server-functions/message";
 import { rootRouteId, useRouteContext } from "@tanstack/react-router";
 
@@ -18,16 +17,19 @@ export default function ChatMessages({ dbMessages }: Props) {
   const textAreaRef = useRef<HTMLTextAreaElement>(null!);
   const [message, setMessage] = useState<Message>(getEmptyMessage());
   const { indexOpen, toggle } = useMenuManagement();
-  const [state, action] = useActionState(
-    message?.id !== 0 ? updateMessageFn : addMessageFn,
-    null,
-  );
-  useActionResult(state, () => setMessage(getEmptyMessage()), false);
 
   const onUpdate = (msg: Message) => {
     setMessage(msg);
     toggle(-1);
     textAreaRef.current.focus();
+  };
+
+  const handleSubmit = async (formData: FormData) => {
+    const res =
+      message?.id !== 0
+        ? await updateMessageFn({ data: formData })
+        : await addMessageFn({ data: formData });
+    if (!res.isError) setMessage(getEmptyMessage());
   };
 
   return (
@@ -59,7 +61,7 @@ export default function ChatMessages({ dbMessages }: Props) {
           })}
       </div>
       <br />
-      <form action={action}>
+      <form action={(formData) => handleSubmit(formData)}>
         <input type="hidden" name="userId" value={session?.userId} />
         <input type="hidden" name="id" value={message.id} />
         <textarea

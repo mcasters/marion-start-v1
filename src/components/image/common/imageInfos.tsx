@@ -1,5 +1,3 @@
-"use client";
-
 import { Work } from "~/lib/type";
 import { getSizeText } from "~/utils/commonUtils";
 

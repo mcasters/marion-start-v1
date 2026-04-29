@@ -25,7 +25,7 @@ export const Route = createFileRoute("/admin")({
   component: RouteComponent,
 });
 
-async function RouteComponent() {
+function RouteComponent() {
   const { themes, activeTheme, presetColors } = Route.useLoaderData();
   return (
     <AdminProvider
