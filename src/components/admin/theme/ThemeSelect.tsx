@@ -21,8 +21,8 @@ export default function ThemeSelect() {
             : t;
       }),
     );
-    alert(res.message, res.isError);
     router.invalidate();
+    alert(res.message, res.isError);
   };
 
   return (

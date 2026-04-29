@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import s from "~/components/admin/admin.module.css";
 import { getMessagesFn } from "~/server-functions/message";
 import { KEY_META } from "~/constants/admin";
-import { InputForm } from "~/components/admin/text/inputForm";
+import { TextForm } from "~/components/admin/text/textForm";
 import ChatMessages from "~/components/admin/chatMessage/chatMessages";
 import AdminTheme from "~/components/admin/theme/adminTheme";
 
@@ -21,7 +21,7 @@ function RouteComponent() {
       <AdminTheme />
       <div className="separate" />
       <h2 className={s.title2}>Pied de page du site</h2>
-      <InputForm
+      <TextForm
         dbKey={KEY_META.FOOTER}
         text={metas.get(KEY_META.FOOTER) || ""}
         isMeta
