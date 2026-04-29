@@ -3,7 +3,11 @@ import { Message } from "~/lib/type";
 import MoreIcon from "~/components/icons/moreIcon";
 import useOnClickOutside from "~/components/hooks/useOnClickOutside";
 import { deleteMessageFn } from "~/server-functions/message";
-import { rootRouteId, useRouteContext } from "@tanstack/react-router";
+import {
+  rootRouteId,
+  useRouteContext,
+  useRouter,
+} from "@tanstack/react-router";
 
 type Props = {
   message: Message;
@@ -16,6 +20,7 @@ type Props = {
 
 export default function ChatMessage({ message, editableMessage }: Props) {
   const { structTheme } = useRouteContext({ from: rootRouteId });
+  const router = useRouter();
   const { ref } = useOnClickOutside(
     editableMessage ? () => editableMessage.openMenu(false) : undefined,
   );
@@ -64,6 +69,7 @@ export default function ChatMessage({ message, editableMessage }: Props) {
                 <button
                   onClick={async () => {
                     await deleteMessageFn({ data: { id: message.id } });
+                    router.invalidate();
                     editableMessage.openMenu(false);
                   }}
                   className={s.menuItemButton}

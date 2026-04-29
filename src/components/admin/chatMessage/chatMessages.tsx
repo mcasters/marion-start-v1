@@ -6,7 +6,11 @@ import ChatMessage from "~/components/admin/chatMessage/chatMessage";
 import { getEmptyMessage } from "~/utils/commonUtils";
 import useMenuManagement from "~/components/hooks/useMenuManagement";
 import { addMessageFn, updateMessageFn } from "~/server-functions/message";
-import { rootRouteId, useRouteContext } from "@tanstack/react-router";
+import {
+  rootRouteId,
+  useRouteContext,
+  useRouter,
+} from "@tanstack/react-router";
 
 type Props = {
   dbMessages: Message[];
@@ -14,6 +18,7 @@ type Props = {
 
 export default function ChatMessages({ dbMessages }: Props) {
   const { session, structTheme } = useRouteContext({ from: rootRouteId });
+  const router = useRouter();
   const textAreaRef = useRef<HTMLTextAreaElement>(null!);
   const [message, setMessage] = useState<Message>(getEmptyMessage());
   const { indexOpen, toggle } = useMenuManagement();
@@ -29,7 +34,10 @@ export default function ChatMessages({ dbMessages }: Props) {
       message?.id !== 0
         ? await updateMessageFn({ data: formData })
         : await addMessageFn({ data: formData });
-    if (!res.isError) setMessage(getEmptyMessage());
+    if (!res.isError) {
+      setMessage(getEmptyMessage());
+      router.invalidate();
+    }
   };
 
   return (
