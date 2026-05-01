@@ -35,26 +35,19 @@ export default function ImageInput({
   const [acceptSmallImage, setAcceptSmallImage] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const [filenamesToDelete, setFilenamesToDelete] = useState<string[]>([]);
-  const [files, setFiles] = useState<File[]>(
-    filesPath.map((path) => new File(["f"], path)),
-  );
+  const [newFiles, setNewFiles] = useState<File[]>([]);
 
   useEffect(() => {
     const dataTransfer = new DataTransfer();
-    files.forEach((file) => {
-      if (!file.name.startsWith("/images/")) dataTransfer.items.add(file);
-    });
+    newFiles.forEach((file) => dataTransfer.items.add(file));
     if (inputRef.current) inputRef.current.files = dataTransfer.files;
-  }, [files]);
+  }, [newFiles]);
 
   const handleDelete = (filepath: string) => {
-    if (filepath.startsWith("/images/")) {
-      const filename = filepath.substring(filepath.lastIndexOf("/") + 1);
-      setFilenamesToDelete((prev) =>
-        isMultiple ? [...prev, filename] : [filename],
-      );
-    }
-    setFiles(files.filter((file) => file.name !== filepath));
+    const filename = filepath.substring(filepath.lastIndexOf("/") + 1);
+    setFilenamesToDelete((prev) =>
+      isMultiple ? [...prev, filename] : [filename],
+    );
     if (onChange) onChange();
   };
 
@@ -81,13 +74,13 @@ export default function ImageInput({
     }
 
     if (!isMultiple) {
-      setFiles(resizedFiles);
+      setNewFiles(resizedFiles);
       if (filesPath.length)
         setFilenamesToDelete([
           filesPath[0].substring(filesPath[0].lastIndexOf("/") + 1),
         ]);
     } else {
-      setFiles((prev) => [...prev, ...resizedFiles]);
+      setNewFiles((prev) => [...prev, ...resizedFiles]);
     }
     if (onChange) onChange();
   };
@@ -101,6 +94,22 @@ export default function ImageInput({
       />
       {title && <p className="label">{title}</p>}
       <div className={s.dropZone}>
+        <div
+          className={s.previewNewImages}
+          style={{
+            border: newFiles.length ? "2px solid var(--color-main)" : undefined,
+          }}
+        >
+          {newFiles.map((file, i) => (
+            <div key={i} className={s.imageWrapper}>
+              <SizedImage
+                src={URL.createObjectURL(file)}
+                width={100}
+                height={100}
+              />
+            </div>
+          ))}
+        </div>
         <div className={s.dropIcon}>
           <ArrowDown width={50} height={50} />
         </div>
@@ -113,7 +122,7 @@ export default function ImageInput({
           multiple={isMultiple}
           accept="image/png, image/jpeg"
           className={s.input}
-          required={required && !files.length}
+          required={required && !newFiles.length && !filesPath.length}
         />
       </div>
       {smallImageOption && (
@@ -126,26 +135,36 @@ export default function ImageInput({
           Accepter les images en dessous de 2000 px de large
         </label>
       )}
-      <div className={s.previewContainer}>
-        {files.length === 0 && <p className={s.emptyInfo}>Aucune image</p>}
-        {files.map((file, i) => (
-          <div key={i} className={s.imageWrapper}>
-            <SizedImage
-              src={
-                file.name.startsWith("/images/")
-                  ? file.name
-                  : URL.createObjectURL(file)
-              }
-            />
-            <DeleteButton onDelete={() => handleDelete(file.name)} />
-          </div>
-        ))}
+      <div className={s.previewExistantImages}>
+        {filesPath.length === 0 && <p className={s.emptyInfo}>Aucune image</p>}
+        {filesPath.map((filepath, i) => {
+          const filename = filepath.substring(filepath.lastIndexOf("/") + 1);
+          if (
+            !filenamesToDelete.find(
+              (filenameToDelete) => filenameToDelete === filename,
+            )
+          )
+            return (
+              <div key={i} className={s.imageWrapper}>
+                <SizedImage src={filepath} />
+                <DeleteButton onDelete={() => handleDelete(filepath)} />
+              </div>
+            );
+        })}
       </div>
     </div>
   );
 }
 
-const SizedImage = ({ src }: { src: string }): JSX.Element => {
+const SizedImage = ({
+  src,
+  width = 150,
+  height = 150,
+}: {
+  src: string;
+  width?: number;
+  height?: number;
+}): JSX.Element => {
   const [size, setSize] = useState({ naturalWidth: 0, naturalHeight: 0 });
   return (
     <img
@@ -160,12 +179,12 @@ const SizedImage = ({ src }: { src: string }): JSX.Element => {
       style={
         size.naturalWidth / size.naturalHeight >= 1.03
           ? {
-              width: 150,
+              width,
               height: "auto",
             }
           : {
               width: "auto",
-              height: 150,
+              height,
             }
       }
       className={s.image}
