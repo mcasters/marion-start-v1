@@ -9,7 +9,7 @@ import {
 import s from "./image.module.css";
 import ArrowDown from "~/components/icons/arrowDown";
 import DeleteButton from "~/components/admin/common/button/deleteButton";
-import { constraintImage, validateFile } from "~/utils/imageUtils";
+import { resizeFile, validateFile } from "~/utils/imageUtils";
 import { useAlert } from "~/components/admin/context/alertProvider";
 
 interface Props extends HTMLProps<HTMLInputElement> {
@@ -72,7 +72,12 @@ export default function ImageInput({
         alert(result.message, result.isError, 5000);
         return;
       }
-      resizedFiles.push(await constraintImage(file));
+      try {
+        const resizedFile = await resizeFile(file, 100);
+        resizedFiles.push(resizedFile);
+      } catch (e) {
+        alert("Erreur au redimensionnement", true);
+      }
     }
 
     if (!isMultiple) {

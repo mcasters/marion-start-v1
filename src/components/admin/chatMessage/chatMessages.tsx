@@ -69,7 +69,7 @@ export default function ChatMessages({ dbMessages }: Props) {
           })}
       </div>
       <br />
-      <form action={(formData) => handleSubmit(formData)}>
+      <form action={handleSubmit}>
         <input type="hidden" name="userId" value={session?.userId} />
         <input type="hidden" name="id" value={message.id} />
         <textarea

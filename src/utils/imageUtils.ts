@@ -1,8 +1,8 @@
 import { EnhancedImage, Post, Work } from "~/lib/type";
 import { FILE_TYPES } from "~/constants/image";
 import { MESSAGE } from "~/constants/admin";
-import Resizer from "react-image-file-resizer";
 import { TYPE } from "~/db/schema";
+import Resizer from "~/utils/resizer";
 
 export const getEnhancedImages = (
   items: Work[] | Post[],
@@ -60,27 +60,27 @@ export const validateFile = async (
   return { message: "OK", isError: false };
 };
 
-const resizeFile = (file: File, quality: number) =>
+export const resizeFile = (file: File, quality: number): Promise<File> =>
   new Promise((resolve) => {
     Resizer.imageFileResizer(
       file,
       2000,
       2000,
-      "JPEG",
+      "jpeg",
       quality,
-      0,
-      (file) => {
+      (file: File) => {
         resolve(file);
       },
       "file",
     );
   });
+
 export const constraintImage = async (
   file: File,
   quality = 90,
   drop = 10,
 ): Promise<File> => {
-  const done = (await resizeFile(file, quality)) as File;
+  const done = await resizeFile(file, quality);
 
   if (done.size > 200000 && quality - drop > 10) {
     return constraintImage(file, quality - drop);
