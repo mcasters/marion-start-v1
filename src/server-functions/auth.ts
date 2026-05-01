@@ -1,7 +1,6 @@
 import bcrypt from "bcryptjs";
 import { Session } from "~/lib/type";
 import { db } from "~/db";
-import { redirect } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { useSession } from "@tanstack/react-start/server";
 
@@ -48,5 +47,5 @@ export const loginFn = createServerFn({ method: "POST" })
 export const logoutFn = createServerFn({ method: "POST" }).handler(async () => {
   const session = await useAppSession();
   await session.clear();
-  throw redirect({ to: "/" });
+  return { success: true, error: "" };
 });

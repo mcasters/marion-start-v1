@@ -50,11 +50,7 @@ export default function LoginForm() {
         }
         required
       />
-      <button
-        type="submit"
-        className="adminButton"
-        style={{ width: "150px", backgroundColor: "green", cursor: "pointer" }}
-      >
+      <button type="submit" className="adminButton">
         OK
       </button>
     </form>
