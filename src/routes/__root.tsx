@@ -135,7 +135,7 @@ function RootComponent() {
             }}
           ></div>
         )}
-        {path === ROUTES.ADMIN ? (
+        {path.startsWith(ROUTES.ADMIN) ? (
           <AdminNav />
         ) : isHome ? (
           <HomeHeader
