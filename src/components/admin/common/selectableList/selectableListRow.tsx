@@ -7,7 +7,7 @@ interface Props {
   part3?: string;
   part4?: string;
   imageSrc: string;
-  deleteAction?: () => Promise<{
+  deleteFn?: () => Promise<{
     message: string;
     isError: boolean;
   }>;
@@ -19,7 +19,7 @@ export default function SelectableListRow({
   part3,
   part4,
   imageSrc,
-  deleteAction,
+  deleteFn,
 }: Props) {
   return (
     <>
@@ -41,7 +41,7 @@ export default function SelectableListRow({
         )}
       </span>
       <span className={s.itemIcon}>
-        <DeleteButton deleteAction={deleteAction} disabled={!deleteAction} />
+        <DeleteButton deleteFn={deleteFn} disabled={!deleteFn} />
       </span>
     </>
   );

@@ -168,7 +168,7 @@ export const createAdminCategoryObjects = (
   categories: Category[],
   items: Work[],
   type: TYPE.PAINTING | TYPE.SCULPTURE | TYPE.DRAWING,
-): AdminCategory[] => {
+): { works: Work[]; categories: AdminCategory[] } => {
   const categoryMap = new Map();
   categories.forEach((category) => {
     categoryMap.set(category.id, {
@@ -192,5 +192,5 @@ export const createAdminCategoryObjects = (
     categoryMap.set(itemCategoryId, category);
   });
   if (categoryMap.get(0).count === 0) categoryMap.delete(0);
-  return [...categoryMap.values()];
+  return { works: items, categories: [...categoryMap.values()] };
 };

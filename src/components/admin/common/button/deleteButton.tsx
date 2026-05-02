@@ -3,7 +3,7 @@ import { useAlert } from "~/components/admin/context/alertProvider";
 
 export type DeleteButtonProps = {
   onDelete?: () => void;
-  deleteAction?: () => Promise<{
+  deleteFn?: () => Promise<{
     message: string;
     isError: boolean;
   }>;
@@ -11,7 +11,7 @@ export type DeleteButtonProps = {
 };
 export default function DeleteButton({
   onDelete,
-  deleteAction,
+  deleteFn,
   disabled = false,
 }: DeleteButtonProps) {
   const alert = useAlert();
@@ -19,12 +19,12 @@ export default function DeleteButton({
   return (
     <button
       onClick={
-        deleteAction
+        deleteFn
           ? async (e) => {
               e.stopPropagation();
               e.preventDefault();
               if (confirm("Sûr de vouloir supprimer ?")) {
-                const res = await deleteAction();
+                const res = await deleteFn();
                 alert(res.message, res.isError);
               }
             }
