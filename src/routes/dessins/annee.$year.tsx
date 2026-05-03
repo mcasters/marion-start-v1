@@ -3,11 +3,11 @@ import { NotFound } from "~/components/NotFound";
 import { PostErrorComponent } from "~/components/PostError";
 import WorkPage from "~/components/work/workPage";
 import { TYPE } from "~/db/schema";
-import { getDrawingWorksByYearFn } from "~/server-functions/drawings";
+import { getDrawingByYearFn } from "~/server-functions/drawings";
 
 export const Route = createFileRoute("/dessins/annee/$year")({
   loader: async ({ params: { year } }) =>
-    await getDrawingWorksByYearFn({ data: year }),
+    await getDrawingByYearFn({ data: year }),
   errorComponent: PostErrorComponent,
   component: RouteComponent,
   notFoundComponent: () => {
