@@ -23,15 +23,21 @@
 }
 
 .part1 {
-  flex: 30%;
   text-align: left;
   font-weight: bold;
 }
-.part2, .part3, .part4 {
-  flex: 15%;
+
+.part1,
+.part2 {
+  flex: 30%;
 }
 
-.itemImage,
+.part3,
+.part4,
+.itemImage {
+  flex: 10%;
+}
+
 .itemIcon {
-  width: 10%;
+  flex: 7%
 }

@@ -50,7 +50,7 @@
   --link-color-xlight: #e0bb89;
 
 
-  --overlayer: hsla(5, 15%, 5%, 0.3);
+  --overlayer: hsla(5, 15%, 5%, 0.6); /* works darkBackground */
   /*
   common home and other pages
    */
