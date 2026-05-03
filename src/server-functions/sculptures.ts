@@ -52,7 +52,7 @@ export const getSculptureCategoriesFn = createServerFn().handler(
   },
 );
 
-export const getSculptureWorksByYearFn = createServerFn({ method: "POST" })
+export const getSculptureByYearFn = createServerFn({ method: "POST" })
   .inputValidator((d: string) => d)
   .handler(async ({ data }) => {
     const rows = await db
@@ -74,7 +74,7 @@ export const getSculptureWorksByYearFn = createServerFn({ method: "POST" })
     return { works, year: data };
   });
 
-export const getSculptureWorksByCategoryFn = createServerFn({ method: "POST" })
+export const getSculptureByCategoryFn = createServerFn({ method: "POST" })
   .inputValidator((d: string) => d)
   .handler(async ({ data }) => {
     let category: SculptureCategory | undefined;

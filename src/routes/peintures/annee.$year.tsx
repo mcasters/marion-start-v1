@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { NotFound } from "~/components/NotFound";
 import { PostErrorComponent } from "~/components/PostError";
-import { getPaintingWorksByYearFn } from "~/server-functions/paintings";
+import { getPaintingByYearFn } from "~/server-functions/paintings";
 import WorkPage from "~/components/work/workPage";
 import { TYPE } from "~/db/schema";
 
 export const Route = createFileRoute("/peintures/annee/$year")({
   loader: async ({ params: { year } }) =>
-    await getPaintingWorksByYearFn({ data: year }),
+    await getPaintingByYearFn({ data: year }),
   errorComponent: PostErrorComponent,
   component: RouteComponent,
   notFoundComponent: () => {

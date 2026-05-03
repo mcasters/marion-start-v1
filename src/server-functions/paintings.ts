@@ -41,7 +41,7 @@ export const getPaintingCategoriesFn = createServerFn().handler(
   },
 );
 
-export const getPaintingWorksByYearFn = createServerFn({ method: "POST" })
+export const getPaintingByYearFn = createServerFn({ method: "POST" })
   .inputValidator((d: string) => d)
   .handler(async ({ data }) => {
     const dbData = await db.query.painting.findMany({
