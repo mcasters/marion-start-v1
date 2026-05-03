@@ -31,8 +31,6 @@ export default function WorkForm({ work, onClose, categories }: Props) {
     if (!isError) onClose();
   };
 
-  console.log(workItem.date);
-
   return (
     <form action={action}>
       <input name="type" type="hidden" value={work.type} />
