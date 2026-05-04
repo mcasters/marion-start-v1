@@ -21,8 +21,8 @@ interface Props {
 }
 export function TextForm({
   dbKey,
-  text,
   isMeta,
+  text,
   title,
   isPhone = false,
   isEmail = false,

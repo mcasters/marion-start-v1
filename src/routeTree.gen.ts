@@ -27,7 +27,13 @@ import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as UsersUserIdRouteImport } from './routes/users.$userId'
 import { Route as PostsPostIdRouteImport } from './routes/posts.$postId'
 import { Route as ApiUsersRouteImport } from './routes/api/users'
+import { Route as AdminSculpturesRouteImport } from './routes/admin/sculptures'
+import { Route as AdminPresentationRouteImport } from './routes/admin/presentation'
+import { Route as AdminPostsRouteImport } from './routes/admin/posts'
+import { Route as AdminPeinturesRouteImport } from './routes/admin/peintures'
+import { Route as AdminMetaRouteImport } from './routes/admin/meta'
 import { Route as AdminHomeRouteImport } from './routes/admin/home'
+import { Route as AdminDessinsRouteImport } from './routes/admin/dessins'
 import { Route as PathlessLayoutNestedLayoutRouteImport } from './routes/_pathlessLayout/_nested-layout'
 import { Route as SculpturesCategorieCategoryKeyRouteImport } from './routes/sculptures/categorie.$categoryKey'
 import { Route as SculpturesAnneeYearRouteImport } from './routes/sculptures/annee.$year'
@@ -131,9 +137,39 @@ const ApiUsersRoute = ApiUsersRouteImport.update({
   path: '/api/users',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSculpturesRoute = AdminSculpturesRouteImport.update({
+  id: '/sculptures',
+  path: '/sculptures',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminPresentationRoute = AdminPresentationRouteImport.update({
+  id: '/presentation',
+  path: '/presentation',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminPostsRoute = AdminPostsRouteImport.update({
+  id: '/posts',
+  path: '/posts',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminPeinturesRoute = AdminPeinturesRouteImport.update({
+  id: '/peintures',
+  path: '/peintures',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminMetaRoute = AdminMetaRouteImport.update({
+  id: '/meta',
+  path: '/meta',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminHomeRoute = AdminHomeRouteImport.update({
   id: '/home',
   path: '/home',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminDessinsRoute = AdminDessinsRouteImport.update({
+  id: '/dessins',
+  path: '/dessins',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const PathlessLayoutNestedLayoutRoute =
@@ -213,7 +249,13 @@ export interface FileRoutesByFullPath {
   '/presentation': typeof PresentationRoute
   '/redirect': typeof RedirectRoute
   '/users': typeof UsersRouteWithChildren
+  '/admin/dessins': typeof AdminDessinsRoute
   '/admin/home': typeof AdminHomeRoute
+  '/admin/meta': typeof AdminMetaRoute
+  '/admin/peintures': typeof AdminPeinturesRoute
+  '/admin/posts': typeof AdminPostsRoute
+  '/admin/presentation': typeof AdminPresentationRoute
+  '/admin/sculptures': typeof AdminSculpturesRoute
   '/api/users': typeof ApiUsersRouteWithChildren
   '/posts/$postId': typeof PostsPostIdRoute
   '/users/$userId': typeof UsersUserIdRoute
@@ -242,7 +284,13 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/presentation': typeof PresentationRoute
   '/redirect': typeof RedirectRoute
+  '/admin/dessins': typeof AdminDessinsRoute
   '/admin/home': typeof AdminHomeRoute
+  '/admin/meta': typeof AdminMetaRoute
+  '/admin/peintures': typeof AdminPeinturesRoute
+  '/admin/posts': typeof AdminPostsRoute
+  '/admin/presentation': typeof AdminPresentationRoute
+  '/admin/sculptures': typeof AdminSculpturesRoute
   '/api/users': typeof ApiUsersRouteWithChildren
   '/posts/$postId': typeof PostsPostIdRoute
   '/users/$userId': typeof UsersUserIdRoute
@@ -276,7 +324,13 @@ export interface FileRoutesById {
   '/redirect': typeof RedirectRoute
   '/users': typeof UsersRouteWithChildren
   '/_pathlessLayout/_nested-layout': typeof PathlessLayoutNestedLayoutRouteWithChildren
+  '/admin/dessins': typeof AdminDessinsRoute
   '/admin/home': typeof AdminHomeRoute
+  '/admin/meta': typeof AdminMetaRoute
+  '/admin/peintures': typeof AdminPeinturesRoute
+  '/admin/posts': typeof AdminPostsRoute
+  '/admin/presentation': typeof AdminPresentationRoute
+  '/admin/sculptures': typeof AdminSculpturesRoute
   '/api/users': typeof ApiUsersRouteWithChildren
   '/posts/$postId': typeof PostsPostIdRoute
   '/users/$userId': typeof UsersUserIdRoute
@@ -310,7 +364,13 @@ export interface FileRouteTypes {
     | '/presentation'
     | '/redirect'
     | '/users'
+    | '/admin/dessins'
     | '/admin/home'
+    | '/admin/meta'
+    | '/admin/peintures'
+    | '/admin/posts'
+    | '/admin/presentation'
+    | '/admin/sculptures'
     | '/api/users'
     | '/posts/$postId'
     | '/users/$userId'
@@ -339,7 +399,13 @@ export interface FileRouteTypes {
     | '/login'
     | '/presentation'
     | '/redirect'
+    | '/admin/dessins'
     | '/admin/home'
+    | '/admin/meta'
+    | '/admin/peintures'
+    | '/admin/posts'
+    | '/admin/presentation'
+    | '/admin/sculptures'
     | '/api/users'
     | '/posts/$postId'
     | '/users/$userId'
@@ -372,7 +438,13 @@ export interface FileRouteTypes {
     | '/redirect'
     | '/users'
     | '/_pathlessLayout/_nested-layout'
+    | '/admin/dessins'
     | '/admin/home'
+    | '/admin/meta'
+    | '/admin/peintures'
+    | '/admin/posts'
+    | '/admin/presentation'
+    | '/admin/sculptures'
     | '/api/users'
     | '/posts/$postId'
     | '/users/$userId'
@@ -548,11 +620,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiUsersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/sculptures': {
+      id: '/admin/sculptures'
+      path: '/sculptures'
+      fullPath: '/admin/sculptures'
+      preLoaderRoute: typeof AdminSculpturesRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/presentation': {
+      id: '/admin/presentation'
+      path: '/presentation'
+      fullPath: '/admin/presentation'
+      preLoaderRoute: typeof AdminPresentationRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/posts': {
+      id: '/admin/posts'
+      path: '/posts'
+      fullPath: '/admin/posts'
+      preLoaderRoute: typeof AdminPostsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/peintures': {
+      id: '/admin/peintures'
+      path: '/peintures'
+      fullPath: '/admin/peintures'
+      preLoaderRoute: typeof AdminPeinturesRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/meta': {
+      id: '/admin/meta'
+      path: '/meta'
+      fullPath: '/admin/meta'
+      preLoaderRoute: typeof AdminMetaRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/home': {
       id: '/admin/home'
       path: '/home'
       fullPath: '/admin/home'
       preLoaderRoute: typeof AdminHomeRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/dessins': {
+      id: '/admin/dessins'
+      path: '/dessins'
+      fullPath: '/admin/dessins'
+      preLoaderRoute: typeof AdminDessinsRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/_pathlessLayout/_nested-layout': {
@@ -643,12 +757,24 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteRouteChildren {
+  AdminDessinsRoute: typeof AdminDessinsRoute
   AdminHomeRoute: typeof AdminHomeRoute
+  AdminMetaRoute: typeof AdminMetaRoute
+  AdminPeinturesRoute: typeof AdminPeinturesRoute
+  AdminPostsRoute: typeof AdminPostsRoute
+  AdminPresentationRoute: typeof AdminPresentationRoute
+  AdminSculpturesRoute: typeof AdminSculpturesRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminDessinsRoute: AdminDessinsRoute,
   AdminHomeRoute: AdminHomeRoute,
+  AdminMetaRoute: AdminMetaRoute,
+  AdminPeinturesRoute: AdminPeinturesRoute,
+  AdminPostsRoute: AdminPostsRoute,
+  AdminPresentationRoute: AdminPresentationRoute,
+  AdminSculpturesRoute: AdminSculpturesRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 

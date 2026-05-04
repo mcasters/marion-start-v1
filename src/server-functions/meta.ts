@@ -2,44 +2,38 @@ import { createServerFn } from "@tanstack/react-start";
 import { db } from "~/db";
 import { meta } from "~/db/schema";
 import { eq } from "drizzle-orm";
+import { KEY_META } from "~/constants/admin";
+import { KeyMeta } from "~/lib/type";
 
-export const getMetasFn = createServerFn().handler(
-  async (): Promise<Map<string, string>> => {
-    const metas = await db.query.meta.findMany({
-      columns: { id: false },
-    });
-    const map = new Map();
-    metas.forEach((meta) => map.set(meta.key, meta.text));
-    return map;
-  },
-);
-
-export const getMetasByKeyFn = createServerFn({ method: "POST" })
-  .inputValidator((d: string[]) => d)
-  .handler(async ({ data }): Promise<Map<string, string>> => {
-    const metas = await db.query.meta.findMany({
-      columns: { id: false },
-      where: {
-        key: { OR: [...data] },
-      },
-    });
-    const map = new Map();
-    metas.forEach((meta) => map.set(meta.key, meta.text));
-    return map;
+export const getMetasFn = createServerFn().handler(async () => {
+  const metas = await db.query.meta.findMany({
+    columns: { id: false },
   });
+  const map = new Map();
+  metas.forEach((meta) => map.set(meta.key, meta.text));
+  return map;
+});
 
 export const updateMetaFn = createServerFn({ method: "POST" })
   .inputValidator(
     (data: {
-      key: string;
+      key: KeyMeta;
       text: string;
       layout?: string;
       darkBackground?: string;
     }) => data,
   )
   .handler(async ({ data }) => {
-    const { key, text } = data;
+    let { key, text, layout, darkBackground } = data;
     try {
+      if (
+        key === KEY_META.PAINTING_LAYOUT ||
+        key === KEY_META.SCULPTURE_LAYOUT ||
+        key === KEY_META.DRAWING_LAYOUT
+      ) {
+        text = `${layout},${darkBackground}`;
+      }
+
       const metaFound = await db.query.meta.findFirst({
         where: { key },
       });
