@@ -11,7 +11,6 @@ import {
   FileInfo,
   Post,
   Work,
-  WorkImage,
 } from "~/lib/type";
 import { getNoCategory, transformValueToKey } from "~/utils/commonUtils";
 
@@ -94,6 +93,7 @@ export const createSculptureWorkObject = (
   rows: { sculpture: DbSculpture; sculptureImage: DbSculptureImage }[],
 ): Work[] => {
   let map: Map<number, Work> = new Map();
+
   rows.reduce<Map<number, Work>>((acc, row) => {
     const { createdAt, id, ...rest } = row.sculpture;
     const image = row.sculptureImage;
@@ -106,43 +106,29 @@ export const createSculptureWorkObject = (
     }
     return acc;
   }, map);
+
   return [...map.values()];
 };
 
-export const aggregatePostRows = (
-  rows: { post: DbPost; postImage: DbPostImage }[],
-): Record<number, { post: DbPost; images: DbPostImage[] }> => {
-  return rows.reduce<Record<number, { post: DbPost; images: DbPostImage[] }>>(
-    (acc, row) => {
-      const post = row.post;
-      const image = row.postImage;
-
-      if (!acc[post.id]) {
-        acc[post.id] = { post: post, images: [] };
-      }
-      if (image) {
-        acc[post.id].images.push(image);
-      }
-      return acc;
-    },
-    {},
-  );
-};
-
 export const createPostObject = (
-  dbPost: Record<number, { post: DbPost; images: DbPostImage[] }>,
+  rows: { post: DbPost; postImage: DbPostImage }[],
 ): Post[] => {
-  const posts: Post[] = [];
-  Object.entries(dbPost).forEach(([n, data]) => {
-    const { createdAt, published, viewCount, ...rest } = data.post;
-    const images: WorkImage[] = [];
-    data.images.forEach((image) => {
-      const { id, postId, ...restImage } = image;
-      images.push({ ...restImage });
-    });
-    posts.push({ ...rest, images });
-  });
-  return posts;
+  let map: Map<number, Post> = new Map();
+
+  rows.reduce<Map<number, Post>>((acc, row) => {
+    const { createdAt, published, viewCount, id, ...rest } = row.post;
+    const image = row.postImage;
+
+    if (!acc.get(id)) {
+      acc.set(id, { ...rest, id, images: [] });
+    }
+    if (image) {
+      acc.get(id)?.images.push(image);
+    }
+    return acc;
+  }, map);
+
+  return [...map.values()];
 };
 
 export const createAdminCategoryObjects = (
