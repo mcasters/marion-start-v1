@@ -34,6 +34,7 @@ import { Route as AdminPeinturesRouteImport } from './routes/admin/peintures'
 import { Route as AdminMetaRouteImport } from './routes/admin/meta'
 import { Route as AdminHomeRouteImport } from './routes/admin/home'
 import { Route as AdminDessinsRouteImport } from './routes/admin/dessins'
+import { Route as AdminContactRouteImport } from './routes/admin/contact'
 import { Route as PathlessLayoutNestedLayoutRouteImport } from './routes/_pathlessLayout/_nested-layout'
 import { Route as SculpturesCategorieCategoryKeyRouteImport } from './routes/sculptures/categorie.$categoryKey'
 import { Route as SculpturesAnneeYearRouteImport } from './routes/sculptures/annee.$year'
@@ -172,6 +173,11 @@ const AdminDessinsRoute = AdminDessinsRouteImport.update({
   path: '/dessins',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminContactRoute = AdminContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const PathlessLayoutNestedLayoutRoute =
   PathlessLayoutNestedLayoutRouteImport.update({
     id: '/_pathlessLayout/_nested-layout',
@@ -249,6 +255,7 @@ export interface FileRoutesByFullPath {
   '/presentation': typeof PresentationRoute
   '/redirect': typeof RedirectRoute
   '/users': typeof UsersRouteWithChildren
+  '/admin/contact': typeof AdminContactRoute
   '/admin/dessins': typeof AdminDessinsRoute
   '/admin/home': typeof AdminHomeRoute
   '/admin/meta': typeof AdminMetaRoute
@@ -284,6 +291,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/presentation': typeof PresentationRoute
   '/redirect': typeof RedirectRoute
+  '/admin/contact': typeof AdminContactRoute
   '/admin/dessins': typeof AdminDessinsRoute
   '/admin/home': typeof AdminHomeRoute
   '/admin/meta': typeof AdminMetaRoute
@@ -324,6 +332,7 @@ export interface FileRoutesById {
   '/redirect': typeof RedirectRoute
   '/users': typeof UsersRouteWithChildren
   '/_pathlessLayout/_nested-layout': typeof PathlessLayoutNestedLayoutRouteWithChildren
+  '/admin/contact': typeof AdminContactRoute
   '/admin/dessins': typeof AdminDessinsRoute
   '/admin/home': typeof AdminHomeRoute
   '/admin/meta': typeof AdminMetaRoute
@@ -364,6 +373,7 @@ export interface FileRouteTypes {
     | '/presentation'
     | '/redirect'
     | '/users'
+    | '/admin/contact'
     | '/admin/dessins'
     | '/admin/home'
     | '/admin/meta'
@@ -399,6 +409,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/presentation'
     | '/redirect'
+    | '/admin/contact'
     | '/admin/dessins'
     | '/admin/home'
     | '/admin/meta'
@@ -438,6 +449,7 @@ export interface FileRouteTypes {
     | '/redirect'
     | '/users'
     | '/_pathlessLayout/_nested-layout'
+    | '/admin/contact'
     | '/admin/dessins'
     | '/admin/home'
     | '/admin/meta'
@@ -669,6 +681,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDessinsRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/contact': {
+      id: '/admin/contact'
+      path: '/contact'
+      fullPath: '/admin/contact'
+      preLoaderRoute: typeof AdminContactRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/_pathlessLayout/_nested-layout': {
       id: '/_pathlessLayout/_nested-layout'
       path: ''
@@ -757,6 +776,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteRouteChildren {
+  AdminContactRoute: typeof AdminContactRoute
   AdminDessinsRoute: typeof AdminDessinsRoute
   AdminHomeRoute: typeof AdminHomeRoute
   AdminMetaRoute: typeof AdminMetaRoute
@@ -768,6 +788,7 @@ interface AdminRouteRouteChildren {
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminContactRoute: AdminContactRoute,
   AdminDessinsRoute: AdminDessinsRoute,
   AdminHomeRoute: AdminHomeRoute,
   AdminMetaRoute: AdminMetaRoute,
