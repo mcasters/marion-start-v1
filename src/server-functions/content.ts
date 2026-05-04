@@ -1,9 +1,6 @@
-"use server";
-
-import { Content, Image } from "~/lib/type";
 import { db } from "~/db";
 import { content, contentImage, LABEL } from "~/db/schema";
-import { eq, or } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { createServerFn } from "@tanstack/react-start";
 import {
   deleteFile,
@@ -11,92 +8,94 @@ import {
   resizeAndSaveImage,
 } from "~/server-functions/serverUtils";
 
-export const getHomeTextFn = createServerFn().handler(
-  async (): Promise<string | undefined> => {
-    const content = await db.query.content.findFirst({
-      columns: { text: true },
-      where: { label: LABEL.INTRO },
-    });
-    return content?.text;
-  },
+export const getHomeTextFn = createServerFn().handler(async () => {
+  const content = await db.query.content.findFirst({
+    columns: { text: true },
+    where: { label: LABEL.INTRO },
+  });
+  return content?.text;
+});
+
+export const getHomeImagesFn = createServerFn().handler(async () =>
+  db
+    .select({
+      filename: contentImage.filename,
+      width: contentImage.width,
+      height: contentImage.height,
+      isMain: contentImage.isMain,
+    })
+    .from(content)
+    .where(eq(content.label, LABEL.SLIDER))
+    .innerJoin(contentImage, eq(contentImage.contentId, content.id)),
 );
 
-export const getHomeImagesFn = createServerFn().handler(
-  async (): Promise<Image[]> =>
-    db
-      .select({
-        filename: contentImage.filename,
-        width: contentImage.width,
-        height: contentImage.height,
-        isMain: contentImage.isMain,
-      })
-      .from(content)
-      .where(eq(content.label, LABEL.SLIDER))
-      .innerJoin(contentImage, eq(contentImage.contentId, content.id)),
-);
-
-export const getContactContentFn = createServerFn().handler(
-  async (): Promise<Content> => {
-    const contents = await db.query.content.findMany({
-      columns: { label: true, text: true },
-      where: {
-        label: {
-          OR: [LABEL.ADDRESS, LABEL.PHONE, LABEL.EMAIL, LABEL.TEXT_CONTACT],
-        },
+export const getContactContentFn = createServerFn().handler(async () => {
+  const contents = await db.query.content.findMany({
+    columns: { label: true, text: true },
+    where: {
+      label: {
+        OR: [LABEL.ADDRESS, LABEL.PHONE, LABEL.EMAIL, LABEL.TEXT_CONTACT],
       },
-    });
-    const map = new Map();
-    contents.forEach((content) =>
-      map.set(content.label, { text: content.text }),
-    );
-    return map;
-  },
-);
+    },
+  });
+  const map = new Map();
+  contents.forEach((content) => map.set(content.label, { text: content.text }));
+  return map;
+});
 
-export const getPresentationContentFn = createServerFn().handler(
-  async (): Promise<Content> => {
-    const contents = await db
-      .select({
-        label: content.label,
-        text: content.text,
-        filename: contentImage.filename,
-        width: contentImage.width,
-        height: contentImage.height,
-      })
-      .from(content)
-      .where(
-        or(
-          eq(content.label, LABEL.DEMARCHE),
-          eq(content.label, LABEL.INSPIRATION),
-          eq(content.label, LABEL.PRESENTATION),
-        ),
-      )
-      .innerJoin(contentImage, eq(contentImage.contentId, content.id))
-      .limit(1);
+export const getPresentationContentFn = createServerFn().handler(async () => {
+  const contents = await db.query.content.findMany({
+    columns: { label: true, text: true },
+    where: {
+      label: {
+        OR: [LABEL.DEMARCHE, LABEL.INSPIRATION, LABEL.PRESENTATION],
+      },
+    },
+  });
 
-    const map = new Map();
-    contents.forEach((content) => {
-      map.set(content.label, {
-        text: content.text,
-        image: {
-          filename: content.filename,
-          width: content.width,
-          height: content.height,
-        },
-      });
+  const presentation = await db
+    .select({
+      label: content.label,
+      text: content.text,
+      filename: contentImage.filename,
+      width: contentImage.width,
+      height: contentImage.height,
+    })
+    .from(content)
+    .where(eq(content.label, LABEL.PRESENTATION))
+    .innerJoin(contentImage, eq(contentImage.contentId, content.id));
+
+  const map = new Map();
+  contents.forEach((content) => {
+    map.set(content.label, {
+      text: content.text,
     });
-    return map;
-  },
-);
+  });
+  map.set(presentation[0].label, {
+    text: presentation[0].text,
+    image: {
+      filename: presentation[0].filename,
+      width: presentation[0].width,
+      height: presentation[0].height,
+    },
+  });
+  return map;
+});
 
 export const updateContentFn = createServerFn({ method: "POST" })
-  .inputValidator((data: { key: string; text: string }) => data)
+  .inputValidator((data: { key: LABEL; text: string }) => data)
   .handler(async ({ data }) => {
     try {
-      await db
+      const res = await db
         .update(content)
         .set({ text: data.text })
-        .where(eq(content.label, data.key as LABEL));
+        .where(eq(content.label, data.key));
+
+      if (res[0].affectedRows === 0)
+        await db.insert(content).values({
+          label: data.key,
+          text: data.text,
+        });
 
       return { message: "Enregistré", isError: false };
     } catch (e) {

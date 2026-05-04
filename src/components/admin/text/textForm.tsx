@@ -36,8 +36,8 @@ export function TextForm({
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     const res = isMeta
-      ? await updateMetaFn({ data: { key: dbKey, text: _text } })
-      : await updateContentFn({ data: { key: dbKey, text: _text } });
+      ? await updateMetaFn({ data: { key: dbKey as KeyMeta, text: _text } })
+      : await updateContentFn({ data: { key: dbKey as LABEL, text: _text } });
     router.invalidate();
     alert(res.message, res.isError);
   };
