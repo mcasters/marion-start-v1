@@ -42,74 +42,71 @@ export const KEY_META = {
   DRAWING_LAYOUT: "drawingLayout",
   HOME_LAYOUT: "homeLayout",
 
-  SEO_SITE_TITLE: "seoSiteTitle",
+  SITE_TITLE: "seoSiteTitle",
   URL: "url",
   KEYWORDS: "keywords",
 
-  DOCUMENT_TITLE_HOME: "documentTitleHome",
+  TITLE_HOME: "documentTitleHome",
   DESCRIPTION_HOME: "descriptionHome",
 
-  DOCUMENT_TITLE_PAINTING_HOME: "documentTitlePaintingHome",
+  TITLE_PAINTING_HOME: "documentTitlePaintingHome",
   DESCRIPTION_PAINTING_HOME: "descriptionPaintingHome",
-  DOCUMENT_TITLE_PAINTING: "documentTitlePainting",
+  TITLE_PAINTING: "documentTitlePainting",
   DESCRIPTION_PAINTING: "descriptionPainting",
 
-  DOCUMENT_TITLE_SCULPTURE_HOME: "documentTitleSculptureHome",
+  TITLE_SCULPTURE_HOME: "documentTitleSculptureHome",
   DESCRIPTION_SCULPTURE_HOME: "descriptionSculptureHome",
-  DOCUMENT_TITLE_SCULPTURE: "documentTitleSculpture",
+  TITLE_SCULPTURE: "documentTitleSculpture",
   DESCRIPTION_SCULPTURE: "descriptionSculpture",
 
-  DOCUMENT_TITLE_DRAWING_HOME: "documentTitleDrawingHome",
+  TITLE_DRAWING_HOME: "documentTitleDrawingHome",
   DESCRIPTION_DRAWING_HOME: "descriptionDrawingHome",
-  DOCUMENT_TITLE_DRAWING: "documentTitleDrawing",
+  TITLE_DRAWING: "documentTitleDrawing",
   DESCRIPTION_DRAWING: "descriptionDrawing",
 
-  DOCUMENT_TITLE_POST: "documentTitlePost",
+  TITLE_POST: "documentTitlePost",
   DESCRIPTION_POST: "descriptionPost",
 
-  DOCUMENT_TITLE_PRESENTATION: "documentTitlePresentation",
+  TITLE_PRESENTATION: "documentTitlePresentation",
   DESCRIPTION_PRESENTATION: "descriptionPresentation",
 
-  DOCUMENT_TITLE_CONTACT: "documentTitleContact",
+  TITLE_CONTACT: "documentTitleContact",
   DESCRIPTION_CONTACT: "descriptionContact",
 } as const;
 
 export const SEO = {
-  [KEY_META.SEO_SITE_TITLE]: "Titre du site",
+  [KEY_META.SITE_TITLE]: "Titre du site",
   [KEY_META.URL]: "Url du site",
   [KEY_META.KEYWORDS]: "Mots clés",
 
-  [KEY_META.DOCUMENT_TITLE_HOME]: "Titre de la page home",
+  [KEY_META.TITLE_HOME]: "Titre de la page home",
   [KEY_META.DESCRIPTION_HOME]: "Description de la page home",
 
-  [KEY_META.DOCUMENT_TITLE_PAINTING_HOME]:
-    "Titre de la page d'accueil des peintures",
+  [KEY_META.TITLE_PAINTING_HOME]: "Titre de la page d'accueil des peintures",
   [KEY_META.DESCRIPTION_PAINTING_HOME]:
     "Description de la page d'accueil des peintures",
-  [KEY_META.DOCUMENT_TITLE_PAINTING]: "Titre de la page peintures",
+  [KEY_META.TITLE_PAINTING]: "Titre de la page peintures",
   [KEY_META.DESCRIPTION_PAINTING]: "Description de la page peintures",
 
-  [KEY_META.DOCUMENT_TITLE_SCULPTURE_HOME]:
-    "Titre de la page d'accueil des sculptures",
+  [KEY_META.TITLE_SCULPTURE_HOME]: "Titre de la page d'accueil des sculptures",
   [KEY_META.DESCRIPTION_SCULPTURE_HOME]:
     "Description de la page d'accueil des sculptures",
-  [KEY_META.DOCUMENT_TITLE_SCULPTURE]: "Titre de la page sculptures",
+  [KEY_META.TITLE_SCULPTURE]: "Titre de la page sculptures",
   [KEY_META.DESCRIPTION_SCULPTURE]: "Description de la page sculptures",
 
-  [KEY_META.DOCUMENT_TITLE_DRAWING_HOME]:
-    "Titre de la page d'accueil des dessins",
+  [KEY_META.TITLE_DRAWING_HOME]: "Titre de la page d'accueil des dessins",
   [KEY_META.DESCRIPTION_DRAWING_HOME]:
     "Description de la page d'accueil des dessins",
-  [KEY_META.DOCUMENT_TITLE_DRAWING]: "Titre de la page dessins",
+  [KEY_META.TITLE_DRAWING]: "Titre de la page dessins",
   [KEY_META.DESCRIPTION_DRAWING]: "Description de la page dessins",
 
-  [KEY_META.DOCUMENT_TITLE_POST]: "Titre de la page posts",
+  [KEY_META.TITLE_POST]: "Titre de la page posts",
   [KEY_META.DESCRIPTION_POST]: "Description de la page posts",
 
-  [KEY_META.DOCUMENT_TITLE_PRESENTATION]: "Titre de la page présentation",
+  [KEY_META.TITLE_PRESENTATION]: "Titre de la page présentation",
   [KEY_META.DESCRIPTION_PRESENTATION]: "Description de la page présentation",
 
-  [KEY_META.DOCUMENT_TITLE_CONTACT]: "Titre de la page contact",
+  [KEY_META.TITLE_CONTACT]: "Titre de la page contact",
   [KEY_META.DESCRIPTION_CONTACT]: "Description de la page contact",
 } as const;
 

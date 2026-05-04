@@ -4,9 +4,22 @@ import { KEY_META } from "~/constants/admin";
 import { LABEL } from "~/db/schema";
 import s from "~/styles/page.module.css";
 import InstagramIcon from "~/components/icons/instagramIcon";
+import { seo } from "~/utils/seo";
 
 export const Route = createFileRoute("/contact")({
   loader: async () => await getContactContentFn(),
+  head: ({ match }) => {
+    const { metas } = match.context;
+    return {
+      meta: [
+        ...seo({
+          title: metas.get(KEY_META.TITLE_CONTACT),
+          description: metas.get(KEY_META.DESCRIPTION_CONTACT),
+          metas,
+        }),
+      ],
+    };
+  },
   component: RouteComponent,
 });
 

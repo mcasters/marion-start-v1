@@ -11,7 +11,6 @@ import { ReactNode } from "react";
 import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary";
 import { NotFound } from "~/components/NotFound";
 import appCss from "~/styles/app.css?url";
-import { seo } from "~/utils/seo";
 import { HomeLayout } from "~/lib/type";
 import { getHomeLayout } from "~/utils/commonUtils";
 import { ROUTES } from "~/constants/specific/routes";
@@ -38,22 +37,14 @@ export const Route = createRootRoute({
     };
   },
   head: () => ({
-    meta: [
-      {
-        charSet: "utf-8",
-      },
-      {
-        name: "viewport",
-        content: "width=device-width, initial-scale=1",
-      },
-      ...seo({
-        title:
-          "TanStack Start | Type-Safe, Client-First, Full-Stack React Framework",
-        description: `TanStack Start is a type-safe, client-first, full-stack React framework. `,
-      }),
-    ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "icon", href: "/favicon.ico" },
+      {
+        rel: "icon",
+        type: "image/svg+xml",
+        href: "/icon.svg",
+      },
       {
         rel: "apple-touch-icon",
         sizes: "180x180",
@@ -62,17 +53,16 @@ export const Route = createRootRoute({
       {
         rel: "icon",
         type: "image/png",
-        sizes: "32x32",
-        href: "/favicon-32x32.png",
+        sizes: "192x192",
+        href: "/logo-192.png",
       },
       {
         rel: "icon",
         type: "image/png",
-        sizes: "16x16",
-        href: "/favicon-16x16.png",
+        sizes: "512x512",
+        href: "/logo-512.png",
       },
-      { rel: "manifest", href: "/site.webmanifest", color: "#fffff" },
-      { rel: "icon", href: "/favicon.ico" },
+      { rel: "manifest", href: "/site.webmanifest", color: "#be2d01" },
     ],
   }),
   errorComponent: DefaultCatchBoundary,

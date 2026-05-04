@@ -4,12 +4,25 @@ import { LABEL } from "~/db/schema";
 import s from "~/styles/page.module.css";
 import FormattedPhoto from "~/components/image/formattedPhoto";
 import { KEY_META } from "~/constants/admin";
+import { seo } from "~/utils/seo";
 
 export const Route = createFileRoute("/presentation")({
   loader: async ({ context }) => {
     const content = await getPresentationContentFn();
     const owner = context.metas.get(KEY_META.OWNER);
     return { content, owner };
+  },
+  head: ({ match }) => {
+    const { metas } = match.context;
+    return {
+      meta: [
+        ...seo({
+          title: metas.get(KEY_META.TITLE_PRESENTATION),
+          description: metas.get(KEY_META.DESCRIPTION_PRESENTATION),
+          metas,
+        }),
+      ],
+    };
   },
   component: RouteComponent,
 });
