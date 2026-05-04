@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { Admin } from "~/lib/type";
 import s from "~/components/admin/common/selectableList/adminList.module.css";
 import useOnClickOutside from "~/components/hooks/useOnClickOutside";
@@ -28,23 +28,20 @@ export default function SelectableList<T extends Admin>({
     useListSelection(items);
   useKeyboard("ArrowUp", decrease, !isOutside);
   useKeyboard("ArrowDown", increase, !isOutside);
-  const [editedItem, setEditedItem] = useState<T | null>(null);
-  const [itemsToDisplay, setItemsToDisplay] = useState<T[]>(items);
   const isCategory = items[0]?.type === TYPE.CATEGORY;
-
-  useEffect(() => {
-    if (!renderFilter) setItemsToDisplay(items);
-  }, []);
+  const [editedItem, setEditedItem] = useState<T | null>(null);
+  const [filteredItems, setFilteredItems] = useState<T[]>(items);
+  const itemsToRender = renderFilter ? filteredItems : items;
 
   return (
     <div className="inputContainer">
-      {renderFilter && renderFilter(setItemsToDisplay)}
+      {renderFilter && renderFilter(setFilteredItems)}
       <div
         ref={ref}
         className={`${isCategory ? s.categoryListWrapper : s.itemListWrapper} ${s.listWrapper} list`}
       >
         <ul>
-          {itemsToDisplay.map((item, i) => {
+          {itemsToRender.map((item, i) => {
             const isModifiable = item.id !== 0;
             return (
               <li
