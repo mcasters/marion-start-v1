@@ -47,7 +47,7 @@ export const getDrawingCategoriesFn = createServerFn().handler(
 export const getDrawingByYearFn = createServerFn({ method: "POST" })
   .inputValidator((d: string) => d)
   .handler(async ({ data }) => {
-    const dbData = await db.query.drawing.findMany({
+    const drawings = await db.query.drawing.findMany({
       columns: {
         createdAt: false,
       },
@@ -59,8 +59,8 @@ export const getDrawingByYearFn = createServerFn({ method: "POST" })
       },
       orderBy: { date: "desc" },
     });
-
-    const works = dbData.map((data) => createWorkObject(data));
+    if (drawings.length === 0) throw notFound();
+    const works = drawings.map((data) => createWorkObject(data));
     return { works, year: data };
   });
 
@@ -69,36 +69,35 @@ export const getDrawingsByCategoryFn = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     let category: DrawingCategory | undefined;
     let works: Work[] = [];
+    let drawings = [];
 
     if (data === "no-category") {
       category = getNoCategory(TYPE.DRAWING) as DrawingCategory;
-      const drawings = await db.query.drawing.findMany({
+      drawings = await db.query.drawing.findMany({
         columns: {
           createdAt: false,
         },
         where: { categoryId: { isNull: true } },
         orderBy: { date: "desc" },
       });
-      works = drawings.map((data) => createWorkObject(data));
     } else {
       category = await db.query.drawingCategory.findFirst({
         where: { key: data },
       });
-      if (category) {
-        const drawings = await db.query.drawing.findMany({
-          columns: {
-            createdAt: false,
-          },
-          where: { categoryId: category.id },
-          orderBy: { date: "desc" },
-        });
-        works = drawings.map((d) => createWorkObject(d));
-      }
+      if (!category) throw notFound();
+
+      drawings = await db.query.drawing.findMany({
+        columns: {
+          createdAt: false,
+        },
+        where: { categoryId: category.id },
+        orderBy: { date: "desc" },
+      });
     }
-    if (!category) {
-      throw notFound();
-    }
-    return { works: works as Array<Work>, category };
+    if (drawings.length === 0) throw notFound();
+
+    works = drawings.map((d) => createWorkObject(d));
+    return { works, category };
   });
 
 /*

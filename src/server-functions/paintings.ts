@@ -44,7 +44,7 @@ export const getPaintingCategoriesFn = createServerFn().handler(
 export const getPaintingByYearFn = createServerFn({ method: "POST" })
   .inputValidator((d: string) => d)
   .handler(async ({ data }) => {
-    const dbData = await db.query.painting.findMany({
+    const paintings = await db.query.painting.findMany({
       columns: {
         createdAt: false,
       },
@@ -56,8 +56,9 @@ export const getPaintingByYearFn = createServerFn({ method: "POST" })
       },
       orderBy: { date: "desc" },
     });
+    if (paintings.length === 0) throw notFound();
 
-    const works = dbData.map((data) => createWorkObject(data));
+    const works = paintings.map((data) => createWorkObject(data));
     return { works, year: data };
   });
 
@@ -66,10 +67,11 @@ export const getPaintingsByCategoryFn = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     let category: PaintingCategory | undefined;
     let works: Work[] = [];
+    let paintings = [];
 
     if (data === "no-category") {
       category = getNoCategory(TYPE.PAINTING) as PaintingCategory;
-      const paintings = await db.query.painting.findMany({
+      paintings = await db.query.painting.findMany({
         columns: {
           createdAt: false,
         },
@@ -81,21 +83,20 @@ export const getPaintingsByCategoryFn = createServerFn({ method: "POST" })
       category = await db.query.paintingCategory.findFirst({
         where: { key: data },
       });
-      if (category) {
-        const paintings = await db.query.painting.findMany({
-          columns: {
-            createdAt: false,
-          },
-          where: { categoryId: category.id },
-          orderBy: { date: "desc" },
-        });
-        works = paintings.map((d) => createWorkObject(d));
-      }
+      if (!category) throw notFound();
+
+      paintings = await db.query.painting.findMany({
+        columns: {
+          createdAt: false,
+        },
+        where: { categoryId: category.id },
+        orderBy: { date: "desc" },
+      });
     }
-    if (!category) {
-      throw notFound();
-    }
-    return { works: works as Array<Work>, category };
+    if (paintings.length === 0) throw notFound();
+
+    works = paintings.map((d) => createWorkObject(d));
+    return { works, category };
   });
 
 /*

@@ -70,6 +70,8 @@ export const getSculptureByYearFn = createServerFn({ method: "POST" })
       .innerJoin(sculptureImage, eq(sculptureImage.sculptureId, sculpture.id))
       .orderBy(asc(sculpture.date));
 
+    if (rows.length === 0) throw notFound();
+
     const works = createSculptureWorkObject(rows);
     return { works, year: data };
   });
@@ -95,27 +97,22 @@ export const getSculptureByCategoryFn = createServerFn({ method: "POST" })
       category = await db.query.sculptureCategory.findFirst({
         where: { key: data },
       });
-      if (category) {
-        rows = await db
-          .select({
-            sculpture: sculpture,
-            sculptureImage: sculptureImage,
-          })
-          .from(sculpture)
-          .where(eq(sculpture.categoryId, category.id))
-          .innerJoin(
-            sculptureImage,
-            eq(sculptureImage.sculptureId, sculpture.id),
-          )
-          .orderBy(asc(sculpture.date));
-      }
-    }
+      if (!category) throw notFound();
 
-    if (rows && category) {
-      const works = createSculptureWorkObject(rows);
-      return { works, category };
+      rows = await db
+        .select({
+          sculpture: sculpture,
+          sculptureImage: sculptureImage,
+        })
+        .from(sculpture)
+        .where(eq(sculpture.categoryId, category.id))
+        .innerJoin(sculptureImage, eq(sculptureImage.sculptureId, sculpture.id))
+        .orderBy(asc(sculpture.date));
     }
-    throw notFound();
+    if (rows.length === 0) throw notFound();
+
+    const works = createSculptureWorkObject(rows);
+    return { works, category };
   });
 
 /*
