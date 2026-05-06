@@ -79,12 +79,12 @@ export interface Image {
 }
 
 export type EnhancedImage = {
-  work?: Work;
-  littleScr?: string;
+  littleScr: string;
   src: string;
   width: number;
   height: number;
   alt: string;
+  work?: Work;
   title?: string;
   year?: number;
 };
@@ -134,11 +134,10 @@ export interface User {
 }
 
 export type Session = {
-  userId?: number
-  email?: string
-  isAdmin?: boolean
-}
-
+  userId?: number;
+  email?: string;
+  isAdmin?: boolean;
+};
 
 export type Message = {
   id: number;

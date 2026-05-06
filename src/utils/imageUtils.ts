@@ -7,6 +7,7 @@ import Resizer from "~/utils/resizer";
 export const getEnhancedImages = (
   items: Work[] | Post[],
   isSmall: boolean,
+  longInfo: boolean = false,
   owner: string = "",
 ): EnhancedImage[] => {
   const tab: EnhancedImage[] = [];
@@ -22,14 +23,15 @@ export const getEnhancedImages = (
             ? `Photo du post "${item.title}" de ${owner}`
             : `${item.title} - ${item.type} de ${owner}`,
       };
+
       tab.push(
-        item.type === TYPE.POST
-          ? {
+        longInfo
+          ? ({ ...obj, work: item } as EnhancedImage)
+          : {
               ...obj,
               title: item.title,
               year: new Date(item.date).getFullYear(),
-            }
-          : { ...obj, work: item },
+            },
       );
     });
   });

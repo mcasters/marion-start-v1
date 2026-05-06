@@ -1,19 +1,19 @@
 import s from "./workLayout.module.css";
 import { EnhancedImage, Layout, Work } from "~/lib/type";
 import React, { useMemo, useState } from "react";
-import ImageInfos from "~/components/image/common/imageInfos";
 import Lightbox from "~/components/image/lightbox/lightbox";
 import { KEY_META } from "~/constants/admin";
 import { DEVICE, IMAGE_INFO } from "~/constants/image";
 import useWindowRect from "~/components/hooks/useWindowRect";
 import { rootRouteId, useRouteContext } from "@tanstack/react-router";
+import { getEnhancedImages } from "~/utils/imageUtils";
+import { getSizeText } from "~/utils/commonUtils";
 
 interface Props {
   work: Work;
   layout: Layout.MONO | Layout.DOUBLE | Layout.SCULPTURE;
-  priority: boolean;
 }
-export default function WorkLayout({ work, layout, priority }: Props) {
+export default function WorkLayout({ work, layout }: Props) {
   const { metas } = useRouteContext({ from: rootRouteId });
   const isSmall = useWindowRect().innerWidth < DEVICE.SMALL;
   const [index, setIndex] = useState(-1);
@@ -25,20 +25,8 @@ export default function WorkLayout({ work, layout, priority }: Props) {
     : IMAGE_INFO[layout].HEIGHT.large;
 
   const enhancedImages: EnhancedImage[] = useMemo(() => {
-    const tab: EnhancedImage[] = [];
-    work.images.forEach((image) => {
-      tab.push({
-        littleScr: `/images/${work.type}/${isSmall ? "sm/" : "md/"}${image.filename}`,
-        src: `/images/${work.type}/${isSmall ? "md/" : ""}${image.filename}`,
-        width: image.width,
-        height: image.height,
-        alt: `${work.title} - ${work.type} de ${metas.get(KEY_META.OWNER)}`,
-        title: work.title,
-        year: new Date(work.date).getFullYear(),
-      });
-    });
-    return tab;
-  }, [work]);
+    return getEnhancedImages([work], isSmall, false, metas.get(KEY_META.OWNER));
+  }, [work, isSmall]);
 
   return (
     <article
@@ -51,20 +39,20 @@ export default function WorkLayout({ work, layout, priority }: Props) {
           layout === Layout.SCULPTURE ? s.sculptureContainer : undefined
         }
       >
-        {work.images.map((image, index) => {
+        {enhancedImages.map((image, index) => {
           const isLandscape = image.width / image.height >= 1.03;
           const onLeft = Layout.SCULPTURE && index % 2 === 0;
           return (
             <img
               key={index}
-              src={`/images/${work.type}/${isSmall ? "sm/" : "md/"}${image.filename}`}
+              src={image.littleScr}
               width={image.width}
               height={image.height}
               style={{
                 width: isLandscape ? `${_width}vw` : "auto",
                 height: !isLandscape ? `${_height}vh` : "auto",
               }}
-              alt={`${work.title} - ${work.type} de ${metas.get(KEY_META.OWNER)}`}
+              alt={image.alt}
               onClick={() => setIndex(index)}
               className={
                 layout === Layout.SCULPTURE
@@ -90,3 +78,70 @@ export default function WorkLayout({ work, layout, priority }: Props) {
     </article>
   );
 }
+
+interface ImageInfosProps {
+  work: Work;
+  isMono: boolean;
+}
+
+const ImageInfos = ({ work, isMono }: ImageInfosProps) => {
+  return (
+    <figcaption>
+      {!isMono && (
+        <>
+          <h2>{work.title}</h2>
+          <p>
+            {`${work.technique} - ${getSizeText(work)} - `}
+            <time>{new Date(work.date).getFullYear()}</time>
+          </p>
+          {work.description !== "" && (
+            <p>
+              <br />
+              {work.description}
+            </p>
+          )}
+          {work.isToSell && (
+            <p>
+              <br />
+              {work.price ? `Prix : ${work.price} euros` : "À vendre"}
+            </p>
+          )}
+          {work.sold && (
+            <p>
+              <br />
+              {work.price ? `Prix : ${work.price} euros - Vendu` : "Vendu"}
+            </p>
+          )}
+        </>
+      )}
+      {isMono && (
+        <>
+          <h2>{work.title}</h2>
+          <p>{work.technique}</p>
+          <p>{getSizeText(work)}</p>
+          <p>
+            <time>{new Date(work.date).getFullYear()}</time>
+          </p>
+          {work.description !== "" && (
+            <p>
+              <br />
+              {work.description}
+            </p>
+          )}
+          {work.isToSell && (
+            <p>
+              <br />
+              {work.price ? `Prix : ${work.price} euros` : "À vendre"}
+            </p>
+          )}
+          {work.sold && (
+            <p>
+              <br />
+              {work.price ? `Prix : ${work.price} euros - Vendu` : "Vendu"}
+            </p>
+          )}
+        </>
+      )}
+    </figcaption>
+  );
+};

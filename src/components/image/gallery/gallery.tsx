@@ -16,8 +16,9 @@ export default function Gallery({ items }: Props) {
   const { metas } = useRouteContext({ from: rootRouteId });
   const [index, setIndex] = useState(-1);
   const isSmall = useWindowRect().innerWidth < DEVICE.SMALL;
+  const isWork = "technique" in items[0];
   const enhancedImages: EnhancedImage[] = useMemo(() => {
-    return getEnhancedImages(items, isSmall, metas.get(KEY_META.OWNER));
+    return getEnhancedImages(items, isSmall, isWork, metas.get(KEY_META.OWNER));
   }, [items, isSmall]);
 
   return (

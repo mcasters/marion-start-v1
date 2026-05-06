@@ -27,23 +27,17 @@ export function LightboxSlide({
   }
 
   return (
-    <div
+    <img
+      alt={slide.alt || ""}
+      src={slide.src}
+      width={width}
+      height={height}
+      loading="eager"
       style={{
-        position: "relative",
-        width,
-        height,
+        objectFit: "contain",
+        paddingBottom: paddingBottom,
       }}
-    >
-      <img
-        alt={slide.alt || ""}
-        src={slide.src}
-        loading="eager"
-        style={{
-          objectFit: "contain",
-          paddingBottom: paddingBottom,
-        }}
-        draggable={false}
-      />
-    </div>
+      draggable={false}
+    />
   );
 }
