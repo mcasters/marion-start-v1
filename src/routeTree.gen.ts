@@ -9,8 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as UsersRouteImport } from './routes/users'
-import { Route as RedirectRouteImport } from './routes/redirect'
 import { Route as PresentationRouteImport } from './routes/presentation'
 import { Route as PostsRouteImport } from './routes/posts'
 import { Route as LoginRouteImport } from './routes/login'
@@ -18,13 +16,10 @@ import { Route as DeferredRouteImport } from './routes/deferred'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as UsersIndexRouteImport } from './routes/users.index'
 import { Route as SculpturesIndexRouteImport } from './routes/sculptures/index'
-import { Route as PostsIndexRouteImport } from './routes/posts.index'
 import { Route as PeinturesIndexRouteImport } from './routes/peintures/index'
 import { Route as DessinsIndexRouteImport } from './routes/dessins/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
-import { Route as UsersUserIdRouteImport } from './routes/users.$userId'
 import { Route as PostsPostIdRouteImport } from './routes/posts.$postId'
 import { Route as ApiUsersRouteImport } from './routes/api/users'
 import { Route as AdminSculpturesRouteImport } from './routes/admin/sculptures'
@@ -38,7 +33,6 @@ import { Route as AdminContactRouteImport } from './routes/admin/contact'
 import { Route as PathlessLayoutNestedLayoutRouteImport } from './routes/_pathlessLayout/_nested-layout'
 import { Route as SculpturesCategorieCategoryKeyRouteImport } from './routes/sculptures/categorie.$categoryKey'
 import { Route as SculpturesAnneeYearRouteImport } from './routes/sculptures/annee.$year'
-import { Route as PostsPostIdDeepRouteImport } from './routes/posts_.$postId.deep'
 import { Route as PeinturesCategorieCategoryKeyRouteImport } from './routes/peintures/categorie.$categoryKey'
 import { Route as PeinturesAnneeYearRouteImport } from './routes/peintures/annee.$year'
 import { Route as DessinsCategorieCategoryKeyRouteImport } from './routes/dessins/categorie.$categoryKey'
@@ -48,16 +42,6 @@ import { Route as PathlessLayoutNestedLayoutRouteBRouteImport } from './routes/_
 import { Route as PathlessLayoutNestedLayoutRouteARouteImport } from './routes/_pathlessLayout/_nested-layout/route-a'
 import { Route as ImagesLibraryChar123FolderChar125FilenameRouteImport } from './routes/images/$library.{-$folder}.$filename'
 
-const UsersRoute = UsersRouteImport.update({
-  id: '/users',
-  path: '/users',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RedirectRoute = RedirectRouteImport.update({
-  id: '/redirect',
-  path: '/redirect',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PresentationRoute = PresentationRouteImport.update({
   id: '/presentation',
   path: '/presentation',
@@ -93,20 +77,10 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const UsersIndexRoute = UsersIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => UsersRoute,
-} as any)
 const SculpturesIndexRoute = SculpturesIndexRouteImport.update({
   id: '/sculptures/',
   path: '/sculptures/',
   getParentRoute: () => rootRouteImport,
-} as any)
-const PostsIndexRoute = PostsIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => PostsRoute,
 } as any)
 const PeinturesIndexRoute = PeinturesIndexRouteImport.update({
   id: '/peintures/',
@@ -122,11 +96,6 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRouteRoute,
-} as any)
-const UsersUserIdRoute = UsersUserIdRouteImport.update({
-  id: '/$userId',
-  path: '/$userId',
-  getParentRoute: () => UsersRoute,
 } as any)
 const PostsPostIdRoute = PostsPostIdRouteImport.update({
   id: '/$postId',
@@ -194,11 +163,6 @@ const SculpturesAnneeYearRoute = SculpturesAnneeYearRouteImport.update({
   path: '/sculptures/annee/$year',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PostsPostIdDeepRoute = PostsPostIdDeepRouteImport.update({
-  id: '/posts_/$postId/deep',
-  path: '/posts/$postId/deep',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PeinturesCategorieCategoryKeyRoute =
   PeinturesCategorieCategoryKeyRouteImport.update({
     id: '/peintures/categorie/$categoryKey',
@@ -253,8 +217,6 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/posts': typeof PostsRouteWithChildren
   '/presentation': typeof PresentationRoute
-  '/redirect': typeof RedirectRoute
-  '/users': typeof UsersRouteWithChildren
   '/admin/contact': typeof AdminContactRoute
   '/admin/dessins': typeof AdminDessinsRoute
   '/admin/home': typeof AdminHomeRoute
@@ -265,13 +227,10 @@ export interface FileRoutesByFullPath {
   '/admin/sculptures': typeof AdminSculpturesRoute
   '/api/users': typeof ApiUsersRouteWithChildren
   '/posts/$postId': typeof PostsPostIdRoute
-  '/users/$userId': typeof UsersUserIdRoute
   '/admin/': typeof AdminIndexRoute
   '/dessins/': typeof DessinsIndexRoute
   '/peintures/': typeof PeinturesIndexRoute
-  '/posts/': typeof PostsIndexRoute
   '/sculptures/': typeof SculpturesIndexRoute
-  '/users/': typeof UsersIndexRoute
   '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
   '/api/users/$userId': typeof ApiUsersUserIdRoute
@@ -279,7 +238,6 @@ export interface FileRoutesByFullPath {
   '/dessins/categorie/$categoryKey': typeof DessinsCategorieCategoryKeyRoute
   '/peintures/annee/$year': typeof PeinturesAnneeYearRoute
   '/peintures/categorie/$categoryKey': typeof PeinturesCategorieCategoryKeyRoute
-  '/posts/$postId/deep': typeof PostsPostIdDeepRoute
   '/sculptures/annee/$year': typeof SculpturesAnneeYearRoute
   '/sculptures/categorie/$categoryKey': typeof SculpturesCategorieCategoryKeyRoute
   '/images/$library/{-$folder}/$filename': typeof ImagesLibraryChar123FolderChar125FilenameRoute
@@ -289,8 +247,8 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/deferred': typeof DeferredRoute
   '/login': typeof LoginRoute
+  '/posts': typeof PostsRouteWithChildren
   '/presentation': typeof PresentationRoute
-  '/redirect': typeof RedirectRoute
   '/admin/contact': typeof AdminContactRoute
   '/admin/dessins': typeof AdminDessinsRoute
   '/admin/home': typeof AdminHomeRoute
@@ -301,13 +259,10 @@ export interface FileRoutesByTo {
   '/admin/sculptures': typeof AdminSculpturesRoute
   '/api/users': typeof ApiUsersRouteWithChildren
   '/posts/$postId': typeof PostsPostIdRoute
-  '/users/$userId': typeof UsersUserIdRoute
   '/admin': typeof AdminIndexRoute
   '/dessins': typeof DessinsIndexRoute
   '/peintures': typeof PeinturesIndexRoute
-  '/posts': typeof PostsIndexRoute
   '/sculptures': typeof SculpturesIndexRoute
-  '/users': typeof UsersIndexRoute
   '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
   '/api/users/$userId': typeof ApiUsersUserIdRoute
@@ -315,7 +270,6 @@ export interface FileRoutesByTo {
   '/dessins/categorie/$categoryKey': typeof DessinsCategorieCategoryKeyRoute
   '/peintures/annee/$year': typeof PeinturesAnneeYearRoute
   '/peintures/categorie/$categoryKey': typeof PeinturesCategorieCategoryKeyRoute
-  '/posts/$postId/deep': typeof PostsPostIdDeepRoute
   '/sculptures/annee/$year': typeof SculpturesAnneeYearRoute
   '/sculptures/categorie/$categoryKey': typeof SculpturesCategorieCategoryKeyRoute
   '/images/$library/{-$folder}/$filename': typeof ImagesLibraryChar123FolderChar125FilenameRoute
@@ -329,8 +283,6 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/posts': typeof PostsRouteWithChildren
   '/presentation': typeof PresentationRoute
-  '/redirect': typeof RedirectRoute
-  '/users': typeof UsersRouteWithChildren
   '/_pathlessLayout/_nested-layout': typeof PathlessLayoutNestedLayoutRouteWithChildren
   '/admin/contact': typeof AdminContactRoute
   '/admin/dessins': typeof AdminDessinsRoute
@@ -342,13 +294,10 @@ export interface FileRoutesById {
   '/admin/sculptures': typeof AdminSculpturesRoute
   '/api/users': typeof ApiUsersRouteWithChildren
   '/posts/$postId': typeof PostsPostIdRoute
-  '/users/$userId': typeof UsersUserIdRoute
   '/admin/': typeof AdminIndexRoute
   '/dessins/': typeof DessinsIndexRoute
   '/peintures/': typeof PeinturesIndexRoute
-  '/posts/': typeof PostsIndexRoute
   '/sculptures/': typeof SculpturesIndexRoute
-  '/users/': typeof UsersIndexRoute
   '/_pathlessLayout/_nested-layout/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
   '/_pathlessLayout/_nested-layout/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
   '/api/users/$userId': typeof ApiUsersUserIdRoute
@@ -356,7 +305,6 @@ export interface FileRoutesById {
   '/dessins/categorie/$categoryKey': typeof DessinsCategorieCategoryKeyRoute
   '/peintures/annee/$year': typeof PeinturesAnneeYearRoute
   '/peintures/categorie/$categoryKey': typeof PeinturesCategorieCategoryKeyRoute
-  '/posts_/$postId/deep': typeof PostsPostIdDeepRoute
   '/sculptures/annee/$year': typeof SculpturesAnneeYearRoute
   '/sculptures/categorie/$categoryKey': typeof SculpturesCategorieCategoryKeyRoute
   '/images/$library/{-$folder}/$filename': typeof ImagesLibraryChar123FolderChar125FilenameRoute
@@ -371,8 +319,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/posts'
     | '/presentation'
-    | '/redirect'
-    | '/users'
     | '/admin/contact'
     | '/admin/dessins'
     | '/admin/home'
@@ -383,13 +329,10 @@ export interface FileRouteTypes {
     | '/admin/sculptures'
     | '/api/users'
     | '/posts/$postId'
-    | '/users/$userId'
     | '/admin/'
     | '/dessins/'
     | '/peintures/'
-    | '/posts/'
     | '/sculptures/'
-    | '/users/'
     | '/route-a'
     | '/route-b'
     | '/api/users/$userId'
@@ -397,7 +340,6 @@ export interface FileRouteTypes {
     | '/dessins/categorie/$categoryKey'
     | '/peintures/annee/$year'
     | '/peintures/categorie/$categoryKey'
-    | '/posts/$postId/deep'
     | '/sculptures/annee/$year'
     | '/sculptures/categorie/$categoryKey'
     | '/images/$library/{-$folder}/$filename'
@@ -407,8 +349,8 @@ export interface FileRouteTypes {
     | '/contact'
     | '/deferred'
     | '/login'
+    | '/posts'
     | '/presentation'
-    | '/redirect'
     | '/admin/contact'
     | '/admin/dessins'
     | '/admin/home'
@@ -419,13 +361,10 @@ export interface FileRouteTypes {
     | '/admin/sculptures'
     | '/api/users'
     | '/posts/$postId'
-    | '/users/$userId'
     | '/admin'
     | '/dessins'
     | '/peintures'
-    | '/posts'
     | '/sculptures'
-    | '/users'
     | '/route-a'
     | '/route-b'
     | '/api/users/$userId'
@@ -433,7 +372,6 @@ export interface FileRouteTypes {
     | '/dessins/categorie/$categoryKey'
     | '/peintures/annee/$year'
     | '/peintures/categorie/$categoryKey'
-    | '/posts/$postId/deep'
     | '/sculptures/annee/$year'
     | '/sculptures/categorie/$categoryKey'
     | '/images/$library/{-$folder}/$filename'
@@ -446,8 +384,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/posts'
     | '/presentation'
-    | '/redirect'
-    | '/users'
     | '/_pathlessLayout/_nested-layout'
     | '/admin/contact'
     | '/admin/dessins'
@@ -459,13 +395,10 @@ export interface FileRouteTypes {
     | '/admin/sculptures'
     | '/api/users'
     | '/posts/$postId'
-    | '/users/$userId'
     | '/admin/'
     | '/dessins/'
     | '/peintures/'
-    | '/posts/'
     | '/sculptures/'
-    | '/users/'
     | '/_pathlessLayout/_nested-layout/route-a'
     | '/_pathlessLayout/_nested-layout/route-b'
     | '/api/users/$userId'
@@ -473,7 +406,6 @@ export interface FileRouteTypes {
     | '/dessins/categorie/$categoryKey'
     | '/peintures/annee/$year'
     | '/peintures/categorie/$categoryKey'
-    | '/posts_/$postId/deep'
     | '/sculptures/annee/$year'
     | '/sculptures/categorie/$categoryKey'
     | '/images/$library/{-$folder}/$filename'
@@ -487,8 +419,6 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   PostsRoute: typeof PostsRouteWithChildren
   PresentationRoute: typeof PresentationRoute
-  RedirectRoute: typeof RedirectRoute
-  UsersRoute: typeof UsersRouteWithChildren
   PathlessLayoutNestedLayoutRoute: typeof PathlessLayoutNestedLayoutRouteWithChildren
   ApiUsersRoute: typeof ApiUsersRouteWithChildren
   DessinsIndexRoute: typeof DessinsIndexRoute
@@ -498,7 +428,6 @@ export interface RootRouteChildren {
   DessinsCategorieCategoryKeyRoute: typeof DessinsCategorieCategoryKeyRoute
   PeinturesAnneeYearRoute: typeof PeinturesAnneeYearRoute
   PeinturesCategorieCategoryKeyRoute: typeof PeinturesCategorieCategoryKeyRoute
-  PostsPostIdDeepRoute: typeof PostsPostIdDeepRoute
   SculpturesAnneeYearRoute: typeof SculpturesAnneeYearRoute
   SculpturesCategorieCategoryKeyRoute: typeof SculpturesCategorieCategoryKeyRoute
   ImagesLibraryChar123FolderChar125FilenameRoute: typeof ImagesLibraryChar123FolderChar125FilenameRoute
@@ -506,20 +435,6 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/users': {
-      id: '/users'
-      path: '/users'
-      fullPath: '/users'
-      preLoaderRoute: typeof UsersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/redirect': {
-      id: '/redirect'
-      path: '/redirect'
-      fullPath: '/redirect'
-      preLoaderRoute: typeof RedirectRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/presentation': {
       id: '/presentation'
       path: '/presentation'
@@ -569,26 +484,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/users/': {
-      id: '/users/'
-      path: '/'
-      fullPath: '/users/'
-      preLoaderRoute: typeof UsersIndexRouteImport
-      parentRoute: typeof UsersRoute
-    }
     '/sculptures/': {
       id: '/sculptures/'
       path: '/sculptures'
       fullPath: '/sculptures/'
       preLoaderRoute: typeof SculpturesIndexRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/posts/': {
-      id: '/posts/'
-      path: '/'
-      fullPath: '/posts/'
-      preLoaderRoute: typeof PostsIndexRouteImport
-      parentRoute: typeof PostsRoute
     }
     '/peintures/': {
       id: '/peintures/'
@@ -610,13 +511,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRouteRoute
-    }
-    '/users/$userId': {
-      id: '/users/$userId'
-      path: '/$userId'
-      fullPath: '/users/$userId'
-      preLoaderRoute: typeof UsersUserIdRouteImport
-      parentRoute: typeof UsersRoute
     }
     '/posts/$postId': {
       id: '/posts/$postId'
@@ -709,13 +603,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SculpturesAnneeYearRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/posts_/$postId/deep': {
-      id: '/posts_/$postId/deep'
-      path: '/posts/$postId/deep'
-      fullPath: '/posts/$postId/deep'
-      preLoaderRoute: typeof PostsPostIdDeepRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/peintures/categorie/$categoryKey': {
       id: '/peintures/categorie/$categoryKey'
       path: '/peintures/categorie/$categoryKey'
@@ -805,27 +692,13 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
 
 interface PostsRouteChildren {
   PostsPostIdRoute: typeof PostsPostIdRoute
-  PostsIndexRoute: typeof PostsIndexRoute
 }
 
 const PostsRouteChildren: PostsRouteChildren = {
   PostsPostIdRoute: PostsPostIdRoute,
-  PostsIndexRoute: PostsIndexRoute,
 }
 
 const PostsRouteWithChildren = PostsRoute._addFileChildren(PostsRouteChildren)
-
-interface UsersRouteChildren {
-  UsersUserIdRoute: typeof UsersUserIdRoute
-  UsersIndexRoute: typeof UsersIndexRoute
-}
-
-const UsersRouteChildren: UsersRouteChildren = {
-  UsersUserIdRoute: UsersUserIdRoute,
-  UsersIndexRoute: UsersIndexRoute,
-}
-
-const UsersRouteWithChildren = UsersRoute._addFileChildren(UsersRouteChildren)
 
 interface PathlessLayoutNestedLayoutRouteChildren {
   PathlessLayoutNestedLayoutRouteARoute: typeof PathlessLayoutNestedLayoutRouteARoute
@@ -865,8 +738,6 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   PostsRoute: PostsRouteWithChildren,
   PresentationRoute: PresentationRoute,
-  RedirectRoute: RedirectRoute,
-  UsersRoute: UsersRouteWithChildren,
   PathlessLayoutNestedLayoutRoute: PathlessLayoutNestedLayoutRouteWithChildren,
   ApiUsersRoute: ApiUsersRouteWithChildren,
   DessinsIndexRoute: DessinsIndexRoute,
@@ -876,7 +747,6 @@ const rootRouteChildren: RootRouteChildren = {
   DessinsCategorieCategoryKeyRoute: DessinsCategorieCategoryKeyRoute,
   PeinturesAnneeYearRoute: PeinturesAnneeYearRoute,
   PeinturesCategorieCategoryKeyRoute: PeinturesCategorieCategoryKeyRoute,
-  PostsPostIdDeepRoute: PostsPostIdDeepRoute,
   SculpturesAnneeYearRoute: SculpturesAnneeYearRoute,
   SculpturesCategorieCategoryKeyRoute: SculpturesCategorieCategoryKeyRoute,
   ImagesLibraryChar123FolderChar125FilenameRoute:

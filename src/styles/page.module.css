@@ -22,7 +22,26 @@
 /*
 POST
  */
+.postWrapper {
+  display: flex;
+}
+
+.list {
+  text-align: left;
+  flex: 20%;
+}
+
+h1 {
+  font-size: var(--font-size-title2);
+  padding-bottom: 1em;
+}
+
+.postWrapper li {
+  list-style: none;
+}
+
 .postContainer {
+  flex: 80%;
   padding: 2em 0 2em;
 }
 

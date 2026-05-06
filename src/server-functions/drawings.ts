@@ -132,7 +132,6 @@ export const createDrawingFn = createServerFn({ method: "POST" })
   })
   .handler(async ({ data: formData }) => {
     const title = formData.get("title") as string;
-    const type = TYPE.DRAWING;
 
     try {
       if (await db.query.drawing.findFirst({ where: { title } }))
@@ -141,7 +140,7 @@ export const createDrawingFn = createServerFn({ method: "POST" })
           isError: true,
         };
 
-      const fileInfos = await handleAddFiles(type, formData);
+      const fileInfos = await handleAddFiles(TYPE.DRAWING, formData);
       const data = createDrawingData(formData, fileInfos);
       await db.insert(drawing).values(data);
 

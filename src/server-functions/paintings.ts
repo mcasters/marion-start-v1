@@ -131,7 +131,6 @@ export const createPaintingFn = createServerFn({ method: "POST" })
   })
   .handler(async ({ data: formData }) => {
     const title = formData.get("title") as string;
-    const type = TYPE.PAINTING;
 
     try {
       if (await db.query.painting.findFirst({ where: { title } }))
@@ -140,7 +139,7 @@ export const createPaintingFn = createServerFn({ method: "POST" })
           isError: true,
         };
 
-      const fileInfos = await handleAddFiles(type, formData);
+      const fileInfos = await handleAddFiles(TYPE.PAINTING, formData);
       const data = createPaintingData(formData, fileInfos);
       await db.insert(painting).values(data);
 

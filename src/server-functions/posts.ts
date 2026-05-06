@@ -1,22 +1,50 @@
 import { createPostData, createPostObject } from "~/utils/workUtils";
-import { db } from "~/db";
-import { createServerFn } from "@tanstack/react-start";
 import { post, postImage, TYPE } from "~/db/schema";
+import { db } from "~/db";
 import {
   handleAddFiles,
   handleRemoveFiles,
 } from "~/server-functions/serverUtils";
 import { asc, eq } from "drizzle-orm";
-import { Post } from "~/lib/type";
+import { createServerFn } from "@tanstack/react-start";
+import { notFound } from "@tanstack/react-router";
 
-export const createPostFn = createServerFn({ method: "POST" })
+export const getPosts = createServerFn().handler(async () => {
+  const rows = await db
+    .select({
+      post: post,
+      postImage: postImage,
+    })
+    .from(post)
+    .innerJoin(postImage, eq(postImage.postId, post.id))
+    .orderBy(asc(post.date));
+
+  return createPostObject(rows);
+});
+
+export const getPost = createServerFn({ method: "POST" })
+  .inputValidator((d: string) => d)
+  .handler(async ({ data }) => {
+    const postRow = await db
+      .select({
+        post: post,
+        postImage: postImage,
+      })
+      .from(post)
+      .innerJoin(postImage, eq(postImage.postId, Number(data)))
+      .orderBy(asc(post.date));
+
+    if (postRow.length === 0) throw notFound();
+    return createPostObject(postRow)[0];
+  });
+
+export const createPost = createServerFn({ method: "POST" })
   .inputValidator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
   })
   .handler(async ({ data: formData }) => {
     const title = formData.get("title") as string;
-    const type = TYPE.POST;
 
     try {
       if (await db.query.post.findFirst({ where: { title } }))
@@ -27,7 +55,7 @@ export const createPostFn = createServerFn({ method: "POST" })
       const data = createPostData(formData);
       const newId = await db.insert(post).values(data).$returningId();
 
-      const fileInfos = await handleAddFiles(type, formData);
+      const fileInfos = await handleAddFiles(TYPE.POST, formData);
       if (fileInfos) {
         const images = fileInfos.map((fileInfo) => {
           return { ...fileInfo, postId: newId[0].id };
@@ -37,11 +65,11 @@ export const createPostFn = createServerFn({ method: "POST" })
 
       return { message: `Post ajouté`, isError: false };
     } catch (e) {
-      return { message: `Erreur à l'enregistrement : ${e}`, isError: true };
+      return { message: `Erreur à l'enregistrement`, isError: true };
     }
   });
 
-export const updatePostFn = createServerFn({ method: "POST" })
+export const updatePost = createServerFn({ method: "POST" })
   .inputValidator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
@@ -93,11 +121,9 @@ export const updatePostFn = createServerFn({ method: "POST" })
     }
   });
 
-export const deletePostFn = createServerFn({ method: "POST" })
+export const deletePost = createServerFn({ method: "POST" })
   .inputValidator((data: { id: number }) => data)
   .handler(async ({ data: { id } }) => {
-    const type = TYPE.POST;
-
     try {
       const postToDelete = await db.query.post.findFirst({
         where: { id },
@@ -110,7 +136,7 @@ export const deletePostFn = createServerFn({ method: "POST" })
 
       await db.delete(post).where(eq(post.id, id));
       await handleRemoveFiles(
-        type,
+        TYPE.POST,
         undefined,
         images.map((image) => image.filename),
       );
@@ -120,18 +146,3 @@ export const deletePostFn = createServerFn({ method: "POST" })
       return { message: `Erreur à la suppression`, isError: true };
     }
   });
-
-export const getPostsFn = createServerFn().handler(
-  async (): Promise<Post[]> => {
-    const rows = await db
-      .select({
-        post: post,
-        postImage: postImage,
-      })
-      .from(post)
-      .innerJoin(postImage, eq(postImage.postId, post.id))
-      .orderBy(asc(post.date));
-
-    return createPostObject(rows);
-  },
-);

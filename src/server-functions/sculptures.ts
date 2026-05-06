@@ -148,7 +148,6 @@ export const createSculptureFn = createServerFn({ method: "POST" })
   })
   .handler(async ({ data: formData }) => {
     const title = formData.get("title") as string;
-    const type = TYPE.SCULPTURE;
 
     try {
       if (await db.query.sculpture.findFirst({ where: { title } }))
@@ -160,7 +159,7 @@ export const createSculptureFn = createServerFn({ method: "POST" })
       const data = createSculptureData(formData);
       const newId = await db.insert(sculpture).values(data).$returningId();
 
-      const fileInfos = await handleAddFiles(type, formData);
+      const fileInfos = await handleAddFiles(TYPE.SCULPTURE, formData);
       if (fileInfos) {
         const images = fileInfos.map((fileInfo) => {
           return { ...fileInfo, sculptureId: newId[0].id };
