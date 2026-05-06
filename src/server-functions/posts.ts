@@ -9,7 +9,7 @@ import { asc, eq } from "drizzle-orm";
 import { createServerFn } from "@tanstack/react-start";
 import { notFound } from "@tanstack/react-router";
 
-export const getPosts = createServerFn().handler(async () => {
+export const getPostsFn = createServerFn().handler(async () => {
   const rows = await db
     .select({
       post: post,
@@ -22,23 +22,25 @@ export const getPosts = createServerFn().handler(async () => {
   return createPostObject(rows);
 });
 
-export const getPost = createServerFn({ method: "POST" })
-  .inputValidator((d: string) => d)
+export const getPostFn = createServerFn({ method: "POST" })
+  .inputValidator((d: { id: string }) => d)
   .handler(async ({ data }) => {
+    const { id } = data;
     const postRow = await db
       .select({
         post: post,
         postImage: postImage,
       })
       .from(post)
-      .innerJoin(postImage, eq(postImage.postId, Number(data)))
+      .where(eq(post.id, Number(id)))
+      .innerJoin(postImage, eq(postImage.postId, Number(id)))
       .orderBy(asc(post.date));
 
     if (postRow.length === 0) throw notFound();
     return createPostObject(postRow)[0];
   });
 
-export const createPost = createServerFn({ method: "POST" })
+export const createPostFn = createServerFn({ method: "POST" })
   .inputValidator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
@@ -69,7 +71,7 @@ export const createPost = createServerFn({ method: "POST" })
     }
   });
 
-export const updatePost = createServerFn({ method: "POST" })
+export const updatePostFn = createServerFn({ method: "POST" })
   .inputValidator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
@@ -121,7 +123,7 @@ export const updatePost = createServerFn({ method: "POST" })
     }
   });
 
-export const deletePost = createServerFn({ method: "POST" })
+export const deletePostFn = createServerFn({ method: "POST" })
   .inputValidator((data: { id: number }) => data)
   .handler(async ({ data: { id } }) => {
     try {
