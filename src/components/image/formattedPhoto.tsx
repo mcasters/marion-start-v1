@@ -9,9 +9,11 @@ interface Props {
   width: number;
   height: number;
   alt: string;
-  displayWidth: { small: number; large: number };
-  displayHeight: { small: number; large: number };
+  displayMaxVW: { small: number; large: number };
+  displayMaxVH: { small: number; large: number };
   withLightbox?: boolean;
+  title?: string;
+  year?: number;
 }
 export default function FormattedPhoto({
   folder,
@@ -19,14 +21,15 @@ export default function FormattedPhoto({
   width,
   height,
   alt,
-  displayWidth,
-  displayHeight,
+  displayMaxVW,
+  displayMaxVH,
   withLightbox = false,
+  title,
+  year,
 }: Props) {
   const isSmall = useWindowRect().innerWidth < DEVICE.SMALL;
+  const isLandscape = Math.round((width / height) * 100) >= 103;
   const [index, setIndex] = useState(-1);
-  const ratio = Math.round((width / height) * 10000);
-  const isLandscape = ratio >= 10300;
 
   return (
     <>
@@ -42,10 +45,10 @@ export default function FormattedPhoto({
           style={{
             objectFit: "contain",
             width: isLandscape
-              ? `${isSmall ? displayWidth.small : displayWidth.large}vw`
+              ? `${isSmall ? displayMaxVW.small : displayMaxVW.large}vw`
               : "auto",
             height: !isLandscape
-              ? `${isSmall ? displayHeight.small : displayHeight.large}vh`
+              ? `${isSmall ? displayMaxVH.small : displayMaxVH.large}vh`
               : "auto",
             cursor: withLightbox ? "pointer" : undefined,
             margin: "auto",
@@ -59,12 +62,13 @@ export default function FormattedPhoto({
         <Lightbox
           enhancedImages={[
             {
-              src: isSmall
-                ? `/images/${folder}/md/${filename}`
-                : `/images/${folder}/${filename}`,
+              src: `/images/${folder}/${filename}`,
+              littleScr: `/images/${folder}/md/${filename}`,
               width,
               height,
               alt,
+              title: title ?? undefined,
+              year: year ?? undefined,
             },
           ]}
           index={index}

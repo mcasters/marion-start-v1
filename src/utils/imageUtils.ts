@@ -13,7 +13,8 @@ export const getEnhancedImages = (
   const tab: EnhancedImage[] = [];
   items.forEach((item) => {
     item.images.forEach((image) => {
-      let obj = {
+      if ("isMain" in image && image.isMain) return;
+      tab.push({
         littleScr: `/images/${item.type}/${isSmall ? "sm/" : "md/"}${image.filename}`,
         src: `/images/${item.type}/${isSmall ? "md/" : ""}${image.filename}`,
         width: image.width,
@@ -22,17 +23,10 @@ export const getEnhancedImages = (
           item.type === TYPE.POST
             ? `Photo du post "${item.title}" de ${owner}`
             : `${item.title} - ${item.type} de ${owner}`,
-      };
-
-      tab.push(
-        longInfo
-          ? ({ ...obj, work: item } as EnhancedImage)
-          : {
-              ...obj,
-              title: item.title,
-              year: new Date(item.date).getFullYear(),
-            },
-      );
+        work: longInfo ? item : undefined,
+        title: !longInfo ? item.title : undefined,
+        year: !longInfo ? new Date(item.date).getFullYear() : undefined,
+      } as EnhancedImage);
     });
   });
   return tab;

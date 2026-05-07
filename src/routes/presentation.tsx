@@ -43,8 +43,8 @@ function RouteComponent() {
           width={image.width}
           height={image.height}
           alt={`Photo de ${owner}`}
-          displayWidth={{ small: 80, large: 35 }}
-          displayHeight={{ small: 40, large: 40 }}
+          displayMaxVW={{ small: 80, large: 35 }}
+          displayMaxVH={{ small: 40, large: 40 }}
         />
       )}
       <section className={s.section}>

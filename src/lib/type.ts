@@ -59,16 +59,10 @@ export type DbSculptureImage = typeof sculptureImage.$inferSelect;
 export type DbPost = typeof post.$inferSelect;
 export type DbPostImage = typeof postImage.$inferSelect;
 
-export type WorkImage = {
-  filename: string;
-  width: number;
-  height: number;
-};
-
 export type Work = Common & {
   type: TYPE.PAINTING | TYPE.SCULPTURE | TYPE.DRAWING;
   length: number;
-  images: WorkImage[];
+  images: Image[];
 };
 
 export interface Image {

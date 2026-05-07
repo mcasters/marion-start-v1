@@ -49,9 +49,11 @@ function RouteComponent() {
           width={mainImage[0].width}
           height={mainImage[0].height}
           alt={`Photo du post "${post.title}" de ${metas.get(KEY_META.OWNER)}`}
-          displayWidth={{ small: 65, large: 30 }}
-          displayHeight={{ small: 35, large: 50 }}
+          displayMaxVW={{ small: 65, large: 30 }}
+          displayMaxVH={{ small: 35, large: 50 }}
           withLightbox={true}
+          title={post.title}
+          year={post.date.getFullYear()}
         />
       )}
       <div className={s.postInfo}>
