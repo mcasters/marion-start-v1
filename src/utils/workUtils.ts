@@ -1,15 +1,12 @@
-import { TYPE } from "~/db/schema";
+import { post, postImage, sculptureImage, TYPE } from "~/db/schema";
 import {
   AdminCategory,
   Category,
-  DbDrawing,
-  DbPainting,
-  DbPost,
-  DbPostImage,
-  DbSculpture,
-  DbSculptureImage,
+  DrawingDb,
   FileInfo,
+  PaintingDb,
   Post,
+  SculptureDb,
   Work,
 } from "~/lib/type";
 import { getNoCategory, transformValueToKey } from "~/utils/commonUtils";
@@ -78,24 +75,32 @@ export const createCategoryData = (formData: FormData) => {
     imageFilename: rawFormData.filename as string,
   };
 };
-export const createWorkObject = (data: DbPainting | DbDrawing): Work => {
+export const createWorkObject = (data: PaintingDb | DrawingDb): Work => {
   const { imageFilename, imageHeight, imageWidth, ...rest } = data;
   return {
     ...rest,
     length: 0,
     images: [
-      { filename: imageFilename, width: imageWidth, height: imageHeight },
+      {
+        filename: imageFilename,
+        width: imageWidth,
+        height: imageHeight,
+        isMain: false,
+      },
     ],
   };
 };
 
 export const createSculptureWorkObject = (
-  rows: { sculpture: DbSculpture; sculptureImage: DbSculptureImage }[],
+  rows: {
+    sculpture: SculptureDb;
+    sculptureImage: typeof sculptureImage.$inferSelect;
+  }[],
 ): Work[] => {
   let map: Map<number, Work> = new Map();
 
   rows.reduce<Map<number, Work>>((acc, row) => {
-    const { createdAt, id, ...rest } = row.sculpture;
+    const { id, ...rest } = row.sculpture;
     const image = row.sculptureImage;
 
     if (!acc.get(id)) {
@@ -111,7 +116,10 @@ export const createSculptureWorkObject = (
 };
 
 export const createPostObject = (
-  rows: { post: DbPost; postImage: DbPostImage }[],
+  rows: {
+    post: typeof post.$inferSelect;
+    postImage: typeof postImage.$inferSelect;
+  }[],
 ): Post[] => {
   let map: Map<number, Post> = new Map();
 

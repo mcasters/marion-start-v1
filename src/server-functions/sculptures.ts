@@ -7,7 +7,7 @@ import {
 } from "~/db/schema";
 import { SculptureCategory } from "~/lib/type";
 import { getNoCategory } from "~/utils/commonUtils";
-import { and, asc, desc, eq, gte, isNull, lte } from "drizzle-orm";
+import { and, asc, desc, eq, getColumns, gte, isNull, lte } from "drizzle-orm";
 import {
   createAdminCategoryObjects,
   createCategoryData,
@@ -79,6 +79,7 @@ export const getSculptureByYearFn = createServerFn({ method: "POST" })
 export const getSculptureByCategoryFn = createServerFn({ method: "POST" })
   .inputValidator((d: string) => d)
   .handler(async ({ data }) => {
+    const { createdAt, ...rest } = getColumns(sculpture);
     let category: SculptureCategory | undefined;
     let rows;
 
@@ -86,7 +87,7 @@ export const getSculptureByCategoryFn = createServerFn({ method: "POST" })
       category = getNoCategory(TYPE.SCULPTURE) as SculptureCategory;
       rows = await db
         .select({
-          sculpture: sculpture,
+          sculpture: { ...rest },
           sculptureImage: sculptureImage,
         })
         .from(sculpture)
@@ -101,7 +102,7 @@ export const getSculptureByCategoryFn = createServerFn({ method: "POST" })
 
       rows = await db
         .select({
-          sculpture: sculpture,
+          sculpture: { ...rest },
           sculptureImage: sculptureImage,
         })
         .from(sculpture)
@@ -123,9 +124,11 @@ ADMIN
 
 export const getAdminSculptureCategoriesFn = createServerFn().handler(
   async () => {
+    const { createdAt, ...rest } = getColumns(sculpture);
+
     const rows = await db
       .select({
-        sculpture: sculpture,
+        sculpture: { ...rest },
         sculptureImage: sculptureImage,
       })
       .from(sculpture)

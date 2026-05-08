@@ -1,6 +1,6 @@
 import { notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
-import { PaintingCategory, Work } from "~/lib/type";
+import { PaintingCategory, PaintingDb, Work } from "~/lib/type";
 import { painting, paintingCategory, TYPE } from "~/db/schema";
 import { db } from "~/db";
 import { getNoCategory } from "~/utils/commonUtils";
@@ -67,7 +67,7 @@ export const getPaintingsByCategoryFn = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     let category: PaintingCategory | undefined;
     let works: Work[] = [];
-    let paintings = [];
+    let paintings: PaintingDb[] = [];
 
     if (data === "no-category") {
       category = getNoCategory(TYPE.PAINTING) as PaintingCategory;
@@ -78,7 +78,7 @@ export const getPaintingsByCategoryFn = createServerFn({ method: "POST" })
         where: { categoryId: { isNull: true } },
         orderBy: { date: "desc" },
       });
-      works = paintings.map((data) => createWorkObject(data));
+      works = paintings.map((d) => createWorkObject(d));
     } else {
       category = await db.query.paintingCategory.findFirst({
         where: { key: data },
