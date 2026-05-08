@@ -1,13 +1,14 @@
 import s from "./workLayout.module.css";
-import { EnhancedImage, Layout, Work } from "~/lib/type";
+import { Layout, Work } from "~/lib/type";
 import React, { useMemo, useState } from "react";
 import Lightbox from "~/components/image/lightbox/lightbox";
 import { KEY_META } from "~/constants/admin";
 import { DEVICE, IMAGE_INFO } from "~/constants/image";
 import useWindowRect from "~/components/hooks/useWindowRect";
 import { rootRouteId, useRouteContext } from "@tanstack/react-router";
-import { getEnhancedImages } from "~/utils/imageUtils";
 import { getSizeText } from "~/utils/commonUtils";
+import { TYPE } from "~/db/schema";
+import { getSlides } from "~/utils/imageUtils";
 
 interface Props {
   work: Work;
@@ -15,6 +16,7 @@ interface Props {
 }
 export default function WorkLayout({ work, layout }: Props) {
   const { metas } = useRouteContext({ from: rootRouteId });
+  const owner = metas.get(KEY_META.OWNER);
   const isSmall = useWindowRect().innerWidth < DEVICE.SMALL;
   const [index, setIndex] = useState(-1);
   const _width = isSmall
@@ -23,10 +25,14 @@ export default function WorkLayout({ work, layout }: Props) {
   const _height = isSmall
     ? IMAGE_INFO[layout].HEIGHT.small
     : IMAGE_INFO[layout].HEIGHT.large;
-
-  const enhancedImages: EnhancedImage[] = useMemo(() => {
-    return getEnhancedImages([work], isSmall, false, metas.get(KEY_META.OWNER));
-  }, [work, isSmall]);
+  const alt =
+    work.type === TYPE.POST
+      ? `Photo du post "${work.title}" de ${owner}`
+      : `${work.title} - ${work.type} de ${owner}`;
+  const slides = useMemo(
+    () => getSlides([work], alt, isSmall),
+    [work, isSmall],
+  );
 
   return (
     <article
@@ -39,21 +45,25 @@ export default function WorkLayout({ work, layout }: Props) {
           layout === Layout.SCULPTURE ? s.sculptureContainer : undefined
         }
       >
-        {enhancedImages.map((image, index) => {
+        {work.images.map((image, i) => {
           const isLandscape = image.width / image.height >= 1.03;
-          const onLeft = Layout.SCULPTURE && index % 2 === 0;
+          const onLeft = Layout.SCULPTURE && i % 2 === 0;
           return (
             <img
-              key={index}
-              src={image.littleScr}
+              key={i}
+              src={
+                isSmall
+                  ? `/images/${work.type}/sm/${image.filename}`
+                  : `/images/${work.type}/md/${image.filename}`
+              }
               width={image.width}
               height={image.height}
               style={{
                 width: isLandscape ? `${_width}vw` : "auto",
                 height: !isLandscape ? `${_height}vh` : "auto",
               }}
-              alt={image.alt}
-              onClick={() => setIndex(index)}
+              alt={alt}
+              onClick={() => setIndex(i)}
               className={
                 layout === Layout.SCULPTURE
                   ? onLeft
@@ -66,14 +76,14 @@ export default function WorkLayout({ work, layout }: Props) {
           );
         })}
         <Lightbox
-          enhancedImages={enhancedImages}
+          slides={slides}
           index={index}
           onClose={() => setIndex(-1)}
           isSmall={isSmall}
         />
       </figure>
       <figcaption>
-        <ImageInfos work={work} isMono={layout === Layout.MONO} />
+        <WorkInfos work={work} isMono={layout === Layout.MONO} />
       </figcaption>
     </article>
   );
@@ -84,7 +94,7 @@ interface ImageInfosProps {
   isMono: boolean;
 }
 
-const ImageInfos = ({ work, isMono }: ImageInfosProps) => {
+const WorkInfos = ({ work, isMono }: ImageInfosProps) => {
   return (
     <figcaption>
       {!isMono && (

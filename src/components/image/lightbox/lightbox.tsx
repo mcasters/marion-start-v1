@@ -2,48 +2,47 @@ import { Lightbox as YetLightbox } from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import "yet-another-react-lightbox/plugins/captions.css";
 import "yet-another-react-lightbox/styles.css";
-import { EnhancedImage, Work } from "~/lib/type";
+import { Slide, Work } from "~/lib/type";
 import { LightboxSlide } from "~/components/image/lightbox/lightboxSlide";
 import { getSizeText } from "~/utils/commonUtils";
 import { rootRouteId, useRouteContext } from "@tanstack/react-router";
 
 type Props = {
-  enhancedImages: EnhancedImage[];
+  slides: Slide[];
   index: number;
   onClose: () => void;
   isSmall: boolean;
 };
 
-export default function Lightbox({
-  enhancedImages,
-  index,
-  onClose,
-  isSmall,
-}: Props) {
+export default function Lightbox({ slides, index, onClose, isSmall }: Props) {
   const { structTheme } = useRouteContext({ from: rootRouteId });
-  const noButtonNav = isSmall || enhancedImages.length < 2;
+  const noButtonNav = isSmall || slides.length < 2;
 
   return (
     <YetLightbox
       index={index}
       open={index >= 0}
       close={onClose}
-      slides={enhancedImages}
+      slides={slides}
       render={{
         slide: LightboxSlide,
         buttonPrev: noButtonNav ? () => null : undefined,
         buttonNext: noButtonNav ? () => null : undefined,
-        slideFooter: ({ slide }) => (
-          <>
-            {"work" in slide && <LongInfoLightbox work={slide.work as Work} />}
-            {"title" in slide && "year" in slide && (
-              <InfoLightbox
-                title={slide.title as string}
-                year={slide.year as number}
-              />
-            )}
-          </>
-        ),
+        slideFooter: ({ slide }) => {
+          return (
+            <>
+              {"work" in slide && (
+                <LongInfoLightbox work={slide.work as Work} />
+              )}
+              {"title" in slide && "year" in slide && (
+                <InfoLightbox
+                  title={slide.title as string}
+                  year={slide.year as number}
+                />
+              )}
+            </>
+          );
+        },
       }}
       styles={{
         container: {

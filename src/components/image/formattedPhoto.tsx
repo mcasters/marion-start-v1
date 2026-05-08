@@ -60,17 +60,31 @@ export default function FormattedPhoto({
       </div>
       {withLightbox && (
         <Lightbox
-          enhancedImages={[
-            {
-              src: `/images/${folder}/${filename}`,
-              littleScr: `/images/${folder}/md/${filename}`,
-              width,
-              height,
-              alt,
-              title: title ?? undefined,
-              year: year ?? undefined,
-            },
-          ]}
+          slides={
+            folder === "post"
+              ? [
+                  {
+                    src: isSmall
+                      ? `/images/${folder}/md/${filename}`
+                      : `/images/${folder}/${filename}`,
+                    width,
+                    height,
+                    alt,
+                    title,
+                    year,
+                  },
+                ]
+              : [
+                  {
+                    src: isSmall
+                      ? `/images/${folder}/md/${filename}`
+                      : `/images/${folder}/${filename}`,
+                    width,
+                    height,
+                    alt,
+                  },
+                ]
+          }
           index={index}
           onClose={() => setIndex(-1)}
           isSmall={isSmall}

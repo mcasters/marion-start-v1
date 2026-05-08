@@ -9,6 +9,10 @@
   font-size: var(--font-size-min);
 }
 
+.article figure {
+  padding-bottom: 0.5em;
+}
+
 /* desktop */
 @media (min-width: 769px) {
   .article {

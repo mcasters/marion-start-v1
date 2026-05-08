@@ -4,16 +4,15 @@
 import { JSX } from "react";
 import { KEY_META } from "~/constants/admin";
 import {
+  drawing,
   drawingCategory,
   LABEL,
   meta,
+  painting,
   paintingCategory,
-  post,
-  postImage,
   presetColor,
   sculpture,
   sculptureCategory,
-  sculptureImage,
   theme,
   TYPE,
 } from "~/db/schema";
@@ -23,10 +22,26 @@ type StringKeys<T> = {
 }[keyof T];
 export type OnlyString<T> = { [k in StringKeys<T>]: boolean };
 
-type Common = {
-  id: number;
+export type PaintingDb = Omit<typeof painting.$inferSelect, "createdAt">;
+export type DrawingDb = Omit<typeof drawing.$inferSelect, "createdAt">;
+export type SculptureDb = Omit<typeof sculpture.$inferSelect, "createdAt">;
+
+export type Image = {
+  filename: string;
+  width: number;
+  height: number;
+  isMain: boolean;
+};
+
+export interface Item {
+  type: TYPE.PAINTING | TYPE.SCULPTURE | TYPE.DRAWING | TYPE.POST;
   title: string;
   date: Date;
+  images: Image[];
+}
+
+export type Work = Item & {
+  id: number;
   technique: string;
   description: string;
   height: number;
@@ -37,43 +52,15 @@ type Common = {
   categoryId: number | null;
   isOut: boolean;
   outInformation: string;
-};
-
-export type DbPainting = Common & {
-  type: TYPE.PAINTING;
-  imageFilename: string;
-  imageWidth: number;
-  imageHeight: number;
-};
-
-export type DbDrawing = Common & {
-  type: TYPE.DRAWING;
-  imageFilename: string;
-  imageWidth: number;
-  imageHeight: number;
-};
-
-export type DbSculpture = typeof sculpture.$inferSelect;
-export type DbSculptureImage = typeof sculptureImage.$inferSelect;
-
-export type DbPost = typeof post.$inferSelect;
-export type DbPostImage = typeof postImage.$inferSelect;
-
-export type Work = Common & {
-  type: TYPE.PAINTING | TYPE.SCULPTURE | TYPE.DRAWING;
   length: number;
-  images: Image[];
 };
 
-export interface Image {
-  filename: string;
-  width: number;
-  height: number;
-  isMain?: boolean;
-}
+export type Post = Item & {
+  id: number;
+  text: string;
+};
 
-export type EnhancedImage = {
-  littleScr: string;
+export type Slide = {
   src: string;
   width: number;
   height: number;
@@ -81,15 +68,6 @@ export type EnhancedImage = {
   work?: Work;
   title?: string;
   year?: number;
-};
-
-export type Post = {
-  id: number;
-  type: TYPE.POST;
-  title: string;
-  date: Date;
-  text: string;
-  images: Image[];
 };
 
 export type PaintingCategory = typeof paintingCategory.$inferSelect;

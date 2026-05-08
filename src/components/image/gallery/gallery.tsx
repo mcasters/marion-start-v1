@@ -1,35 +1,45 @@
 import React, { useMemo, useState } from "react";
-import { EnhancedImage, Post, Work } from "~/lib/type";
+import { Item } from "~/lib/type";
 import s from "./gallery.module.css";
 import Lightbox from "~/components/image/lightbox/lightbox";
 import useWindowRect from "~/components/hooks/useWindowRect";
 import { DEVICE } from "~/constants/image";
 import { KEY_META } from "~/constants/admin";
-import { getEnhancedImages } from "~/utils/imageUtils";
 import { rootRouteId, useRouteContext } from "@tanstack/react-router";
+import { TYPE } from "~/db/schema";
+import { getSlides } from "~/utils/imageUtils";
 
 interface Props {
-  items: Work[] | Post[];
+  items: Item[];
 }
 
 export default function Gallery({ items }: Props) {
   const { metas } = useRouteContext({ from: rootRouteId });
   const [index, setIndex] = useState(-1);
   const isSmall = useWindowRect().innerWidth < DEVICE.SMALL;
-  const isWork = "technique" in items[0];
-  const enhancedImages: EnhancedImage[] = useMemo(() => {
-    return getEnhancedImages(items, isSmall, isWork, metas.get(KEY_META.OWNER));
-  }, [items, isSmall]);
+  const owner = metas.get(KEY_META.OWNER);
+  const alt =
+    items[0].type === TYPE.POST
+      ? `Photo du post "${items[0].title}" de ${owner}`
+      : `${items[0].title} - ${items[0].type} de ${owner}`;
+  const slides = useMemo(
+    () => getSlides(items, alt, isSmall, items[0].type !== TYPE.POST),
+    [items, isSmall],
+  );
 
   return (
     <>
       <div className={s.container}>
-        {enhancedImages.map((image, i) => {
-          return (
+        {items.map((item, i) =>
+          item.images.map((image, ii) => (
             <img
-              key={i}
-              src={image.littleScr!}
-              alt={image.alt}
+              key={`${i}-${ii}`}
+              src={
+                isSmall
+                  ? `/images/${item.type}/sm/${image.filename}`
+                  : `/images/${item.type}/md/${image.filename}`
+              }
+              alt={alt}
               width={image.width}
               height={image.height}
               className={`${s.image}`}
@@ -37,11 +47,11 @@ export default function Gallery({ items }: Props) {
               title="Agrandir"
               loading={i < 10 ? "eager" : undefined}
             />
-          );
-        })}
+          )),
+        )}
       </div>
       <Lightbox
-        enhancedImages={enhancedImages}
+        slides={slides}
         index={index}
         onClose={() => setIndex(-1)}
         isSmall={isSmall}

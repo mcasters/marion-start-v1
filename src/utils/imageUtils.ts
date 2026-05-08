@@ -1,35 +1,36 @@
-import { EnhancedImage, Post, Work } from "~/lib/type";
+import { Item, Slide, Work } from "~/lib/type";
 import { FILE_TYPES } from "~/constants/image";
 import { MESSAGE } from "~/constants/admin";
 import { TYPE } from "~/db/schema";
 import Resizer from "~/utils/resizer";
 
-export const getEnhancedImages = (
-  items: Work[] | Post[],
+export const getSlides = (
+  items: Item[],
+  alt: string,
   isSmall: boolean,
   longInfo: boolean = false,
-  owner: string = "",
-): EnhancedImage[] => {
-  const tab: EnhancedImage[] = [];
+): Slide[] => {
+  const slides: Slide[] = [];
   items.forEach((item) => {
     item.images.forEach((image) => {
-      if ("isMain" in image && image.isMain) return;
-      tab.push({
-        littleScr: `/images/${item.type}/${isSmall ? "sm/" : "md/"}${image.filename}`,
-        src: `/images/${item.type}/${isSmall ? "md/" : ""}${image.filename}`,
-        width: image.width,
-        height: image.height,
-        alt:
-          item.type === TYPE.POST
-            ? `Photo du post "${item.title}" de ${owner}`
-            : `${item.title} - ${item.type} de ${owner}`,
-        work: longInfo ? item : undefined,
-        title: !longInfo ? item.title : undefined,
-        year: !longInfo ? new Date(item.date).getFullYear() : undefined,
-      } as EnhancedImage);
+      if (!image.isMain) {
+        const slide: Slide = {
+          src: `/images/${item.type}/${isSmall ? "md/" : ""}${image.filename}`,
+          width: image.width,
+          height: image.height,
+          alt,
+        };
+        if (longInfo && item.type !== TYPE.POST) {
+          slide.work = item as Work;
+        } else {
+          slide.title = item.title;
+          slide.year = item.date.getFullYear();
+        }
+        slides.push(slide);
+      }
     });
   });
-  return tab;
+  return slides;
 };
 
 export const validateFile = async (

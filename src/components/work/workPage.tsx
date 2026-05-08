@@ -34,8 +34,8 @@ export default function WorkPage({ tag, works, category, type }: Props) {
       >
         {itemLayout === Layout.MULTIPLE && <Gallery items={works} />}
         {itemLayout !== Layout.MULTIPLE &&
-          works.map((item, i) => (
-            <WorkLayout key={i} layout={itemLayout} work={item} />
+          works.map((work, i) => (
+            <WorkLayout key={i} layout={itemLayout} work={work} />
           ))}
       </div>
     </>
