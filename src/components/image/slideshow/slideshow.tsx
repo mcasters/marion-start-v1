@@ -23,13 +23,13 @@ export default function Slideshow({ images }: Props) {
   const isPlainHomeLayout = getHomeLayout(metas) === HomeLayout.PLAIN;
   const window = useWindowRect();
   const isSmall = window.innerWidth < DEVICE.SMALL;
-  const needPortrait = window.innerWidth / window.innerHeight < 0.98;
+  const isLandscape = window.innerWidth / window.innerHeight > 1.02;
   const [active, setActive] = useState(0);
   const imagesToDisplay = useMemo(() => {
-    return needPortrait
+    return isLandscape
       ? images.filter((i) => i.isMain)
       : images.filter((i) => !i.isMain);
-  }, [needPortrait, images]);
+  }, [isLandscape, images]);
 
   useEffect(() => {
     if (imagesToDisplay.length > 0) {

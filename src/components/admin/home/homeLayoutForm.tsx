@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import s from "~/components/admin/admin.module.css";
 import { getHomeLayout } from "~/utils/commonUtils";
 import { KEY_META } from "~/constants/admin";
