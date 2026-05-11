@@ -4,7 +4,6 @@ import { Category, Work } from "~/lib/type";
 import SubmitButton from "~/components/admin/common/button/submitButton";
 import CancelButton from "~/components/admin/common/button/cancelButton";
 import ImageInput from "~/components/admin/common/image/imageInput";
-import { format } from "date-fns/format";
 import { TYPE } from "~/db/schema";
 import { getCreateFn, getUpdateFn } from "~/server-functions";
 import { useAlert } from "~/components/admin/context/alertProvider";
@@ -61,7 +60,7 @@ export default function WorkForm({ work, onClose, categories }: Props) {
             <input
               name="date"
               type="date"
-              value={format(new Date(workItem.date), "yyyy-MM-dd")}
+              value={workItem.date.toISOString().substring(0, 10)}
               onChange={(e) =>
                 setWorkItem({ ...workItem, date: new Date(e.target.value) })
               }
