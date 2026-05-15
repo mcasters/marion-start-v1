@@ -16,15 +16,15 @@ class Resizer {
     maxWidth,
     maxHeight,
     compressFormat = "jpeg",
-    quality = 100,
+    quality,
   ) {
-    var qualityDecimal = quality / 100;
-    var canvas = document.createElement("canvas");
+    const qualityDecimal = quality / 100;
+    const canvas = document.createElement("canvas");
 
-    var width = image.width;
-    var height = image.height;
+    let width = image.width;
+    let height = image.height;
 
-    var newHeightWidth = this.changeHeightWidth(
+    const newHeightWidth = this.changeHeightWidth(
       height,
       maxHeight,
       width,
@@ -36,7 +36,7 @@ class Resizer {
     width = newHeightWidth.width;
     height = newHeightWidth.height;
 
-    var ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d");
     ctx.fillStyle = "rgba(0, 0, 0, 0)";
     ctx.fillRect(0, 0, width, height);
 
@@ -51,24 +51,24 @@ class Resizer {
 
   static b64toByteArrays(b64Data, contentType) {
     contentType = contentType || "image/jpeg";
-    var sliceSize = 512;
+    const sliceSize = 512;
 
-    var byteCharacters = atob(
+    const byteCharacters = atob(
       b64Data
         .toString()
         .replace(/^data:image\/(png|jpeg|jpg|webp);base64,/, ""),
     );
-    var byteArrays = [];
+    const byteArrays = [];
 
-    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      var slice = byteCharacters.slice(offset, offset + sliceSize);
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
 
-      var byteNumbers = new Array(slice.length);
-      for (var i = 0; i < slice.length; i++) {
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
         byteNumbers[i] = slice.charCodeAt(i);
       }
 
-      var byteArray = new Uint8Array(byteNumbers);
+      const byteArray = new Uint8Array(byteNumbers);
 
       byteArrays.push(byteArray);
     }
@@ -77,20 +77,18 @@ class Resizer {
 
   static b64toBlob(b64Data, contentType) {
     const byteArrays = this.b64toByteArrays(b64Data, contentType);
-    var blob = new Blob(byteArrays, {
+    return new Blob(byteArrays, {
       type: contentType,
       lastModified: new Date(),
     });
-    return blob;
   }
 
   static b64toFile(b64Data, fileName, contentType) {
     const byteArrays = this.b64toByteArrays(b64Data, contentType);
-    const file = new File(byteArrays, fileName, {
+    return new File(byteArrays, fileName, {
       type: contentType,
       lastModified: new Date(),
     });
-    return file;
   }
 
   static createResizedImage(
@@ -109,10 +107,10 @@ class Resizer {
       } else {
         reader.readAsDataURL(file);
         reader.onload = () => {
-          var image = new Image();
+          const image = new Image();
           image.src = reader.result;
           image.onload = function () {
-            var resizedDataUrl = Resizer.resizeImage(
+            const resizedDataUrl = Resizer.resizeImage(
               image,
               maxWidth,
               maxHeight,

@@ -1,4 +1,4 @@
-import {Layout} from "~/lib/type";
+import { Layout } from "~/lib/type";
 
 export const IMAGE = {
   SM_PX: 384,

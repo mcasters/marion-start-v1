@@ -5,7 +5,7 @@ import { createServerFn } from "@tanstack/react-start";
 import {
   deleteFile,
   getMiscellaneousDir,
-  resizeAndSaveImage,
+  resizeAndSaveImages,
 } from "~/server-functions/serverUtils";
 
 export const getHomeTextFn = createServerFn().handler(async () => {
@@ -175,7 +175,7 @@ const saveContentImage = async (
 
   for await (const file of filesToAdd) {
     if (file.size > 0) {
-      const fileInfo = await resizeAndSaveImage(
+      const fileInfo = await resizeAndSaveImages(
         file,
         title,
         getMiscellaneousDir(),

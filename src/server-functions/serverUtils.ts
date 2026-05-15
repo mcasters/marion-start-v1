@@ -17,7 +17,7 @@ export const getMiscellaneousDir = () => {
   return join(`${serverLibraryPath}`, "miscellaneous");
 };
 
-export const resizeAndSaveImage = async (
+export const resizeAndSaveImages = async (
   file: File,
   title: string = "",
   dir: string,
@@ -25,20 +25,12 @@ export const resizeAndSaveImage = async (
 ) => {
   const titleString = transformValueToKey(title);
   const newFilename = `${titleString}-${Date.now()}.jpeg`;
+
+  const buffer = Buffer.from(await file.arrayBuffer());
+  const outputInfo = await constraintImage(buffer, dir, newFilename);
+
   const sharpStream = sharp({ failOn: "none" });
   const promises = [];
-
-  promises.push(
-    sharpStream
-      .clone()
-      .withExif({
-        IFD0: {
-          Copyright: copyright,
-        },
-      })
-      .jpeg({ quality: 80 })
-      .toFile(`${dir}/${newFilename}`),
-  );
   promises.push(
     sharpStream
       .clone()
@@ -52,8 +44,8 @@ export const resizeAndSaveImage = async (
           Copyright: copyright,
         },
       })
-      .jpeg({ quality: 80 })
-      .toFile(`${dir}/md/${newFilename}`),
+      .jpeg({ quality: 80, mozjpeg: true, chromaSubsampling: "4:4:4" })
+      .toFile(join(dir, "md", newFilename)),
   );
   promises.push(
     sharpStream
@@ -68,23 +60,18 @@ export const resizeAndSaveImage = async (
           Copyright: copyright,
         },
       })
-      .jpeg({ quality: 80 })
-      .toFile(`${dir}/sm/${newFilename}`),
+      .jpeg({ quality: 80, mozjpeg: true })
+      .toFile(join(dir, "sm", newFilename)),
   );
 
-  const bytes = await file.arrayBuffer();
-  const imageBuffer = await sharp(Buffer.from(bytes))
-    .jpeg({ quality: 100 })
-    .toBuffer();
-  sharp(imageBuffer).pipe(sharpStream);
+  sharp(buffer).pipe(sharpStream);
 
   return Promise.all(promises)
-    .then((res) => {
-      const info = res[0];
+    .then(() => {
       return {
         filename: newFilename,
-        width: info.width,
-        height: info.height,
+        width: outputInfo.width,
+        height: outputInfo.height,
         isMain,
       };
     })
@@ -93,11 +80,40 @@ export const resizeAndSaveImage = async (
         "Erreur à l'écriture des fichiers images, nettoyage...",
         err,
       );
-      deleteFile(`${dir}/sm`, newFilename);
-      deleteFile(`${dir}/md`, newFilename);
       deleteFile(dir, newFilename);
       return null;
     });
+};
+
+const constraintImage = async (
+  buffer: Buffer<ArrayBuffer> | Buffer<ArrayBufferLike>,
+  dir: string,
+  filename: string,
+  quality = 100,
+  drop = 8,
+) => {
+  const done = await sharp(buffer)
+    .resize({
+      width: 2000,
+      height: 2000,
+      fit: sharp.fit.inside,
+      withoutEnlargement: true,
+    })
+    .jpeg({
+      quality,
+      mozjpeg: true,
+      chromaSubsampling: "4:4:4",
+    })
+    .withExif({
+      IFD0: {
+        Copyright: copyright,
+      },
+    })
+    .toFile(join(dir, filename));
+
+  if (done.size > 250000 && quality - drop > 10)
+    return constraintImage(buffer, dir, filename, quality - drop);
+  return done;
 };
 
 export const deleteFile = (dir: string, filename: string) => {
@@ -117,14 +133,14 @@ export const handleAddFiles = async (
   const filesToAdd = formData.getAll("filesToAdd") as File[];
   if (type === TYPE.POST && mainFileToAdd.size > 0)
     fileInfos.push(
-      <FileInfo>await resizeAndSaveImage(mainFileToAdd, title, dir, true),
+      <FileInfo>await resizeAndSaveImages(mainFileToAdd, title, dir, true),
     );
 
   if (filesToAdd.length) {
     for await (const file of filesToAdd) {
       if (file.size > 0)
         fileInfos.push(
-          <FileInfo>await resizeAndSaveImage(file, title, dir, false),
+          <FileInfo>await resizeAndSaveImages(file, title, dir, false),
         );
     }
   }

@@ -9,8 +9,9 @@ import {
 import s from "./image.module.css";
 import ArrowDown from "~/components/icons/arrowDown";
 import DeleteButton from "~/components/admin/common/button/deleteButton";
-import { resizeFile, validateFile } from "~/utils/imageUtils";
+import { validateFile } from "~/utils/imageUtils";
 import { useAlert } from "~/components/admin/context/alertProvider";
+import { FILE_TYPES } from "~/constants/image";
 
 interface Props extends HTMLProps<HTMLInputElement> {
   filesPath: string[];
@@ -65,12 +66,7 @@ export default function ImageInput({
         alert(result.message, result.isError, 5000);
         return;
       }
-      try {
-        const resizedFile = await resizeFile(file, 100);
-        resizedFiles.push(resizedFile);
-      } catch (e) {
-        alert("Erreur au redimensionnement", true);
-      }
+      resizedFiles.push(file);
     }
 
     if (!isMultiple) {
@@ -113,14 +109,18 @@ export default function ImageInput({
         <div className={s.dropIcon}>
           <ArrowDown width={50} height={50} />
         </div>
-        <div>{`Glisser ${isMultiple ? "les" : "la"} photo${isMultiple ? "s" : ""} ou cliquer`}</div>
+        <div>
+          {`Glisser ${isMultiple ? "les" : "la"} photo${isMultiple ? "s" : ""} ou cliquer`}
+          <br />
+          <small>(jpeg, jpg ou png)</small>
+        </div>
         <input
           ref={inputRef}
           type="file"
           name={isMain ? "mainFileToAdd" : "filesToAdd"}
           onChange={handleAdd}
           multiple={isMultiple}
-          accept="image/png, image/jpeg"
+          accept={FILE_TYPES.toString()}
           className={s.input}
           required={required && !newFiles.length && !filesPath.length}
         />

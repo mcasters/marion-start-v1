@@ -57,12 +57,16 @@ export const validateFile = async (
   return { message: "OK", isError: false };
 };
 
-export const resizeFile = (file: File, quality: number): Promise<File> =>
+export const resizer = (
+  file: File,
+  quality: number,
+  maxDim: number,
+): Promise<File> =>
   new Promise((resolve) => {
     Resizer.imageFileResizer(
       file,
-      2000,
-      2000,
+      maxDim,
+      maxDim,
       "jpeg",
       quality,
       (file: File) => {
@@ -72,15 +76,19 @@ export const resizeFile = (file: File, quality: number): Promise<File> =>
     );
   });
 
-export const constraintImage = async (
-  file: File,
-  quality = 90,
-  drop = 10,
-): Promise<File> => {
-  const done = await resizeFile(file, quality);
-
-  if (done.size > 200000 && quality - drop > 10) {
-    return constraintImage(file, quality - drop);
-  }
-  return done;
-};
+export async function resizeFile({
+  file,
+  maxDim,
+  maxSize = 150000,
+  quality = 100,
+}: {
+  file: File;
+  maxDim: number;
+  maxSize?: number;
+  quality?: number;
+}): Promise<File> {
+  const resizedFile = await resizer(file, quality, maxDim);
+  return resizedFile.size > maxSize && quality >= 10
+    ? resizeFile({ file, maxDim, maxSize, quality: quality - 8 })
+    : resizedFile;
+}
