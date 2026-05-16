@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import s from "~/components/admin/admin.module.css";
 import { Category, Work } from "~/lib/type";
-import SubmitButton from "~/components/admin/common/button/submitButton";
-import CancelButton from "~/components/admin/common/button/cancelButton";
 import ImageInput from "~/components/admin/common/image/imageInput";
 import { TYPE } from "~/db/schema";
 import { getCreateFn, getUpdateFn } from "~/server-functions";
 import { useAlert } from "~/components/admin/context/alertProvider";
 import { useRouter } from "@tanstack/react-router";
+import FormButtons from "~/components/admin/common/button/FormButtons";
 
 interface Props {
   work: Work;
@@ -257,10 +256,7 @@ export default function WorkForm({ work, onClose, categories }: Props) {
         title={isSculpture ? "Images * :" : "Image * :"}
         required
       />
-      <div className={s.buttonSection}>
-        <SubmitButton />
-        <CancelButton onCancel={onClose} />
-      </div>
+      <FormButtons onCancel={onClose} />
     </form>
   );
 }

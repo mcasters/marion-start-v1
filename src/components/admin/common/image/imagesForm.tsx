@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import s from "~/components/admin/admin.module.css";
 import { Image } from "~/lib/type";
 import ImageInput from "~/components/admin/common/image/imageInput";
-import SubmitButton from "~/components/admin/common/button/submitButton";
-import CancelButton from "~/components/admin/common/button/cancelButton";
 import { LABEL } from "~/db/schema";
 import { updateImageContentFn } from "~/server-functions/content";
 import { useRouter } from "@tanstack/react-router";
 import { useAlert } from "~/components/admin/context/alertProvider";
+import FormButtons from "~/components/admin/common/button/FormButtons";
 
 type Props = {
   images: Image[];
@@ -36,7 +34,7 @@ export default function ImagesForm({
     setChanged(false);
   };
 
-  const handleSubmit = async (formData: FormData) => {
+  const action = async (formData: FormData) => {
     const res = await updateImageContentFn({ data: formData });
     alert(res.message, res.isError);
     router.invalidate();
@@ -44,7 +42,7 @@ export default function ImagesForm({
   };
 
   return (
-    <form action={handleSubmit}>
+    <form action={action}>
       <input type="hidden" name="key" value={label} />
       <input type="hidden" name="isMain" value={isMain?.toString()} />
       <ImageInput
@@ -57,10 +55,7 @@ export default function ImagesForm({
         onChange={() => setChanged(true)}
         title={title}
       />
-      <div className={s.buttonSection}>
-        <SubmitButton disabled={!changed} />
-        <CancelButton disabled={!changed} onCancel={reset} />
-      </div>
+      <FormButtons onCancel={reset} disabled={!changed} />
     </form>
   );
 }

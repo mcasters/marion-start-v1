@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { Image, Post } from "~/lib/type";
-import s from "~/components/admin/admin.module.css";
-import SubmitButton from "~/components/admin/common/button/submitButton";
-import CancelButton from "~/components/admin/common/button/cancelButton";
 import ImageInput from "~/components/admin/common/image/imageInput";
 import { TYPE } from "~/db/schema";
 import { useRouter } from "@tanstack/react-router";
 import { getCreateFn, getUpdateFn } from "~/server-functions";
 import { useAlert } from "~/components/admin/context/alertProvider";
+import FormButtons from "~/components/admin/common/button/FormButtons";
 
 interface Props {
   post: Post;
@@ -78,10 +76,7 @@ export default function PostForm({ post, onClose }: Props) {
         isMain={false}
         title="Album d'images (facultatif)"
       />
-      <div className={s.buttonSection}>
-        <SubmitButton />
-        <CancelButton onCancel={onClose} />
-      </div>
+      <FormButtons onCancel={onClose} />
     </form>
   );
 }

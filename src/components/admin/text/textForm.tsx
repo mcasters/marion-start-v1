@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import SubmitButton from "~/components/admin/common/button/submitButton";
-import CancelButton from "~/components/admin/common/button/cancelButton";
 import { KeyMeta } from "~/lib/type";
 import s from "../admin.module.css";
 import { LABEL } from "~/db/schema";
@@ -8,6 +6,7 @@ import { updateMetaFn } from "~/server-functions/meta";
 import { updateContentFn } from "~/server-functions/content";
 import { useAlert } from "~/components/admin/context/alertProvider";
 import { useRouter } from "@tanstack/react-router";
+import FormButtons from "~/components/admin/common/button/FormButtons";
 
 interface Props {
   dbKey: LABEL | KeyMeta;
@@ -65,8 +64,7 @@ export function TextForm({
           />
         )}
       </label>
-      <SubmitButton disabled={text === _text} />
-      <CancelButton disabled={text === _text} onCancel={() => set_text(text)} />
+      <FormButtons onCancel={() => set_text(text)} disabled={text === _text} />
     </form>
   );
 }
