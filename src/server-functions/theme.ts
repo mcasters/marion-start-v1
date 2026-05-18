@@ -5,6 +5,7 @@ import { eq } from "drizzle-orm";
 import { THEME } from "~/constants/admin";
 import { getBasePresetColorData, getBaseThemeData } from "~/utils/themeUtils";
 import { presetColor, theme } from "~/db/schema";
+import { authMiddleware } from "~/middleware";
 
 export const getActiveThemeFn = createServerFn().handler(
   async (): Promise<Theme> => {
@@ -64,6 +65,7 @@ export const getThemes = createServerFn().handler(
 );
 
 export const activateThemeFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: { id: number }) => data)
   .handler(async ({ data }) => {
     try {
@@ -80,6 +82,7 @@ export const activateThemeFn = createServerFn({ method: "POST" })
   });
 
 export const createThemeFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: Theme) => data)
   .handler(async ({ data }) => {
     try {
@@ -110,6 +113,7 @@ export const createThemeFn = createServerFn({ method: "POST" })
   });
 
 export const updateThemeFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: Theme) => data)
   .handler(async ({ data }) => {
     try {
@@ -122,6 +126,7 @@ export const updateThemeFn = createServerFn({ method: "POST" })
   });
 
 export const deleteThemeFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: { id: number }) => data)
   .handler(async ({ data }) => {
     try {
@@ -158,6 +163,7 @@ export const deleteThemeFn = createServerFn({ method: "POST" })
   });
 
 export const createPresetColorFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator(
     (data: { name: string; color: string; displayOrder: number }) => data,
   )
@@ -202,6 +208,7 @@ export const createPresetColorFn = createServerFn({ method: "POST" })
   });
 
 export const updatePresetColorFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: PresetColor) => data)
   .handler(async ({ data }) => {
     try {
@@ -222,6 +229,7 @@ export const updatePresetColorFn = createServerFn({ method: "POST" })
   });
 
 export const updatePresetColorsOrderFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: Map<number, number>) => data)
   .handler(async ({ data }) => {
     try {
@@ -251,6 +259,7 @@ export const updatePresetColorsOrderFn = createServerFn({ method: "POST" })
   });
 
 export const deletePresetColorFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: { id: number }) => data)
   .handler(async ({ data }) => {
     try {

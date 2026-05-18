@@ -20,6 +20,7 @@ import {
   handleAddFiles,
   handleRemoveFiles,
 } from "~/server-functions/serverUtils";
+import { authMiddleware } from "~/middleware";
 
 export const getSculptureCategoriesFn = createServerFn().handler(
   async (): Promise<{
@@ -145,6 +146,7 @@ export const getAdminSculptureCategoriesFn = createServerFn().handler(
 );
 
 export const createSculptureFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
@@ -176,6 +178,7 @@ export const createSculptureFn = createServerFn({ method: "POST" })
   });
 
 export const updateSculptureFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
@@ -248,6 +251,7 @@ export const updateSculptureFn = createServerFn({ method: "POST" })
   });
 
 export const deleteSculptureFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: { id: number }) => data)
   .handler(async ({ data: { id } }) => {
     try {
@@ -274,6 +278,7 @@ export const deleteSculptureFn = createServerFn({ method: "POST" })
   });
 
 export const createSculptureCategoryFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
@@ -300,6 +305,7 @@ export const createSculptureCategoryFn = createServerFn({ method: "POST" })
   });
 
 export const updateSculptureCategoryFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
@@ -326,6 +332,7 @@ export const updateSculptureCategoryFn = createServerFn({ method: "POST" })
   });
 
 export const deleteSculptureCategoryFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: { id: number }) => data)
   .handler(async ({ data: { id } }) => {
     try {
