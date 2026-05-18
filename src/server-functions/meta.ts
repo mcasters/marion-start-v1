@@ -4,6 +4,7 @@ import { meta } from "~/db/schema";
 import { eq } from "drizzle-orm";
 import { KEY_META } from "~/constants/admin";
 import { KeyMeta } from "~/lib/type";
+import { authMiddleware } from "~/middleware";
 
 export const getMetasFn = createServerFn().handler(async () => {
   const metas = await db.query.meta.findMany({
@@ -15,6 +16,7 @@ export const getMetasFn = createServerFn().handler(async () => {
 });
 
 export const updateMetaFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator(
     (data: {
       key: KeyMeta;

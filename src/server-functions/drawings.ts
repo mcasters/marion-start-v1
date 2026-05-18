@@ -15,6 +15,7 @@ import {
   handleAddFiles,
   handleRemoveFiles,
 } from "~/server-functions/serverUtils";
+import { authMiddleware } from "~/middleware";
 
 export const getDrawingCategoriesFn = createServerFn().handler(
   async (): Promise<{ categories: DrawingCategory[]; years: number[] }> => {
@@ -126,6 +127,7 @@ export const getAdminDrawingCategoriesFn = createServerFn().handler(
 );
 
 export const createDrawingFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
@@ -151,6 +153,7 @@ export const createDrawingFn = createServerFn({ method: "POST" })
   });
 
 export const updateDrawingFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
@@ -205,6 +208,7 @@ export const updateDrawingFn = createServerFn({ method: "POST" })
   });
 
 export const deleteDrawingFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: { id: number }) => data)
   .handler(async ({ data: { id } }) => {
     try {
@@ -227,6 +231,7 @@ export const deleteDrawingFn = createServerFn({ method: "POST" })
   });
 
 export const createDrawingCategoryFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
@@ -253,6 +258,7 @@ export const createDrawingCategoryFn = createServerFn({ method: "POST" })
   });
 
 export const updateDrawingCategoryFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
@@ -279,6 +285,7 @@ export const updateDrawingCategoryFn = createServerFn({ method: "POST" })
   });
 
 export const deleteDrawingCategoryFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: { id: number }) => data)
   .handler(async ({ data: { id } }) => {
     try {

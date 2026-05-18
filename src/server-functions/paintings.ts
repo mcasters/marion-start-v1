@@ -12,6 +12,7 @@ import {
 } from "~/utils/workUtils";
 import { asc, eq } from "drizzle-orm";
 import { handleAddFiles, handleRemoveFiles } from "./serverUtils";
+import { authMiddleware } from "~/middleware";
 
 export const getPaintingCategoriesFn = createServerFn().handler(
   async (): Promise<{ categories: PaintingCategory[]; years: number[] }> => {
@@ -125,6 +126,7 @@ export const getAdminPaintingCategoriesFn = createServerFn().handler(
 );
 
 export const createPaintingFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
@@ -150,6 +152,7 @@ export const createPaintingFn = createServerFn({ method: "POST" })
   });
 
 export const updatePaintingFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
@@ -206,6 +209,7 @@ export const updatePaintingFn = createServerFn({ method: "POST" })
   });
 
 export const deletePaintingFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: { id: number }) => data)
   .handler(async ({ data: { id } }) => {
     try {
@@ -228,6 +232,7 @@ export const deletePaintingFn = createServerFn({ method: "POST" })
   });
 
 export const createPaintingCategoryFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
@@ -253,6 +258,7 @@ export const createPaintingCategoryFn = createServerFn({ method: "POST" })
   });
 
 export const updatePaintingCategoryFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
@@ -278,6 +284,7 @@ export const updatePaintingCategoryFn = createServerFn({ method: "POST" })
   });
 
 export const deletePaintingCategoryFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: { id: number }) => data)
   .handler(async ({ data: { id } }) => {
     try {
