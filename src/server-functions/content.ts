@@ -7,6 +7,7 @@ import {
   getMiscellaneousDir,
   resizeAndSaveImages,
 } from "~/server-functions/serverUtils";
+import { authMiddleware } from "~/middleware";
 
 export const getHomeTextFn = createServerFn().handler(async () => {
   const content = await db.query.content.findFirst({
@@ -83,6 +84,7 @@ export const getPresentationContentFn = createServerFn().handler(async () => {
 });
 
 export const updateContentFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: { key: LABEL; text: string }) => data)
   .handler(async ({ data }) => {
     try {
@@ -104,6 +106,7 @@ export const updateContentFn = createServerFn({ method: "POST" })
   });
 
 export const updateImageContentFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((d: FormData) => d)
   .handler(async ({ data }) => {
     const label = data.get("key") as LABEL;
