@@ -8,6 +8,7 @@ import {
 import { asc, eq } from "drizzle-orm";
 import { createServerFn } from "@tanstack/react-start";
 import { notFound } from "@tanstack/react-router";
+import { authMiddleware } from "~/middleware";
 
 export const getPostsFn = createServerFn().handler(async () => {
   const rows = await db
@@ -41,6 +42,7 @@ export const getPostFn = createServerFn({ method: "POST" })
   });
 
 export const createPostFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
@@ -72,6 +74,7 @@ export const createPostFn = createServerFn({ method: "POST" })
   });
 
 export const updatePostFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
@@ -124,6 +127,7 @@ export const updatePostFn = createServerFn({ method: "POST" })
   });
 
 export const deletePostFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: { id: number }) => data)
   .handler(async ({ data: { id } }) => {
     try {

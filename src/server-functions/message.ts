@@ -2,6 +2,7 @@ import { db } from "~/db";
 import { message, user } from "~/db/schema";
 import { desc, eq } from "drizzle-orm";
 import { createServerFn } from "@tanstack/react-start";
+import { authMiddleware } from "~/middleware";
 
 export const getMessagesFn = createServerFn().handler(async () => {
   return db
@@ -18,6 +19,7 @@ export const getMessagesFn = createServerFn().handler(async () => {
 });
 
 export const addMessageFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data) => {
     if (!(data instanceof FormData)) {
       throw new Error("Expected FormData");
@@ -43,6 +45,7 @@ export const addMessageFn = createServerFn({ method: "POST" })
   });
 
 export const updateMessageFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data) => {
     if (!(data instanceof FormData)) {
       throw new Error("Expected FormData");
@@ -70,6 +73,7 @@ export const updateMessageFn = createServerFn({ method: "POST" })
   });
 
 export const deleteMessageFn = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: { id: number }) => data)
   .handler(async ({ data }) => {
     try {
