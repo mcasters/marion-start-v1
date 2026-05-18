@@ -1,21 +1,24 @@
-.limitedWidth {
-  text-align: left;
-}
-
 .section {
   white-space: pre-line;
   padding: 1em 0;
 }
 
+.errorWrapper {
+  padding: 2em;
+
+  div {
+    margin-top: 3em;
+  }
+}
+
 /* desktop */
 @media (min-width: 769px) {
-  .limitedWidth {
-    max-width: 42vw;
-    margin: auto;
-  }
-
   .section {
     padding: 2em 0;
+  }
+
+  .errorWrapper {
+    padding: 4em 8em;
   }
 }
 
