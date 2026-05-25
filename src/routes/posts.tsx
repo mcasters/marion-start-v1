@@ -12,7 +12,7 @@ function RouteComponent() {
   return (
     <div className={s.postWrapper}>
       <div className={s.list}>
-        <h1>Posts :</h1>
+        <h1>Posts</h1>
         <ul>
           {posts.map((post) => {
             return (
@@ -22,16 +22,12 @@ function RouteComponent() {
                   params={{
                     postId: String(post.id),
                   }}
-                  className="block py-1 text-blue-800 hover:text-blue-600"
-                  activeProps={{ className: "text-black font-bold" }}
                 >
-                  <div>
-                    {post.title.substring(0, 20)}
-                    <span>
-                      {" - "}
-                      {post.date.getFullYear()}
-                    </span>
-                  </div>
+                  {post.title.substring(0, 20)}
+                  <span>
+                    {" - "}
+                    {post.date.getFullYear()}
+                  </span>
                 </Link>
               </li>
             );

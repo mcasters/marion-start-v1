@@ -4,7 +4,7 @@ import {
   useRouteContext,
 } from "@tanstack/react-router";
 import { NotFound } from "~/components/NotFound";
-import { PostErrorComponent } from "~/components/PostError";
+import { WorkErrorComponent } from "~/components/WorkError";
 import { getPostFn } from "~/server-functions/posts";
 import Gallery from "~/components/image/gallery/gallery";
 import s from "~/styles/page.module.css";
@@ -27,10 +27,14 @@ export const Route = createFileRoute("/posts/$postId")({
       ],
     };
   },
-  errorComponent: PostErrorComponent,
   component: RouteComponent,
+  errorComponent: WorkErrorComponent,
   notFoundComponent: () => {
-    return <NotFound>Post not found</NotFound>;
+    return (
+      <div className={s.postContainer}>
+        <NotFound>Post introuvable</NotFound>
+      </div>
+    );
   },
 });
 

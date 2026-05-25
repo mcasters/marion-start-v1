@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { NotFound } from "~/components/NotFound";
-import { PostErrorComponent } from "~/components/PostError";
+import { WorkErrorComponent } from "~/components/WorkError";
 import { getPaintingByYearFn } from "~/server-functions/paintings";
 import WorkPage from "~/components/work/workPage";
 import { TYPE } from "~/db/schema";
@@ -23,8 +23,8 @@ export const Route = createFileRoute("/peintures/annee/$year")({
       ],
     };
   },
-  errorComponent: PostErrorComponent,
   component: RouteComponent,
+  errorComponent: WorkErrorComponent,
   notFoundComponent: () => {
     return <NotFound>Peintures introuvables</NotFound>;
   },

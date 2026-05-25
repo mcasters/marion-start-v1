@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { NotFound } from "~/components/NotFound";
-import { PostErrorComponent } from "~/components/PostError";
+import { WorkErrorComponent } from "~/components/WorkError";
 import { getPaintingsByCategoryFn } from "~/server-functions/paintings";
 import { TYPE } from "~/db/schema";
 import WorkPage from "~/components/work/workPage";
@@ -27,8 +27,8 @@ export const Route = createFileRoute("/peintures/categorie/$categoryKey")({
       ],
     };
   },
-  errorComponent: PostErrorComponent,
   component: RouteComponent,
+  errorComponent: WorkErrorComponent,
   notFoundComponent: () => {
     return <NotFound>Peintures introuvables</NotFound>;
   },

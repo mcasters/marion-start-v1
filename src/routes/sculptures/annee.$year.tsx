@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { NotFound } from "~/components/NotFound";
-import { PostErrorComponent } from "~/components/PostError";
+import { WorkErrorComponent } from "~/components/WorkError";
 import WorkPage from "~/components/work/workPage";
 import { TYPE } from "~/db/schema";
 import { getSculptureByYearFn } from "~/server-functions/sculptures";
@@ -23,8 +23,8 @@ export const Route = createFileRoute("/sculptures/annee/$year")({
       ],
     };
   },
-  errorComponent: PostErrorComponent,
   component: RouteComponent,
+  errorComponent: WorkErrorComponent,
   notFoundComponent: () => {
     return <NotFound>Sculptures introuvables</NotFound>;
   },

@@ -20,6 +20,8 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
   return (
     <div className={s.errorWrapper}>
       <ErrorComponent error={error} />
+      <br />
+      <br />
       <div>
         <button
           onClick={() => {
@@ -33,15 +35,9 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
         {isRoot ? (
           <Link to="/">Home</Link>
         ) : (
-          <Link
-            to="/"
-            onClick={(e) => {
-              e.preventDefault();
-              window.history.back();
-            }}
-          >
+          <button onClick={() => window.history.back()} className="buttonLink">
             Précédent
-          </Link>
+          </button>
         )}
       </div>
     </div>
