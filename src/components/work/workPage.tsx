@@ -8,17 +8,19 @@ import { TYPE } from "~/db/schema";
 import { rootRouteId, useRouteContext } from "@tanstack/react-router";
 
 interface Props {
+  title: string;
   tag: string;
   works: Work[];
   category?: Category;
   type: TYPE.PAINTING | TYPE.SCULPTURE | TYPE.DRAWING;
 }
-export default function WorkPage({ tag, works, category, type }: Props) {
+export default function WorkPage({ title, tag, works, category, type }: Props) {
   const { metas } = useRouteContext({ from: rootRouteId });
   const [itemLayout, itemDarkBackground] = getWorkLayout(metas, type);
 
   return (
     <>
+      <h1 className="hidden">{title}</h1>
       <div className={s.infoCategory}>
         <h2 className={s.tagTitle}>{tag}</h2>
         {category && (category.title !== "" || category.text !== "") && (

@@ -32,5 +32,7 @@ export const Route = createFileRoute("/peintures/annee/$year")({
 
 function RouteComponent() {
   const { works, year } = Route.useLoaderData();
-  return <WorkPage tag={year} works={works} type={TYPE.PAINTING} />;
+  return (
+    <WorkPage title={year} tag={year} works={works} type={TYPE.PAINTING} />
+  );
 }

@@ -36,9 +36,14 @@ export const Route = createFileRoute("/peintures/categorie/$categoryKey")({
 
 function RouteComponent() {
   const { works, category } = Route.useLoaderData();
+  const text =
+    category.value === "Sans catégorie"
+      ? category.value
+      : `Série ${category.value}`;
 
   return (
     <WorkPage
+      title={`Peintures - ${text}`}
       tag={category.value}
       category={category}
       works={works}
