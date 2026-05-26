@@ -1,7 +1,6 @@
 import { MENU_2 } from "~/constants/specific/routes";
 import s from "~/components/layout/nav_2/nav_2.module.css";
 import { KEY_META } from "~/constants/admin";
-import React from "react";
 import LogoIconT from "~/components/icons/logoIconT";
 import LogoIconM from "~/components/icons/logoIconM";
 import { Link, rootRouteId, useRouteContext } from "@tanstack/react-router";

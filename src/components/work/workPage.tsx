@@ -1,5 +1,4 @@
 import { Category, ItemDarkBackground, Layout, Work } from "~/lib/type";
-import React from "react";
 import s from "~/components/work/workPage.module.css";
 import { getWorkLayout } from "~/utils/commonUtils";
 import WorkLayout from "~/components/work/workLayout";
@@ -8,21 +7,33 @@ import { TYPE } from "~/db/schema";
 import { rootRouteId, useRouteContext } from "@tanstack/react-router";
 
 interface Props {
-  title: string;
-  tag: string;
   works: Work[];
+  year?: string;
   category?: Category;
   type: TYPE.PAINTING | TYPE.SCULPTURE | TYPE.DRAWING;
 }
-export default function WorkPage({ title, tag, works, category, type }: Props) {
+export default function WorkPage({ works, year, category, type }: Props) {
   const { metas } = useRouteContext({ from: rootRouteId });
   const [itemLayout, itemDarkBackground] = getWorkLayout(metas, type);
+  const title =
+    type === TYPE.PAINTING
+      ? "Peintures"
+      : type === TYPE.SCULPTURE
+        ? "Sculptures"
+        : "Dessins";
+  const subTitle = year
+    ? year
+    : category
+      ? category.value === "Sans catégorie"
+        ? category.value
+        : `Série ${category?.value}`
+      : "";
 
   return (
     <>
-      <h1 className="hidden">{title}</h1>
+      <h1 className="hidden">{`${title} - ${subTitle}`}</h1>
       <div className={s.infoCategory}>
-        <h2 className={s.tagTitle}>{tag}</h2>
+        <h2 className={s.tagTitle}>{year || category?.value}</h2>
         {category && (category.title !== "" || category.text !== "") && (
           <div className={s.categoryContent}>
             <h3>{category.title}</h3>

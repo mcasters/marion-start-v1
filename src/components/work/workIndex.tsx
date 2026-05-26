@@ -1,4 +1,3 @@
-import React from "react";
 import s from "~/components/work/workIndex.module.css";
 import { TYPE } from "~/db/schema";
 import { Link } from "@tanstack/react-router";

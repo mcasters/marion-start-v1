@@ -41,13 +41,5 @@ function RouteComponent() {
       ? category.value
       : `Série ${category.value}`;
 
-  return (
-    <WorkPage
-      title={`Peintures - ${text}`}
-      tag={category.value}
-      category={category}
-      works={works}
-      type={TYPE.PAINTING}
-    />
-  );
+  return <WorkPage works={works} category={category} type={TYPE.PAINTING} />;
 }

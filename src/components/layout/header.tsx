@@ -1,7 +1,6 @@
 import Nav_1 from "~/components/layout/nav_1/nav_1";
 import Nav_2 from "~/components/layout/nav_2/nav_2";
 import s from "./layout.module.css";
-import React from "react";
 
 type Props = {
   themePage: "work" | "other" | "home";

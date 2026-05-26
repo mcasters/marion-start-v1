@@ -1,7 +1,6 @@
 import s from "~/components/layout/layout.module.css";
 import { ROUTES } from "~/constants/specific/routes";
 import { KEY_META } from "~/constants/admin";
-import React from "react";
 import { Link, rootRouteId, useRouteContext } from "@tanstack/react-router";
 
 type Props = {

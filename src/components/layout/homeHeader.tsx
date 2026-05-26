@@ -2,7 +2,6 @@ import { LAYOUT as L } from "~/constants/layout.js";
 import Nav_1 from "~/components/layout/nav_1/nav_1";
 import Nav_2 from "~/components/layout/nav_2/nav_2";
 import s from "./layout.module.css";
-import React from "react";
 import useElementIsUpTo from "~/components/hooks/useElementIsUpTo";
 import { rootRouteId, useRouteContext } from "@tanstack/react-router";
 
