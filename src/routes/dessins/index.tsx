@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import WorkHome from "~/components/work/workHome";
+import WorkIndex from "~/components/work/workIndex";
 import { TYPE } from "~/db/schema";
 import { getDrawingCategoriesFn } from "~/server-functions/drawings";
 import { seo } from "~/utils/seo";
@@ -25,9 +25,6 @@ export const Route = createFileRoute("/dessins/")({
 function RouteComponent() {
   const { categories, years } = Route.useLoaderData();
   return (
-    <>
-      <h1 className="hidden">Les dessins</h1>
-      <WorkHome type={TYPE.DRAWING} categories={categories} years={years} />
-    </>
+    <WorkIndex type={TYPE.DRAWING} categories={categories} years={years} />
   );
 }

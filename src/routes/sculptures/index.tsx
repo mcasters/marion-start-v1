@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { getSculptureCategoriesFn } from "~/server-functions/sculptures";
-import WorkHome from "~/components/work/workHome";
+import WorkIndex from "~/components/work/workIndex";
 import { TYPE } from "~/db/schema";
 import { seo } from "~/utils/seo";
 import { KEY_META } from "~/constants/admin";
@@ -25,9 +25,6 @@ export const Route = createFileRoute("/sculptures/")({
 function RouteComponent() {
   const { categories, years } = Route.useLoaderData();
   return (
-    <>
-      <h1 className="hidden">Les sculptures</h1>
-      <WorkHome type={TYPE.SCULPTURE} categories={categories} years={years} />
-    </>
+    <WorkIndex type={TYPE.SCULPTURE} categories={categories} years={years} />
   );
 }

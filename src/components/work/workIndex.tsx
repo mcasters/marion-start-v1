@@ -1,5 +1,5 @@
 import React from "react";
-import s from "~/components/work/workHome.module.css";
+import s from "~/components/work/workIndex.module.css";
 import { TYPE } from "~/db/schema";
 import { Link } from "@tanstack/react-router";
 import { Category } from "~/lib/type";
@@ -9,10 +9,17 @@ interface Props {
   categories: Category[];
   years: number[];
 }
-export default function WorkHome({ categories, type, years }: Props) {
+export default function WorkIndex({ categories, type, years }: Props) {
+  const title =
+    type === TYPE.PAINTING
+      ? "Les peintures"
+      : type === TYPE.SCULPTURE
+        ? "Les sculptures"
+        : "Les dessins";
   return (
     <>
-      <p className={`${s.tagTitle}`}>Par séries :</p>
+      <h1 className="hidden">{title}</h1>
+      <h2 className={`${s.tagTitle}`}>Par séries :</h2>
       <ul className={s.ul}>
         {categories.map((category) => {
           const noImage =
@@ -44,7 +51,7 @@ export default function WorkHome({ categories, type, years }: Props) {
           );
         })}
       </ul>
-      <p className={`${s.tagTitle}`}>Par années :</p>
+      <h2 className={`${s.tagTitle}`}>Par années :</h2>
       <ul className={s.ul}>
         {years.map((year) => {
           return (
