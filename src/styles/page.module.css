@@ -13,6 +13,9 @@
 
 /* desktop */
 @media (min-width: 769px) {
+  .limitedWidth {
+    padding: 0 12em;
+  }
   .section {
     padding: 2em 0;
   }

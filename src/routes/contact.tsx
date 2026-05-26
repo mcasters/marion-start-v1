@@ -34,7 +34,7 @@ function RouteComponent() {
 
   return (
     <>
-      <h1 className="hidden">Contacter {owner}</h1>
+      <h1 className="hidden">{`Contacter ${owner}`}</h1>
       <address className={s.section}>
         <p>{owner}</p>
         <p>{content.get(LABEL.ADDRESS)?.text}</p>

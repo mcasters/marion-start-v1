@@ -34,7 +34,7 @@ function RouteComponent() {
   const inspiration = content.get(LABEL.INSPIRATION)?.text;
 
   return (
-    <div className={`${s.limitedWidth} preLine`}>
+    <div className={s.limitedWidth}>
       <h1 className="hidden">Présentation</h1>
       {image && (
         <FormattedPhoto
