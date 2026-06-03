@@ -3,7 +3,7 @@ import { Image, Post } from "~/lib/type";
 import ImageInput from "~/components/admin/common/image/imageInput";
 import { TYPE } from "~/db/schema";
 import { useRouter } from "@tanstack/react-router";
-import { getCreateFn, getUpdateFn } from "~/server-functions";
+import { getCreateItemFn, getUpdateItemFn } from "~/server-functions";
 import { useAlert } from "~/components/admin/context/alertProvider";
 import FormButtons from "~/components/admin/common/button/FormButtons";
 
@@ -16,7 +16,8 @@ export default function PostForm({ post, onClose }: Props) {
   const alert = useAlert();
   const router = useRouter();
   const [workPost, setWorkPost] = useState<Post>(post);
-  const fn = post.id === 0 ? getCreateFn(TYPE.POST) : getUpdateFn(TYPE.POST);
+  const fn =
+    post.id === 0 ? getCreateItemFn(TYPE.POST) : getUpdateItemFn(TYPE.POST);
 
   const action = async (formData: FormData) => {
     const { message, isError } = await fn({ data: formData });

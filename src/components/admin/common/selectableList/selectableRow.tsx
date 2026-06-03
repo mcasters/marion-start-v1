@@ -13,7 +13,7 @@ interface Props {
   }>;
 }
 
-export default function SelectableListRow({
+export default function SelectableRow({
   part1,
   part2,
   part3,

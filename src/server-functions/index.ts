@@ -29,7 +29,7 @@ import {
   updatePostFn,
 } from "~/server-functions/posts";
 
-export const getCreateFn = (
+export const getCreateItemFn = (
   type: TYPE.PAINTING | TYPE.SCULPTURE | TYPE.DRAWING | TYPE.POST,
 ) => {
   switch (type) {
@@ -44,7 +44,7 @@ export const getCreateFn = (
   }
 };
 
-export const getUpdateFn = (
+export const getUpdateItemFn = (
   type: TYPE.PAINTING | TYPE.SCULPTURE | TYPE.DRAWING | TYPE.POST,
 ) => {
   switch (type) {
@@ -59,7 +59,7 @@ export const getUpdateFn = (
   }
 };
 
-export const getDeleteFn = (
+export const getDeleteItemFn = (
   type: TYPE.PAINTING | TYPE.SCULPTURE | TYPE.DRAWING | TYPE.POST,
 ) => {
   switch (type) {

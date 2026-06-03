@@ -8,12 +8,12 @@ import {
   getThumbnailSrc,
 } from "~/utils/commonUtils";
 import SelectableList from "~/components/admin/common/selectableList/selectableList";
-import SelectableListRow from "~/components/admin/common/selectableList/selectableListRow";
+import SelectableRow from "~/components/admin/common/selectableList/selectableRow";
 import CategoryForm from "~/components/admin/item/form/categoryForm";
-import FilterWorkListComponent from "~/components/admin/common/selectableList/filterWorkListComponent";
+import FilterComponent from "~/components/admin/common/selectableList/filterComponent";
 import WorkForm from "~/components/admin/item/form/workForm";
 import { TYPE } from "~/db/schema";
-import { getDeleteCategoryFn, getDeleteFn } from "~/server-functions";
+import { getDeleteCategoryFn, getDeleteItemFn } from "~/server-functions";
 
 interface Props {
   works: Work[];
@@ -21,15 +21,16 @@ interface Props {
   type: TYPE.PAINTING | TYPE.SCULPTURE | TYPE.DRAWING;
 }
 export default function WorkManagement({ works, categories, type }: Props) {
-  const deleteFn = getDeleteFn(type);
+  const deleteItemFn = getDeleteItemFn(type);
   const deleteCategoryFn = getDeleteCategoryFn(type);
+
   return (
     <>
       <SelectableList
-        key={"works"}
+        key="works"
         items={works}
-        renderItem={(work) => (
-          <SelectableListRow
+        renderRow={(work) => (
+          <SelectableRow
             part1={work.title}
             part2={
               categories.find((category) => category.id === work.categoryId)
@@ -38,18 +39,18 @@ export default function WorkManagement({ works, categories, type }: Props) {
             part3={new Date(work.date).getFullYear().toString()}
             part4={work.isOut ? "sortie" : "Non sortie"}
             imageSrc={getThumbnailSrc(work)}
-            deleteFn={() => deleteFn({ data: { id: work.id } })}
+            deleteFn={() => deleteItemFn({ data: { id: work.id } })}
           />
         )}
         renderFilter={(getFilteredItems) => (
-          <FilterWorkListComponent
+          <FilterComponent
             works={works}
             categories={categories}
             onFilter={getFilteredItems}
             type={type}
           />
         )}
-        formToRender={(work, handleClose) => (
+        renderUpdateForm={(work, handleClose) => (
           <WorkForm work={work} categories={categories} onClose={handleClose} />
         )}
       />
@@ -66,10 +67,10 @@ export default function WorkManagement({ works, categories, type }: Props) {
       <div className="separate" />
       <h2 className={s.title2}>Gestion des catégories</h2>
       <SelectableList
-        key={"categories"}
+        key="categories"
         items={categories}
-        renderItem={(category) => (
-          <SelectableListRow
+        renderRow={(category) => (
+          <SelectableRow
             part1={category.value}
             part2={`${category.count} ${category.workType}(s)`}
             imageSrc={getThumbnailSrc(category)}
@@ -80,7 +81,7 @@ export default function WorkManagement({ works, categories, type }: Props) {
             }
           />
         )}
-        formToRender={(category, handleClose) => (
+        renderUpdateForm={(category, handleClose) => (
           <CategoryForm adminCategory={category} onClose={handleClose} />
         )}
       />

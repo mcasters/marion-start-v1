@@ -10,7 +10,7 @@ interface Props {
   onFilter: (filteredItems: Work[]) => void;
   type: TYPE.PAINTING | TYPE.SCULPTURE | TYPE.DRAWING;
 }
-export default function FilterWorkListComponent({
+export default function FilterComponent({
   works,
   categories,
   onFilter,

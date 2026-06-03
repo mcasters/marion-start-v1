@@ -10,18 +10,18 @@ import { TYPE } from "~/db/schema";
 
 interface SelectableListProps<T extends Admin> {
   items: T[];
-  renderItem: (item: T, index: number) => React.ReactNode;
+  renderRow: (item: T, index: number) => React.ReactNode;
   renderFilter?: (
     getFilteredItems: (filteredItems: T[]) => void,
   ) => React.ReactNode;
-  formToRender: (item: T, handleClose: () => void) => React.ReactNode;
+  renderUpdateForm: (item: T, handleClose: () => void) => React.ReactNode;
 }
 
 export default function SelectableList<T extends Admin>({
   items,
-  renderItem,
+  renderRow,
   renderFilter,
-  formToRender,
+  renderUpdateForm,
 }: SelectableListProps<T>): ReactElement {
   const { ref, isOutside } = useOnClickOutside();
   const { selectedIndex, decrease, increase, setSelectedIndex } =
@@ -51,6 +51,7 @@ export default function SelectableList<T extends Admin>({
                   opacity: isOutside && i === selectedIndex ? "60%" : undefined,
                   cursor: isModifiable ? "pointer" : undefined,
                 }}
+                onClick={() => setSelectedIndex(i)}
                 onDoubleClick={() =>
                   isModifiable ? setEditedItem(item) : undefined
                 }
@@ -60,9 +61,8 @@ export default function SelectableList<T extends Admin>({
                     : "Ne peut pas être modifié"
                 }
                 role={isModifiable ? "button" : undefined}
-                onClick={() => setSelectedIndex(i)}
               >
-                {renderItem(item, i)}
+                {renderRow(item, i)}
               </li>
             );
           })}
@@ -74,7 +74,7 @@ export default function SelectableList<T extends Admin>({
         title="Modification"
         width={isCategory ? 700 : 900}
       >
-        {editedItem && formToRender(editedItem, () => setEditedItem(null))}
+        {editedItem && renderUpdateForm(editedItem, () => setEditedItem(null))}
       </Modal>
     </div>
   );

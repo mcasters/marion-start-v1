@@ -4,25 +4,25 @@ import { Post } from "~/lib/type";
 import AddButton from "~/components/admin/common/button/addButton";
 import { getEmptyPost, getThumbnailSrc } from "~/utils/commonUtils";
 import SelectableList from "~/components/admin/common/selectableList/selectableList";
-import SelectableListRow from "~/components/admin/common/selectableList/selectableListRow";
+import SelectableRow from "~/components/admin/common/selectableList/selectableRow";
 import PostForm from "~/components/admin/item/form/postForm";
 import { TYPE } from "~/db/schema";
-import { getDeleteFn } from "~/server-functions";
+import { getDeleteItemFn } from "~/server-functions";
 
 interface Props {
   posts: Post[];
 }
 export default function PostManagement({ posts }: Props) {
-  const deleteFn = getDeleteFn(TYPE.POST);
+  const deleteFn = getDeleteItemFn(TYPE.POST);
   return (
     <>
       <h2 className={s.title2}>Liste des posts</h2>
       <SelectableList
         key={"posts"}
         items={posts}
-        renderItem={(post) => {
+        renderRow={(post) => {
           return (
-            <SelectableListRow
+            <SelectableRow
               part1={post.title}
               part2={new Date(post.date).getFullYear().toString()}
               imageSrc={getThumbnailSrc(post)}
@@ -30,7 +30,7 @@ export default function PostManagement({ posts }: Props) {
             />
           );
         }}
-        formToRender={(post, handleClose) => (
+        renderUpdateForm={(post, handleClose) => (
           <PostForm post={post} onClose={handleClose} />
         )}
       />
