@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PresentationRouteImport } from './routes/presentation'
 import { Route as PostsRouteImport } from './routes/posts'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as DeferredRouteImport } from './routes/deferred'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
@@ -21,7 +20,6 @@ import { Route as PeinturesIndexRouteImport } from './routes/peintures/index'
 import { Route as DessinsIndexRouteImport } from './routes/dessins/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as PostsPostIdRouteImport } from './routes/posts.$postId'
-import { Route as ApiUsersRouteImport } from './routes/api/users'
 import { Route as AdminSculpturesRouteImport } from './routes/admin/sculptures'
 import { Route as AdminPresentationRouteImport } from './routes/admin/presentation'
 import { Route as AdminPostsRouteImport } from './routes/admin/posts'
@@ -30,16 +28,12 @@ import { Route as AdminMetaRouteImport } from './routes/admin/meta'
 import { Route as AdminHomeRouteImport } from './routes/admin/home'
 import { Route as AdminDessinsRouteImport } from './routes/admin/dessins'
 import { Route as AdminContactRouteImport } from './routes/admin/contact'
-import { Route as PathlessLayoutNestedLayoutRouteImport } from './routes/_pathlessLayout/_nested-layout'
 import { Route as SculpturesCategorieCategoryKeyRouteImport } from './routes/sculptures/categorie.$categoryKey'
 import { Route as SculpturesAnneeYearRouteImport } from './routes/sculptures/annee.$year'
 import { Route as PeinturesCategorieCategoryKeyRouteImport } from './routes/peintures/categorie.$categoryKey'
 import { Route as PeinturesAnneeYearRouteImport } from './routes/peintures/annee.$year'
 import { Route as DessinsCategorieCategoryKeyRouteImport } from './routes/dessins/categorie.$categoryKey'
 import { Route as DessinsAnneeYearRouteImport } from './routes/dessins/annee.$year'
-import { Route as ApiUsersUserIdRouteImport } from './routes/api/users.$userId'
-import { Route as PathlessLayoutNestedLayoutRouteBRouteImport } from './routes/_pathlessLayout/_nested-layout/route-b'
-import { Route as PathlessLayoutNestedLayoutRouteARouteImport } from './routes/_pathlessLayout/_nested-layout/route-a'
 import { Route as ImagesLibraryChar123FolderChar125FilenameRouteImport } from './routes/images/$library.{-$folder}.$filename'
 
 const PresentationRoute = PresentationRouteImport.update({
@@ -55,11 +49,6 @@ const PostsRoute = PostsRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DeferredRoute = DeferredRouteImport.update({
-  id: '/deferred',
-  path: '/deferred',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -102,11 +91,6 @@ const PostsPostIdRoute = PostsPostIdRouteImport.update({
   path: '/$postId',
   getParentRoute: () => PostsRoute,
 } as any)
-const ApiUsersRoute = ApiUsersRouteImport.update({
-  id: '/api/users',
-  path: '/api/users',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AdminSculpturesRoute = AdminSculpturesRouteImport.update({
   id: '/sculptures',
   path: '/sculptures',
@@ -147,11 +131,6 @@ const AdminContactRoute = AdminContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const PathlessLayoutNestedLayoutRoute =
-  PathlessLayoutNestedLayoutRouteImport.update({
-    id: '/_pathlessLayout/_nested-layout',
-    getParentRoute: () => rootRouteImport,
-  } as any)
 const SculpturesCategorieCategoryKeyRoute =
   SculpturesCategorieCategoryKeyRouteImport.update({
     id: '/sculptures/categorie/$categoryKey',
@@ -185,23 +164,6 @@ const DessinsAnneeYearRoute = DessinsAnneeYearRouteImport.update({
   path: '/dessins/annee/$year',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiUsersUserIdRoute = ApiUsersUserIdRouteImport.update({
-  id: '/$userId',
-  path: '/$userId',
-  getParentRoute: () => ApiUsersRoute,
-} as any)
-const PathlessLayoutNestedLayoutRouteBRoute =
-  PathlessLayoutNestedLayoutRouteBRouteImport.update({
-    id: '/route-b',
-    path: '/route-b',
-    getParentRoute: () => PathlessLayoutNestedLayoutRoute,
-  } as any)
-const PathlessLayoutNestedLayoutRouteARoute =
-  PathlessLayoutNestedLayoutRouteARouteImport.update({
-    id: '/route-a',
-    path: '/route-a',
-    getParentRoute: () => PathlessLayoutNestedLayoutRoute,
-  } as any)
 const ImagesLibraryChar123FolderChar125FilenameRoute =
   ImagesLibraryChar123FolderChar125FilenameRouteImport.update({
     id: '/images/$library/{-$folder}/$filename',
@@ -213,7 +175,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/contact': typeof ContactRoute
-  '/deferred': typeof DeferredRoute
   '/login': typeof LoginRoute
   '/posts': typeof PostsRouteWithChildren
   '/presentation': typeof PresentationRoute
@@ -225,15 +186,11 @@ export interface FileRoutesByFullPath {
   '/admin/posts': typeof AdminPostsRoute
   '/admin/presentation': typeof AdminPresentationRoute
   '/admin/sculptures': typeof AdminSculpturesRoute
-  '/api/users': typeof ApiUsersRouteWithChildren
   '/posts/$postId': typeof PostsPostIdRoute
   '/admin/': typeof AdminIndexRoute
   '/dessins/': typeof DessinsIndexRoute
   '/peintures/': typeof PeinturesIndexRoute
   '/sculptures/': typeof SculpturesIndexRoute
-  '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
-  '/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
-  '/api/users/$userId': typeof ApiUsersUserIdRoute
   '/dessins/annee/$year': typeof DessinsAnneeYearRoute
   '/dessins/categorie/$categoryKey': typeof DessinsCategorieCategoryKeyRoute
   '/peintures/annee/$year': typeof PeinturesAnneeYearRoute
@@ -245,7 +202,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
-  '/deferred': typeof DeferredRoute
   '/login': typeof LoginRoute
   '/posts': typeof PostsRouteWithChildren
   '/presentation': typeof PresentationRoute
@@ -257,15 +213,11 @@ export interface FileRoutesByTo {
   '/admin/posts': typeof AdminPostsRoute
   '/admin/presentation': typeof AdminPresentationRoute
   '/admin/sculptures': typeof AdminSculpturesRoute
-  '/api/users': typeof ApiUsersRouteWithChildren
   '/posts/$postId': typeof PostsPostIdRoute
   '/admin': typeof AdminIndexRoute
   '/dessins': typeof DessinsIndexRoute
   '/peintures': typeof PeinturesIndexRoute
   '/sculptures': typeof SculpturesIndexRoute
-  '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
-  '/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
-  '/api/users/$userId': typeof ApiUsersUserIdRoute
   '/dessins/annee/$year': typeof DessinsAnneeYearRoute
   '/dessins/categorie/$categoryKey': typeof DessinsCategorieCategoryKeyRoute
   '/peintures/annee/$year': typeof PeinturesAnneeYearRoute
@@ -279,11 +231,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/contact': typeof ContactRoute
-  '/deferred': typeof DeferredRoute
   '/login': typeof LoginRoute
   '/posts': typeof PostsRouteWithChildren
   '/presentation': typeof PresentationRoute
-  '/_pathlessLayout/_nested-layout': typeof PathlessLayoutNestedLayoutRouteWithChildren
   '/admin/contact': typeof AdminContactRoute
   '/admin/dessins': typeof AdminDessinsRoute
   '/admin/home': typeof AdminHomeRoute
@@ -292,15 +242,11 @@ export interface FileRoutesById {
   '/admin/posts': typeof AdminPostsRoute
   '/admin/presentation': typeof AdminPresentationRoute
   '/admin/sculptures': typeof AdminSculpturesRoute
-  '/api/users': typeof ApiUsersRouteWithChildren
   '/posts/$postId': typeof PostsPostIdRoute
   '/admin/': typeof AdminIndexRoute
   '/dessins/': typeof DessinsIndexRoute
   '/peintures/': typeof PeinturesIndexRoute
   '/sculptures/': typeof SculpturesIndexRoute
-  '/_pathlessLayout/_nested-layout/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
-  '/_pathlessLayout/_nested-layout/route-b': typeof PathlessLayoutNestedLayoutRouteBRoute
-  '/api/users/$userId': typeof ApiUsersUserIdRoute
   '/dessins/annee/$year': typeof DessinsAnneeYearRoute
   '/dessins/categorie/$categoryKey': typeof DessinsCategorieCategoryKeyRoute
   '/peintures/annee/$year': typeof PeinturesAnneeYearRoute
@@ -315,7 +261,6 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/contact'
-    | '/deferred'
     | '/login'
     | '/posts'
     | '/presentation'
@@ -327,15 +272,11 @@ export interface FileRouteTypes {
     | '/admin/posts'
     | '/admin/presentation'
     | '/admin/sculptures'
-    | '/api/users'
     | '/posts/$postId'
     | '/admin/'
     | '/dessins/'
     | '/peintures/'
     | '/sculptures/'
-    | '/route-a'
-    | '/route-b'
-    | '/api/users/$userId'
     | '/dessins/annee/$year'
     | '/dessins/categorie/$categoryKey'
     | '/peintures/annee/$year'
@@ -347,7 +288,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/contact'
-    | '/deferred'
     | '/login'
     | '/posts'
     | '/presentation'
@@ -359,15 +299,11 @@ export interface FileRouteTypes {
     | '/admin/posts'
     | '/admin/presentation'
     | '/admin/sculptures'
-    | '/api/users'
     | '/posts/$postId'
     | '/admin'
     | '/dessins'
     | '/peintures'
     | '/sculptures'
-    | '/route-a'
-    | '/route-b'
-    | '/api/users/$userId'
     | '/dessins/annee/$year'
     | '/dessins/categorie/$categoryKey'
     | '/peintures/annee/$year'
@@ -380,11 +316,9 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/contact'
-    | '/deferred'
     | '/login'
     | '/posts'
     | '/presentation'
-    | '/_pathlessLayout/_nested-layout'
     | '/admin/contact'
     | '/admin/dessins'
     | '/admin/home'
@@ -393,15 +327,11 @@ export interface FileRouteTypes {
     | '/admin/posts'
     | '/admin/presentation'
     | '/admin/sculptures'
-    | '/api/users'
     | '/posts/$postId'
     | '/admin/'
     | '/dessins/'
     | '/peintures/'
     | '/sculptures/'
-    | '/_pathlessLayout/_nested-layout/route-a'
-    | '/_pathlessLayout/_nested-layout/route-b'
-    | '/api/users/$userId'
     | '/dessins/annee/$year'
     | '/dessins/categorie/$categoryKey'
     | '/peintures/annee/$year'
@@ -415,12 +345,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
   ContactRoute: typeof ContactRoute
-  DeferredRoute: typeof DeferredRoute
   LoginRoute: typeof LoginRoute
   PostsRoute: typeof PostsRouteWithChildren
   PresentationRoute: typeof PresentationRoute
-  PathlessLayoutNestedLayoutRoute: typeof PathlessLayoutNestedLayoutRouteWithChildren
-  ApiUsersRoute: typeof ApiUsersRouteWithChildren
   DessinsIndexRoute: typeof DessinsIndexRoute
   PeinturesIndexRoute: typeof PeinturesIndexRoute
   SculpturesIndexRoute: typeof SculpturesIndexRoute
@@ -454,13 +381,6 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/deferred': {
-      id: '/deferred'
-      path: '/deferred'
-      fullPath: '/deferred'
-      preLoaderRoute: typeof DeferredRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -519,13 +439,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsPostIdRouteImport
       parentRoute: typeof PostsRoute
     }
-    '/api/users': {
-      id: '/api/users'
-      path: '/api/users'
-      fullPath: '/api/users'
-      preLoaderRoute: typeof ApiUsersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/admin/sculptures': {
       id: '/admin/sculptures'
       path: '/sculptures'
@@ -582,13 +495,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminContactRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/_pathlessLayout/_nested-layout': {
-      id: '/_pathlessLayout/_nested-layout'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof PathlessLayoutNestedLayoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/sculptures/categorie/$categoryKey': {
       id: '/sculptures/categorie/$categoryKey'
       path: '/sculptures/categorie/$categoryKey'
@@ -630,27 +536,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/dessins/annee/$year'
       preLoaderRoute: typeof DessinsAnneeYearRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/api/users/$userId': {
-      id: '/api/users/$userId'
-      path: '/$userId'
-      fullPath: '/api/users/$userId'
-      preLoaderRoute: typeof ApiUsersUserIdRouteImport
-      parentRoute: typeof ApiUsersRoute
-    }
-    '/_pathlessLayout/_nested-layout/route-b': {
-      id: '/_pathlessLayout/_nested-layout/route-b'
-      path: '/route-b'
-      fullPath: '/route-b'
-      preLoaderRoute: typeof PathlessLayoutNestedLayoutRouteBRouteImport
-      parentRoute: typeof PathlessLayoutNestedLayoutRoute
-    }
-    '/_pathlessLayout/_nested-layout/route-a': {
-      id: '/_pathlessLayout/_nested-layout/route-a'
-      path: '/route-a'
-      fullPath: '/route-a'
-      preLoaderRoute: typeof PathlessLayoutNestedLayoutRouteARouteImport
-      parentRoute: typeof PathlessLayoutNestedLayoutRoute
     }
     '/images/$library/{-$folder}/$filename': {
       id: '/images/$library/{-$folder}/$filename'
@@ -700,46 +585,13 @@ const PostsRouteChildren: PostsRouteChildren = {
 
 const PostsRouteWithChildren = PostsRoute._addFileChildren(PostsRouteChildren)
 
-interface PathlessLayoutNestedLayoutRouteChildren {
-  PathlessLayoutNestedLayoutRouteARoute: typeof PathlessLayoutNestedLayoutRouteARoute
-  PathlessLayoutNestedLayoutRouteBRoute: typeof PathlessLayoutNestedLayoutRouteBRoute
-}
-
-const PathlessLayoutNestedLayoutRouteChildren: PathlessLayoutNestedLayoutRouteChildren =
-  {
-    PathlessLayoutNestedLayoutRouteARoute:
-      PathlessLayoutNestedLayoutRouteARoute,
-    PathlessLayoutNestedLayoutRouteBRoute:
-      PathlessLayoutNestedLayoutRouteBRoute,
-  }
-
-const PathlessLayoutNestedLayoutRouteWithChildren =
-  PathlessLayoutNestedLayoutRoute._addFileChildren(
-    PathlessLayoutNestedLayoutRouteChildren,
-  )
-
-interface ApiUsersRouteChildren {
-  ApiUsersUserIdRoute: typeof ApiUsersUserIdRoute
-}
-
-const ApiUsersRouteChildren: ApiUsersRouteChildren = {
-  ApiUsersUserIdRoute: ApiUsersUserIdRoute,
-}
-
-const ApiUsersRouteWithChildren = ApiUsersRoute._addFileChildren(
-  ApiUsersRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRouteRoute: AdminRouteRouteWithChildren,
   ContactRoute: ContactRoute,
-  DeferredRoute: DeferredRoute,
   LoginRoute: LoginRoute,
   PostsRoute: PostsRouteWithChildren,
   PresentationRoute: PresentationRoute,
-  PathlessLayoutNestedLayoutRoute: PathlessLayoutNestedLayoutRouteWithChildren,
-  ApiUsersRoute: ApiUsersRouteWithChildren,
   DessinsIndexRoute: DessinsIndexRoute,
   PeinturesIndexRoute: PeinturesIndexRoute,
   SculpturesIndexRoute: SculpturesIndexRoute,
