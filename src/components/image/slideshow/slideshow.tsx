@@ -6,13 +6,7 @@ import { DEVICE } from "~/constants/image";
 import s from "~/components/image/slideshow/slider.module.css";
 import ArrowPrev from "~/components/icons/arrowPrev";
 import ArrowNext from "~/components/icons/arrowNext";
-import {
-  getRouteApi,
-  rootRouteId,
-  useRouteContext,
-} from "@tanstack/react-router";
-
-const routeApi = getRouteApi("/");
+import { rootRouteId, useRouteContext } from "@tanstack/react-router";
 
 type Props = {
   images: Image[];
@@ -27,8 +21,8 @@ export default function Slideshow({ images }: Props) {
   const [active, setActive] = useState(0);
   const imagesToDisplay = useMemo(() => {
     return isLandscape
-      ? images.filter((i) => i.isMain)
-      : images.filter((i) => !i.isMain);
+      ? images.filter((i) => !i.isMain)
+      : images.filter((i) => i.isMain);
   }, [isLandscape, images]);
 
   useEffect(() => {
