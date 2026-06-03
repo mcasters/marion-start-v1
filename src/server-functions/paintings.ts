@@ -119,7 +119,7 @@ export const getAdminPaintingCategoriesFn = createServerFn().handler(
     });
 
     const categories = await db.query.paintingCategory.findMany({
-      orderBy: { value: "desc" },
+      orderBy: { value: "asc" },
     });
     return createAdminCategoryObjects(categories, works, TYPE.PAINTING);
   },

@@ -120,7 +120,7 @@ export const getAdminDrawingCategoriesFn = createServerFn().handler(
     });
 
     const categories = await db.query.drawingCategory.findMany({
-      orderBy: { value: "desc" },
+      orderBy: { value: "asc" },
     });
     return createAdminCategoryObjects(categories, works, TYPE.DRAWING);
   },
