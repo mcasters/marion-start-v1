@@ -3,7 +3,6 @@ import s from "~/components/admin/admin.module.css";
 import { Category, Work } from "~/lib/type";
 import ImageInput from "~/components/admin/common/image/imageInput";
 import { TYPE } from "~/db/schema";
-import { getCreateItemFn, getUpdateItemFn } from "~/server-functions";
 import { useAlert } from "~/components/admin/context/alertProvider";
 import { useRouter } from "@tanstack/react-router";
 import FormButtons from "~/components/admin/common/button/FormButtons";
@@ -12,15 +11,18 @@ interface Props {
   work: Work;
   onClose: () => void;
   categories?: Category[];
+  fn: ({ data }: { data: FormData }) => Promise<{
+    message: string;
+    isError: boolean;
+  }>;
 }
 
-export default function WorkForm({ work, onClose, categories }: Props) {
+export default function WorkForm({ work, onClose, categories, fn }: Props) {
   const alert = useAlert();
   const router = useRouter();
   const type = work.type;
   const isSculpture = type === TYPE.SCULPTURE;
   const [workItem, setWorkItem] = useState<Work>(work);
-  const fn = work.id === 0 ? getCreateItemFn(type) : getUpdateItemFn(type);
 
   const action = async (formData: FormData) => {
     const { message, isError } = await fn({ data: formData });

@@ -1,5 +1,6 @@
 import DeleteIcon from "~/components/icons/deleteIcon";
 import { useAlert } from "~/components/admin/context/alertProvider";
+import { useRouter } from "@tanstack/react-router";
 
 export type DeleteButtonProps = {
   onDelete?: () => void;
@@ -15,6 +16,7 @@ export default function DeleteButton({
   disabled = false,
 }: DeleteButtonProps) {
   const alert = useAlert();
+  const router = useRouter();
 
   return (
     <button
@@ -26,6 +28,7 @@ export default function DeleteButton({
               if (confirm("Sûr de vouloir supprimer ?")) {
                 const res = await deleteFn();
                 alert(res.message, res.isError);
+                router.invalidate();
               }
             }
           : onDelete

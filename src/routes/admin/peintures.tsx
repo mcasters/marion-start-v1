@@ -14,8 +14,6 @@ function RouteComponent() {
   const type = TYPE.PAINTING;
   const { works, categories } = Route.useLoaderData();
 
-  console.log(categories.length);
-
   return (
     <div className={s.container}>
       <h1 className={s.title1}>Les peintures</h1>

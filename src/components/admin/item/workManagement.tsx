@@ -13,7 +13,12 @@ import CategoryForm from "~/components/admin/item/form/categoryForm";
 import FilterComponent from "~/components/admin/common/selectableList/filterComponent";
 import WorkForm from "~/components/admin/item/form/workForm";
 import { TYPE } from "~/db/schema";
-import { getDeleteCategoryFn, getDeleteItemFn } from "~/server-functions";
+import {
+  getCreateItemFn,
+  getDeleteCategoryFn,
+  getDeleteItemFn,
+  getUpdateItemFn,
+} from "~/server-functions";
 
 interface Props {
   works: Work[];
@@ -21,9 +26,6 @@ interface Props {
   type: TYPE.PAINTING | TYPE.SCULPTURE | TYPE.DRAWING;
 }
 export default function WorkManagement({ works, categories, type }: Props) {
-  const deleteItemFn = getDeleteItemFn(type);
-  const deleteCategoryFn = getDeleteCategoryFn(type);
-
   return (
     <>
       <SelectableList
@@ -39,7 +41,7 @@ export default function WorkManagement({ works, categories, type }: Props) {
             part3={new Date(work.date).getFullYear().toString()}
             part4={work.isOut ? "sortie" : "Non sortie"}
             imageSrc={getThumbnailSrc(work)}
-            deleteFn={() => deleteItemFn({ data: { id: work.id } })}
+            deleteFn={() => getDeleteItemFn(type)({ data: { id: work.id } })}
           />
         )}
         renderFilter={(getFilteredItems) => (
@@ -51,7 +53,12 @@ export default function WorkManagement({ works, categories, type }: Props) {
           />
         )}
         renderUpdateForm={(work, handleClose) => (
-          <WorkForm work={work} categories={categories} onClose={handleClose} />
+          <WorkForm
+            work={work}
+            categories={categories}
+            onClose={handleClose}
+            fn={getUpdateItemFn(type)}
+          />
         )}
       />
       <AddButton
@@ -60,6 +67,7 @@ export default function WorkManagement({ works, categories, type }: Props) {
             work={getEmptyWork(type)}
             categories={categories}
             onClose={toggle}
+            fn={getCreateItemFn(type)}
           />
         )}
         modalWidth={900}
@@ -77,7 +85,7 @@ export default function WorkManagement({ works, categories, type }: Props) {
             deleteFn={
               category.id === 0 || category.count > 0
                 ? undefined
-                : () => deleteCategoryFn({ data: { id: category.id } })
+                : () => getDeleteCategoryFn(type)({ data: { id: category.id } })
             }
           />
         )}
