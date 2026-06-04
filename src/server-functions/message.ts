@@ -2,7 +2,7 @@ import { db } from "~/db";
 import { message, user } from "~/db/schema";
 import { desc, eq } from "drizzle-orm";
 import { createServerFn } from "@tanstack/react-start";
-import { authMiddleware } from "~/middleware";
+import { authMiddleware } from "~/utils/middleware/authMiddleware";
 
 export const getMessagesFn = createServerFn().handler(async () => {
   return db

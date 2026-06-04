@@ -8,7 +8,7 @@ import {
 import { asc, eq } from "drizzle-orm";
 import { createServerFn } from "@tanstack/react-start";
 import { notFound } from "@tanstack/react-router";
-import { authMiddleware } from "~/middleware";
+import { authMiddleware } from "~/utils/middleware/authMiddleware";
 
 export const getPostsFn = createServerFn().handler(async () => {
   const rows = await db

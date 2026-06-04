@@ -5,7 +5,7 @@ import { eq } from "drizzle-orm";
 import { THEME } from "~/constants/admin";
 import { getBasePresetColorData, getBaseThemeData } from "~/utils/themeUtils";
 import { presetColor, theme } from "~/db/schema";
-import { authMiddleware } from "~/middleware";
+import { authMiddleware } from "~/utils/middleware/authMiddleware";
 
 export const getActiveThemeFn = createServerFn().handler(
   async (): Promise<Theme> => {

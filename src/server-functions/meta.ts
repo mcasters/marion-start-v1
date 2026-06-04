@@ -4,7 +4,7 @@ import { meta } from "~/db/schema";
 import { eq } from "drizzle-orm";
 import { KEY_META } from "~/constants/admin";
 import { KeyMeta } from "~/lib/type";
-import { authMiddleware } from "~/middleware";
+import { authMiddleware } from "~/utils/middleware/authMiddleware";
 
 export const getMetasFn = createServerFn().handler(async () => {
   const metas = await db.query.meta.findMany({

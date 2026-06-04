@@ -15,7 +15,7 @@ import {
   handleAddFiles,
   handleRemoveFiles,
 } from "~/server-functions/serverUtils";
-import { authMiddleware } from "~/middleware";
+import { authMiddleware } from "~/utils/middleware/authMiddleware";
 
 export const getDrawingCategoriesFn = createServerFn().handler(
   async (): Promise<{ categories: DrawingCategory[]; years: number[] }> => {

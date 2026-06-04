@@ -12,7 +12,7 @@ import {
 } from "~/utils/workUtils";
 import { asc, eq } from "drizzle-orm";
 import { handleAddFiles, handleRemoveFiles } from "./serverUtils";
-import { authMiddleware } from "~/middleware";
+import { authMiddleware } from "~/utils/middleware/authMiddleware";
 
 export const getPaintingCategoriesFn = createServerFn().handler(
   async (): Promise<{ categories: PaintingCategory[]; years: number[] }> => {

@@ -7,7 +7,7 @@ import {
   getMiscellaneousDir,
   resizeAndSaveImages,
 } from "~/server-functions/serverUtils";
-import { authMiddleware } from "~/middleware";
+import { authMiddleware } from "~/utils/middleware/authMiddleware";
 
 export const getHomeTextFn = createServerFn().handler(async () => {
   const content = await db.query.content.findFirst({
