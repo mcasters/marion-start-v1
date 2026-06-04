@@ -10,9 +10,9 @@ import { KEY_META } from "~/constants/admin";
 export const Route = createFileRoute("/dessins/categorie/$categoryKey")({
   loader: async ({ params: { categoryKey } }) =>
     await getDrawingsByCategoryFn({ data: categoryKey }),
-  head: ({ match }) => {
+  head: ({ match, loaderData }) => {
     const { metas } = match.context;
-    const categoryName = match.loaderData?.category.value;
+    const categoryName = loaderData?.category.value;
     const text =
       categoryName === "Sans catégorie"
         ? categoryName

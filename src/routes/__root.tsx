@@ -27,6 +27,7 @@ import { getMetasFn } from "~/server-functions/meta";
 import { getSessionFn } from "~/server-functions/auth";
 
 export const Route = createRootRoute({
+  // context
   beforeLoad: async () => {
     const theme = await getActiveThemeFn();
     const presetColors = await getPresetColorsFn();

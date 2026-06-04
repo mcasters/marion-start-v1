@@ -37,13 +37,13 @@ const pageSeo = ({
 };
 
 export const seo = ({
+  title = "",
+  description = "",
   metas,
-  title,
-  description,
 }: {
+  title: string | undefined;
+  description: string | undefined;
   metas: Map<KeyMeta, string>;
-  title: string;
-  description: string;
 }) => {
   return [...pageSeo({ title, description }), ...generalSeo(metas)];
 };

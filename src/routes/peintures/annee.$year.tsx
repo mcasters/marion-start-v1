@@ -10,9 +10,9 @@ import { KEY_META } from "~/constants/admin";
 export const Route = createFileRoute("/peintures/annee/$year")({
   loader: async ({ params: { year } }) =>
     await getPaintingByYearFn({ data: year }),
-  head: ({ match }) => {
+  head: ({ match, loaderData }) => {
     const { metas } = match.context;
-    const year = match.loaderData?.year;
+    const year = loaderData?.year;
     return {
       meta: [
         ...seo({

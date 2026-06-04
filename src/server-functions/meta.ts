@@ -10,8 +10,8 @@ export const getMetasFn = createServerFn().handler(async () => {
   const metas = await db.query.meta.findMany({
     columns: { id: false },
   });
-  const map = new Map();
-  metas.forEach((meta) => map.set(meta.key, meta.text));
+  const map: Map<KeyMeta, string> = new Map();
+  metas.forEach((meta) => map.set(meta.key as KeyMeta, meta.text));
   return map;
 });
 
