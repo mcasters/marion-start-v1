@@ -7,7 +7,6 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import * as React from "react";
-import { ReactNode } from "react";
 import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary";
 import { NotFound } from "~/components/NotFound";
 import appCss from "~/styles/app.css?url";
@@ -68,7 +67,7 @@ export const Route = createRootRoute({
   }),
   errorComponent: DefaultCatchBoundary,
   notFoundComponent: () => <NotFound />,
-  shellComponent: RootComponent,
+  component: RootComponent,
 });
 
 function RootComponent() {
@@ -86,24 +85,28 @@ function RootComponent() {
   const gradientRgb = `${gradientRgbObject?.r},${gradientRgbObject?.g},${gradientRgbObject?.b}`;
 
   return (
-    <RootDocument>
-      <div
-        className={s.wrapper}
-        style={{
-          backgroundColor: structTheme[page].main.background,
-          color: structTheme[page].main.text,
-        }}
-      >
+    <html lang="fr">
+      <head>
+        <HeadContent />
+      </head>
+      <body>
         <div
-          className={s.line}
-          style={{ backgroundColor: structTheme.general.lineColor }}
-        ></div>
-        {session && session.email && <AuthStatus email={session.email} />}
-        {isHome && !isPlainHomeLayout && (
+          className={s.wrapper}
+          style={{
+            backgroundColor: structTheme[page].main.background,
+            color: structTheme[page].main.text,
+          }}
+        >
           <div
-            className={s.gradient}
-            style={{
-              background: `
+            className={s.line}
+            style={{ backgroundColor: structTheme.general.lineColor }}
+          ></div>
+          {session && session.email && <AuthStatus email={session.email} />}
+          {isHome && !isPlainHomeLayout && (
+            <div
+              className={s.gradient}
+              style={{
+                background: `
           linear-gradient(
             to top,
             rgba(${gradientRgb}, 0) 0%,
@@ -123,25 +126,25 @@ function RootComponent() {
             rgba(${gradientRgb}, 0.987) 91.9%,
             rgb(${gradientRgb}) 100%
           )`,
-            }}
-          ></div>
-        )}
-        {path.startsWith(ROUTES.ADMIN) ? (
-          <AdminNav />
-        ) : isHome ? (
-          <HomeHeader
-            isPlainHomeLayout={isPlainHomeLayout}
-            title={metas.get(KEY_META.OWNER) || ""}
-            introduction={""}
-          />
-        ) : (
-          <Header themePage={page} />
-        )}
-        <main className={isHome ? undefined : s.main}>
-          <Outlet />
-        </main>
-        <Footer themePage={page} />
-        <style>{`
+              }}
+            ></div>
+          )}
+          {path.startsWith(ROUTES.ADMIN) ? (
+            <AdminNav />
+          ) : isHome ? (
+            <HomeHeader
+              isPlainHomeLayout={isPlainHomeLayout}
+              title={metas.get(KEY_META.OWNER) || ""}
+              introduction={""}
+            />
+          ) : (
+            <Header themePage={page} />
+          )}
+          <main className={isHome ? undefined : s.main}>
+            <Outlet />
+          </main>
+          <Footer themePage={page} />
+          <style>{`
           a,
           .buttonLink,
           .iconButton {
@@ -172,19 +175,7 @@ function RootComponent() {
             fill: antiquewhite;
           }
         `}</style>
-      </div>
-    </RootDocument>
-  );
-}
-
-function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
-  return (
-    <html>
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        {children}
+        </div>
         <TanStackRouterDevtools position="bottom-right" />
         <Scripts />
       </body>
