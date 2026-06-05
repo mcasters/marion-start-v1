@@ -24,6 +24,7 @@ export const Route = createFileRoute("/admin")({
     const presetColors = await getPresetColorsFn();
     return { themes, activeTheme, presetColors };
   },
+  ssr: false,
   component: RouteComponent,
 });
 

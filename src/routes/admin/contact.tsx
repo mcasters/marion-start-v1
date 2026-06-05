@@ -6,6 +6,7 @@ import { getContactContentFn } from "~/server-functions/content";
 
 export const Route = createFileRoute("/admin/contact")({
   loader: async () => await getContactContentFn(),
+  ssr: false,
   component: RouteComponent,
 });
 

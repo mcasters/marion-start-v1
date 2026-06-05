@@ -7,6 +7,7 @@ import { TextForm } from "~/components/admin/text/textForm";
 
 export const Route = createFileRoute("/admin/presentation")({
   loader: async () => await getPresentationContentFn(),
+  ssr: false,
   component: RouteComponent,
 });
 

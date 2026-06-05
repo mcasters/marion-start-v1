@@ -8,6 +8,7 @@ import AdminTheme from "~/components/admin/theme/adminTheme";
 
 export const Route = createFileRoute("/admin/")({
   loader: async () => await getMessagesFn(),
+  ssr: false,
   component: RouteComponent,
 });
 

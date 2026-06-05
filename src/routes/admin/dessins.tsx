@@ -7,6 +7,7 @@ import { getAdminDrawingCategoriesFn } from "~/server-functions/drawings";
 
 export const Route = createFileRoute("/admin/dessins")({
   loader: async () => await getAdminDrawingCategoriesFn(),
+  ssr: false,
   component: RouteComponent,
 });
 

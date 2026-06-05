@@ -13,6 +13,7 @@ export const Route = createFileRoute("/admin/home")({
       images: await getHomeImagesFn(),
     };
   },
+  ssr: false,
   component: RouteComponent,
 });
 

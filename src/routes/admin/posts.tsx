@@ -5,6 +5,7 @@ import PostManagement from "~/components/admin/item/postManagement";
 
 export const Route = createFileRoute("/admin/posts")({
   loader: async () => await getPostsFn(),
+  ssr: false,
   component: RouteComponent,
 });
 

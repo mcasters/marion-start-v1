@@ -7,6 +7,7 @@ import { getAdminSculptureCategoriesFn } from "~/server-functions/sculptures";
 
 export const Route = createFileRoute("/admin/sculptures")({
   loader: async () => await getAdminSculptureCategoriesFn(),
+  ssr: false,
   component: RouteComponent,
 });
 

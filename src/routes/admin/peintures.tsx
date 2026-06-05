@@ -7,6 +7,7 @@ import WorkManagement from "~/components/admin/item/workManagement";
 
 export const Route = createFileRoute("/admin/peintures")({
   loader: async () => await getAdminPaintingCategoriesFn(),
+  ssr: false,
   component: RouteComponent,
 });
 

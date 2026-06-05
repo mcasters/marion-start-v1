@@ -5,6 +5,7 @@ import { KeyMeta } from "~/lib/type";
 import { Fragment } from "react";
 
 export const Route = createFileRoute("/admin/meta")({
+  ssr: false,
   component: RouteComponent,
 });
 
