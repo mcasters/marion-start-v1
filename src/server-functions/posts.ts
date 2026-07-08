@@ -24,7 +24,7 @@ export const getPostsFn = createServerFn().handler(async () => {
 });
 
 export const getPostFn = createServerFn({ method: "POST" })
-  .inputValidator((d: { id: string }) => d)
+  .validator((d: { id: string }) => d)
   .handler(async ({ data }) => {
     const { id } = data;
     const postRow = await db
@@ -43,7 +43,7 @@ export const getPostFn = createServerFn({ method: "POST" })
 
 export const createPostFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: FormData) => {
+  .validator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
   })
@@ -75,7 +75,7 @@ export const createPostFn = createServerFn({ method: "POST" })
 
 export const updatePostFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: FormData) => {
+  .validator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
   })
@@ -128,7 +128,7 @@ export const updatePostFn = createServerFn({ method: "POST" })
 
 export const deletePostFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: { id: number }) => data)
+  .validator((data: { id: number }) => data)
   .handler(async ({ data: { id } }) => {
     try {
       const postToDelete = await db.query.post.findFirst({

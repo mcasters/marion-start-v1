@@ -66,7 +66,7 @@ export const getThemes = createServerFn().handler(
 
 export const activateThemeFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: { id: number }) => data)
+  .validator((data: { id: number }) => data)
   .handler(async ({ data }) => {
     try {
       await db.update(theme).set({ isActive: false });
@@ -83,7 +83,7 @@ export const activateThemeFn = createServerFn({ method: "POST" })
 
 export const createThemeFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: Theme) => data)
+  .validator((data: Theme) => data)
   .handler(async ({ data }) => {
     try {
       const existant = await db.query.theme.findFirst({
@@ -114,7 +114,7 @@ export const createThemeFn = createServerFn({ method: "POST" })
 
 export const updateThemeFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: Theme) => data)
+  .validator((data: Theme) => data)
   .handler(async ({ data }) => {
     try {
       await db.update(theme).set(data).where(eq(theme.id, data.id));
@@ -127,7 +127,7 @@ export const updateThemeFn = createServerFn({ method: "POST" })
 
 export const deleteThemeFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: { id: number }) => data)
+  .validator((data: { id: number }) => data)
   .handler(async ({ data }) => {
     try {
       const themeToDelete = await db.query.theme.findFirst({
@@ -164,7 +164,7 @@ export const deleteThemeFn = createServerFn({ method: "POST" })
 
 export const createPresetColorFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator(
+  .validator(
     (data: { name: string; color: string; displayOrder: number }) => data,
   )
   .handler(async ({ data }) => {
@@ -209,7 +209,7 @@ export const createPresetColorFn = createServerFn({ method: "POST" })
 
 export const updatePresetColorFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: PresetColor) => data)
+  .validator((data: PresetColor) => data)
   .handler(async ({ data }) => {
     try {
       await db
@@ -230,7 +230,7 @@ export const updatePresetColorFn = createServerFn({ method: "POST" })
 
 export const updatePresetColorsOrderFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: Map<number, number>) => data)
+  .validator((data: Map<number, number>) => data)
   .handler(async ({ data }) => {
     try {
       const presetColors = await db.query.presetColor.findMany();
@@ -260,7 +260,7 @@ export const updatePresetColorsOrderFn = createServerFn({ method: "POST" })
 
 export const deletePresetColorFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: { id: number }) => data)
+  .validator((data: { id: number }) => data)
   .handler(async ({ data }) => {
     try {
       const presetColorToDelete = await db.query.presetColor.findFirst({

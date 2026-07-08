@@ -46,7 +46,7 @@ export const getDrawingCategoriesFn = createServerFn().handler(
 );
 
 export const getDrawingByYearFn = createServerFn({ method: "POST" })
-  .inputValidator((d: string) => d)
+  .validator((d: string) => d)
   .handler(async ({ data }) => {
     const drawings = await db.query.drawing.findMany({
       columns: {
@@ -66,7 +66,7 @@ export const getDrawingByYearFn = createServerFn({ method: "POST" })
   });
 
 export const getDrawingsByCategoryFn = createServerFn({ method: "POST" })
-  .inputValidator((d: string) => d)
+  .validator((d: string) => d)
   .handler(async ({ data }) => {
     let category: DrawingCategory | undefined;
     let works: Work[] = [];
@@ -128,7 +128,7 @@ export const getAdminDrawingCategoriesFn = createServerFn().handler(
 
 export const createDrawingFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: FormData) => {
+  .validator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
   })
@@ -154,7 +154,7 @@ export const createDrawingFn = createServerFn({ method: "POST" })
 
 export const updateDrawingFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: FormData) => {
+  .validator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
   })
@@ -209,7 +209,7 @@ export const updateDrawingFn = createServerFn({ method: "POST" })
 
 export const deleteDrawingFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: { id: number }) => data)
+  .validator((data: { id: number }) => data)
   .handler(async ({ data: { id } }) => {
     try {
       const itemToDelete = await db.query.drawing.findFirst({
@@ -232,7 +232,7 @@ export const deleteDrawingFn = createServerFn({ method: "POST" })
 
 export const createDrawingCategoryFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: FormData) => {
+  .validator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
   })
@@ -259,7 +259,7 @@ export const createDrawingCategoryFn = createServerFn({ method: "POST" })
 
 export const updateDrawingCategoryFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: FormData) => {
+  .validator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
   })
@@ -286,7 +286,7 @@ export const updateDrawingCategoryFn = createServerFn({ method: "POST" })
 
 export const deleteDrawingCategoryFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: { id: number }) => data)
+  .validator((data: { id: number }) => data)
   .handler(async ({ data: { id } }) => {
     try {
       const catToDelete = await db.query.drawingCategory.findFirst({

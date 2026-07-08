@@ -54,7 +54,7 @@ export const getSculptureCategoriesFn = createServerFn().handler(
 );
 
 export const getSculptureByYearFn = createServerFn({ method: "POST" })
-  .inputValidator((d: string) => d)
+  .validator((d: string) => d)
   .handler(async ({ data }) => {
     const rows = await db
       .select({
@@ -78,7 +78,7 @@ export const getSculptureByYearFn = createServerFn({ method: "POST" })
   });
 
 export const getSculptureByCategoryFn = createServerFn({ method: "POST" })
-  .inputValidator((d: string) => d)
+  .validator((d: string) => d)
   .handler(async ({ data }) => {
     const { createdAt, ...rest } = getColumns(sculpture);
     let category: SculptureCategory | undefined;
@@ -147,7 +147,7 @@ export const getAdminSculptureCategoriesFn = createServerFn().handler(
 
 export const createSculptureFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: FormData) => {
+  .validator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
   })
@@ -179,7 +179,7 @@ export const createSculptureFn = createServerFn({ method: "POST" })
 
 export const updateSculptureFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: FormData) => {
+  .validator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
   })
@@ -252,7 +252,7 @@ export const updateSculptureFn = createServerFn({ method: "POST" })
 
 export const deleteSculptureFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: { id: number }) => data)
+  .validator((data: { id: number }) => data)
   .handler(async ({ data: { id } }) => {
     try {
       const sculptureToDelete = await db.query.sculpture.findFirst({
@@ -279,7 +279,7 @@ export const deleteSculptureFn = createServerFn({ method: "POST" })
 
 export const createSculptureCategoryFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: FormData) => {
+  .validator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
   })
@@ -306,7 +306,7 @@ export const createSculptureCategoryFn = createServerFn({ method: "POST" })
 
 export const updateSculptureCategoryFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: FormData) => {
+  .validator((data: FormData) => {
     if (!(data instanceof FormData)) throw new Error("Expected FormData");
     return data;
   })
@@ -333,7 +333,7 @@ export const updateSculptureCategoryFn = createServerFn({ method: "POST" })
 
 export const deleteSculptureCategoryFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator((data: { id: number }) => data)
+  .validator((data: { id: number }) => data)
   .handler(async ({ data: { id } }) => {
     try {
       const catToDelete = await db.query.sculptureCategory.findFirst({

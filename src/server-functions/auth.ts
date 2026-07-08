@@ -25,7 +25,7 @@ export const getSessionFn = createServerFn({ method: "GET" }).handler(
 );
 
 export const loginFn = createServerFn({ method: "POST" })
-  .inputValidator((data: { email: string; password: string }) => data)
+  .validator((data: { email: string; password: string }) => data)
   .handler(async ({ data }) => {
     const user = await db.query.user.findFirst({
       where: { email: data.email },
@@ -40,7 +40,6 @@ export const loginFn = createServerFn({ method: "POST" })
       email: user.email,
       isAdmin: !!user.isAdmin,
     });
-    // throw redirect({ to: "/admin" });
     return { success: true, error: "" };
   });
 

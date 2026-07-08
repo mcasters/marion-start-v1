@@ -17,7 +17,7 @@ export const getMetasFn = createServerFn().handler(async () => {
 
 export const updateMetaFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .inputValidator(
+  .validator(
     (data: {
       key: KeyMeta;
       text: string;
