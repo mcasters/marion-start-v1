@@ -20,6 +20,7 @@ import { Route as PeinturesIndexRouteImport } from './routes/peintures/index'
 import { Route as DessinsIndexRouteImport } from './routes/dessins/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as PostsPostIdRouteImport } from './routes/posts.$postId'
+import { Route as ImagesSplatRouteImport } from './routes/images/$'
 import { Route as AdminSculpturesRouteImport } from './routes/admin/sculptures'
 import { Route as AdminPresentationRouteImport } from './routes/admin/presentation'
 import { Route as AdminPostsRouteImport } from './routes/admin/posts'
@@ -34,7 +35,6 @@ import { Route as PeinturesCategorieCategoryKeyRouteImport } from './routes/pein
 import { Route as PeinturesAnneeYearRouteImport } from './routes/peintures/annee.$year'
 import { Route as DessinsCategorieCategoryKeyRouteImport } from './routes/dessins/categorie.$categoryKey'
 import { Route as DessinsAnneeYearRouteImport } from './routes/dessins/annee.$year'
-import { Route as ImagesLibraryChar123FolderChar125FilenameRouteImport } from './routes/images/$library.{-$folder}.$filename'
 
 const PresentationRoute = PresentationRouteImport.update({
   id: '/presentation',
@@ -90,6 +90,11 @@ const PostsPostIdRoute = PostsPostIdRouteImport.update({
   id: '/$postId',
   path: '/$postId',
   getParentRoute: () => PostsRoute,
+} as any)
+const ImagesSplatRoute = ImagesSplatRouteImport.update({
+  id: '/images/$',
+  path: '/images/$',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminSculpturesRoute = AdminSculpturesRouteImport.update({
   id: '/sculptures',
@@ -164,12 +169,6 @@ const DessinsAnneeYearRoute = DessinsAnneeYearRouteImport.update({
   path: '/dessins/annee/$year',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ImagesLibraryChar123FolderChar125FilenameRoute =
-  ImagesLibraryChar123FolderChar125FilenameRouteImport.update({
-    id: '/images/$library/{-$folder}/$filename',
-    path: '/images/$library/{-$folder}/$filename',
-    getParentRoute: () => rootRouteImport,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -186,6 +185,7 @@ export interface FileRoutesByFullPath {
   '/admin/posts': typeof AdminPostsRoute
   '/admin/presentation': typeof AdminPresentationRoute
   '/admin/sculptures': typeof AdminSculpturesRoute
+  '/images/$': typeof ImagesSplatRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/admin/': typeof AdminIndexRoute
   '/dessins/': typeof DessinsIndexRoute
@@ -197,7 +197,6 @@ export interface FileRoutesByFullPath {
   '/peintures/categorie/$categoryKey': typeof PeinturesCategorieCategoryKeyRoute
   '/sculptures/annee/$year': typeof SculpturesAnneeYearRoute
   '/sculptures/categorie/$categoryKey': typeof SculpturesCategorieCategoryKeyRoute
-  '/images/$library/{-$folder}/$filename': typeof ImagesLibraryChar123FolderChar125FilenameRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -213,6 +212,7 @@ export interface FileRoutesByTo {
   '/admin/posts': typeof AdminPostsRoute
   '/admin/presentation': typeof AdminPresentationRoute
   '/admin/sculptures': typeof AdminSculpturesRoute
+  '/images/$': typeof ImagesSplatRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/admin': typeof AdminIndexRoute
   '/dessins': typeof DessinsIndexRoute
@@ -224,7 +224,6 @@ export interface FileRoutesByTo {
   '/peintures/categorie/$categoryKey': typeof PeinturesCategorieCategoryKeyRoute
   '/sculptures/annee/$year': typeof SculpturesAnneeYearRoute
   '/sculptures/categorie/$categoryKey': typeof SculpturesCategorieCategoryKeyRoute
-  '/images/$library/{-$folder}/$filename': typeof ImagesLibraryChar123FolderChar125FilenameRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -242,6 +241,7 @@ export interface FileRoutesById {
   '/admin/posts': typeof AdminPostsRoute
   '/admin/presentation': typeof AdminPresentationRoute
   '/admin/sculptures': typeof AdminSculpturesRoute
+  '/images/$': typeof ImagesSplatRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/admin/': typeof AdminIndexRoute
   '/dessins/': typeof DessinsIndexRoute
@@ -253,7 +253,6 @@ export interface FileRoutesById {
   '/peintures/categorie/$categoryKey': typeof PeinturesCategorieCategoryKeyRoute
   '/sculptures/annee/$year': typeof SculpturesAnneeYearRoute
   '/sculptures/categorie/$categoryKey': typeof SculpturesCategorieCategoryKeyRoute
-  '/images/$library/{-$folder}/$filename': typeof ImagesLibraryChar123FolderChar125FilenameRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -272,6 +271,7 @@ export interface FileRouteTypes {
     | '/admin/posts'
     | '/admin/presentation'
     | '/admin/sculptures'
+    | '/images/$'
     | '/posts/$postId'
     | '/admin/'
     | '/dessins/'
@@ -283,7 +283,6 @@ export interface FileRouteTypes {
     | '/peintures/categorie/$categoryKey'
     | '/sculptures/annee/$year'
     | '/sculptures/categorie/$categoryKey'
-    | '/images/$library/{-$folder}/$filename'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -299,6 +298,7 @@ export interface FileRouteTypes {
     | '/admin/posts'
     | '/admin/presentation'
     | '/admin/sculptures'
+    | '/images/$'
     | '/posts/$postId'
     | '/admin'
     | '/dessins'
@@ -310,7 +310,6 @@ export interface FileRouteTypes {
     | '/peintures/categorie/$categoryKey'
     | '/sculptures/annee/$year'
     | '/sculptures/categorie/$categoryKey'
-    | '/images/$library/{-$folder}/$filename'
   id:
     | '__root__'
     | '/'
@@ -327,6 +326,7 @@ export interface FileRouteTypes {
     | '/admin/posts'
     | '/admin/presentation'
     | '/admin/sculptures'
+    | '/images/$'
     | '/posts/$postId'
     | '/admin/'
     | '/dessins/'
@@ -338,7 +338,6 @@ export interface FileRouteTypes {
     | '/peintures/categorie/$categoryKey'
     | '/sculptures/annee/$year'
     | '/sculptures/categorie/$categoryKey'
-    | '/images/$library/{-$folder}/$filename'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -348,6 +347,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   PostsRoute: typeof PostsRouteWithChildren
   PresentationRoute: typeof PresentationRoute
+  ImagesSplatRoute: typeof ImagesSplatRoute
   DessinsIndexRoute: typeof DessinsIndexRoute
   PeinturesIndexRoute: typeof PeinturesIndexRoute
   SculpturesIndexRoute: typeof SculpturesIndexRoute
@@ -357,7 +357,6 @@ export interface RootRouteChildren {
   PeinturesCategorieCategoryKeyRoute: typeof PeinturesCategorieCategoryKeyRoute
   SculpturesAnneeYearRoute: typeof SculpturesAnneeYearRoute
   SculpturesCategorieCategoryKeyRoute: typeof SculpturesCategorieCategoryKeyRoute
-  ImagesLibraryChar123FolderChar125FilenameRoute: typeof ImagesLibraryChar123FolderChar125FilenameRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -438,6 +437,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/posts/$postId'
       preLoaderRoute: typeof PostsPostIdRouteImport
       parentRoute: typeof PostsRoute
+    }
+    '/images/$': {
+      id: '/images/$'
+      path: '/images/$'
+      fullPath: '/images/$'
+      preLoaderRoute: typeof ImagesSplatRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/admin/sculptures': {
       id: '/admin/sculptures'
@@ -537,13 +543,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DessinsAnneeYearRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/images/$library/{-$folder}/$filename': {
-      id: '/images/$library/{-$folder}/$filename'
-      path: '/images/$library/{-$folder}/$filename'
-      fullPath: '/images/$library/{-$folder}/$filename'
-      preLoaderRoute: typeof ImagesLibraryChar123FolderChar125FilenameRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -592,6 +591,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   PostsRoute: PostsRouteWithChildren,
   PresentationRoute: PresentationRoute,
+  ImagesSplatRoute: ImagesSplatRoute,
   DessinsIndexRoute: DessinsIndexRoute,
   PeinturesIndexRoute: PeinturesIndexRoute,
   SculpturesIndexRoute: SculpturesIndexRoute,
@@ -601,8 +601,6 @@ const rootRouteChildren: RootRouteChildren = {
   PeinturesCategorieCategoryKeyRoute: PeinturesCategorieCategoryKeyRoute,
   SculpturesAnneeYearRoute: SculpturesAnneeYearRoute,
   SculpturesCategorieCategoryKeyRoute: SculpturesCategorieCategoryKeyRoute,
-  ImagesLibraryChar123FolderChar125FilenameRoute:
-    ImagesLibraryChar123FolderChar125FilenameRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
