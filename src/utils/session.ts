@@ -6,7 +6,7 @@ export function useAppSession() {
     name: "app-session",
     password: process.env.AUTH_SECRET!, // At least 32 characters
     cookie: {
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.URL?.startsWith("https") ?? false,
       sameSite: "lax",
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60,
