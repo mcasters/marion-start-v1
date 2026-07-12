@@ -7,11 +7,11 @@ import {
 } from "~/server-functions/theme";
 import * as React from "react";
 import { AlertProvider } from "~/components/admin/context/alertProvider";
-import { getSessionFn } from "~/server-functions/auth";
+import { getCurrentSessionFn } from "~/server-functions/auth";
 
 export const Route = createFileRoute("/admin")({
   beforeLoad: async () => {
-    return { session: await getSessionFn() };
+    return { session: await getCurrentSessionFn() };
   },
   loader: async ({ context }) => {
     if (!context.session)

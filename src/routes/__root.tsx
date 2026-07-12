@@ -23,7 +23,7 @@ import AuthStatus from "~/components/auth/authStatus";
 import s from "~/components/layout/layout.module.css";
 import { getActiveThemeFn, getPresetColorsFn } from "~/server-functions/theme";
 import { getMetasFn } from "~/server-functions/meta";
-import { getSessionFn } from "~/server-functions/auth";
+import { getCurrentSessionFn } from "~/server-functions/auth";
 
 export const Route = createRootRoute({
   // context
@@ -32,7 +32,7 @@ export const Route = createRootRoute({
     const presetColors = await getPresetColorsFn();
     return {
       metas: await getMetasFn(),
-      session: await getSessionFn(),
+      session: await getCurrentSessionFn(),
       structTheme: getStructHexaTheme(theme, presetColors),
     };
   },
