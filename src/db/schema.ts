@@ -51,13 +51,12 @@ export const contentImage = mysqlTable(
     width: int().notNull(),
     height: int().notNull(),
     isMain: boolean().default(false).notNull(),
-    contentId: int().references(() => content.id, {
-      onDelete: "set null",
-      onUpdate: "cascade",
-    }),
+    contentId: int()
+      .notNull()
+      .references(() => content.id),
   },
   (table) => [
-    index("ContentImage_contentId_fkey").on(table.contentId),
+    index("ContentImage_contentId_key").on(table.contentId),
     unique("ContentImage_filename_key").on(table.filename),
   ],
 );
@@ -73,11 +72,10 @@ export const drawing = mysqlTable(
     height: double().notNull(),
     width: double().notNull(),
     createdAt: datetime({ mode: "date", fsp: 3 })
-      .default(sql`(CURRENT_TIMESTAMP(3))`)
+      .default(sql`(CURRENT_TIMESTAMP (3))`)
       .notNull(),
     categoryId: int().references(() => drawingCategory.id, {
       onDelete: "set null",
-      onUpdate: "cascade",
     }),
     imageFilename: varchar({ length: 191 }).default("").notNull(),
     imageHeight: int().default(0).notNull(),
@@ -93,7 +91,7 @@ export const drawing = mysqlTable(
     outInformation: varchar({ length: 191 }).default("").notNull(),
   },
   (table) => [
-    index("Drawing_categoryId_fkey").on(table.categoryId),
+    index("Drawing_categoryId_key").on(table.categoryId),
     unique("Drawing_title_key").on(table.title),
   ],
 );
@@ -122,15 +120,19 @@ export const drawingCategory = mysqlTable(
   ],
 );
 
-export const message = mysqlTable("Message", {
-  id: int().autoincrement().primaryKey(),
-  date: datetime({ mode: "date", fsp: 3 }).notNull(),
-  text: longtext().notNull(),
-  userId: int()
-    .notNull()
-    .references(() => user.id, { onDelete: "restrict", onUpdate: "cascade" }),
-  dateUpdated: datetime({ mode: "date", fsp: 3 }),
-});
+export const message = mysqlTable(
+  "Message",
+  {
+    id: int().autoincrement().primaryKey(),
+    date: datetime({ mode: "date", fsp: 3 }).notNull(),
+    text: longtext().notNull(),
+    userId: int()
+      .notNull()
+      .references(() => user.id),
+    dateUpdated: datetime({ mode: "date", fsp: 3 }),
+  },
+  (table) => [index("Message_userId_key").on(table.userId)],
+);
 
 export const meta = mysqlTable(
   "Meta",
@@ -153,11 +155,10 @@ export const painting = mysqlTable(
     height: double().notNull(),
     width: double().notNull(),
     createdAt: datetime({ mode: "date", fsp: 3 })
-      .default(sql`(CURRENT_TIMESTAMP(3))`)
+      .default(sql`(CURRENT_TIMESTAMP (3))`)
       .notNull(),
     categoryId: int().references(() => paintingCategory.id, {
       onDelete: "set null",
-      onUpdate: "cascade",
     }),
     imageFilename: varchar({ length: 191 }).default("").notNull(),
     imageHeight: int().default(0).notNull(),
@@ -173,7 +174,7 @@ export const painting = mysqlTable(
     outInformation: varchar({ length: 191 }).default("").notNull(),
   },
   (table) => [
-    index("Painting_categoryId_fkey").on(table.categoryId),
+    index("Painting_categoryId_key").on(table.categoryId),
     unique("Painting_title_key").on(table.title),
   ],
 );
@@ -213,7 +214,7 @@ export const post = mysqlTable(
     title: varchar({ length: 191 }).notNull(),
     date: datetime({ mode: "date", fsp: 3 }).notNull(),
     createdAt: datetime({ mode: "date", fsp: 3 })
-      .default(sql`(CURRENT_TIMESTAMP(3))`)
+      .default(sql`(CURRENT_TIMESTAMP (3))`)
       .notNull(),
     text: longtext().notNull(),
     published: boolean().default(false).notNull(),
@@ -230,13 +231,12 @@ export const postImage = mysqlTable(
     width: int().notNull(),
     height: int().notNull(),
     isMain: boolean().default(false).notNull(),
-    postId: int().references(() => post.id, {
-      onDelete: "set null",
-      onUpdate: "cascade",
-    }),
+    postId: int()
+      .notNull()
+      .references(() => post.id),
   },
   (table) => [
-    index("PostImage_postId_fkey").on(table.postId),
+    index("PostImage_postId_key").on(table.postId),
     unique("PostImage_filename_key").on(table.filename),
   ],
 );
@@ -264,11 +264,10 @@ export const sculpture = mysqlTable(
     width: double().notNull(),
     length: double().notNull(),
     createdAt: datetime({ mode: "date", fsp: 3 })
-      .default(sql`(CURRENT_TIMESTAMP(3))`)
+      .default(sql`(CURRENT_TIMESTAMP (3))`)
       .notNull(),
     categoryId: int().references(() => sculptureCategory.id, {
       onDelete: "set null",
-      onUpdate: "cascade",
     }),
     isToSell: boolean().default(false).notNull(),
     price: int(),
@@ -281,7 +280,7 @@ export const sculpture = mysqlTable(
     outInformation: varchar({ length: 191 }).default("").notNull(),
   },
   (table) => [
-    index("Sculpture_categoryId_fkey").on(table.categoryId),
+    index("Sculpture_categoryId_key").on(table.categoryId),
     unique("Sculpture_title_key").on(table.title),
   ],
 );
@@ -318,13 +317,12 @@ export const sculptureImage = mysqlTable(
     width: int().notNull(),
     height: int().notNull(),
     isMain: boolean().default(false).notNull(),
-    sculptureId: int().references(() => sculpture.id, {
-      onDelete: "set null",
-      onUpdate: "cascade",
-    }),
+    sculptureId: int()
+      .notNull()
+      .references(() => sculpture.id),
   },
   (table) => [
-    index("SculptureImage_sculptureId_fkey").on(table.sculptureId),
+    index("SculptureImage_sculptureId_key").on(table.sculptureId),
     unique("SculptureImage_filename_key").on(table.filename),
   ],
 );
