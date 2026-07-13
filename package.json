@@ -20,6 +20,7 @@
     "@tanstack/react-router-devtools": "^1.167.0",
     "@tanstack/react-start": "^1.168.27",
     "bcryptjs": "^3.0.3",
+    "drizzle-kit": "^1.0.0-rc.4",
     "drizzle-orm": "^1.0.0-rc.4",
     "mysql2": "^3.22.6",
     "react": "^19.2.7",
@@ -35,7 +36,6 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.0.3",
     "@vitejs/plugin-react": "^6.0.3",
-    "drizzle-kit": "^1.0.0-rc.4",
     "nitro": "^3.0.260610-beta",
     "typescript": "^6.0.3",
     "vite": "^8.1.4"

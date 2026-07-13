@@ -1,7 +1,6 @@
 import { Item, Slide, Work } from "~/lib/type";
 import { FILE_TYPES } from "~/constants/image";
 import { MESSAGE } from "~/constants/admin";
-import { TYPE } from "~/db/schema";
 import Resizer from "~/utils/resizer";
 
 export const getSlides = (
@@ -20,7 +19,7 @@ export const getSlides = (
           height: image.height,
           alt,
         };
-        if (longInfo && item.type !== TYPE.POST) {
+        if (longInfo) {
           slide.work = item as Work;
         } else {
           slide.title = item.title;
