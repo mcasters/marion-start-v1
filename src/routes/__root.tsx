@@ -24,6 +24,7 @@ import s from "~/components/layout/layout.module.css";
 import { getActiveThemeFn, getPresetColorsFn } from "~/server-functions/theme";
 import { getMetasFn } from "~/server-functions/meta";
 import { getCurrentSessionFn } from "~/server-functions/auth";
+import { getHomeTextFn } from "~/server-functions/content";
 
 export const Route = createRootRoute({
   // context
@@ -36,6 +37,7 @@ export const Route = createRootRoute({
       structTheme: getStructHexaTheme(theme, presetColors),
     };
   },
+  loader: async () => await getHomeTextFn(),
   head: () => ({
     links: [
       { rel: "stylesheet", href: appCss },
@@ -72,6 +74,7 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   const { metas, session, structTheme } = Route.useRouteContext();
+  const homeText = Route.useLoaderData();
   const location = useLocation();
   const path = location.pathname;
   const isPlainHomeLayout = getHomeLayout(metas) === HomeLayout.PLAIN;
@@ -135,7 +138,7 @@ function RootComponent() {
             <HomeHeader
               isPlainHomeLayout={isPlainHomeLayout}
               title={metas.get(KEY_META.OWNER) || ""}
-              introduction={""}
+              introduction={homeText || ""}
             />
           ) : (
             <Header themePage={page} />

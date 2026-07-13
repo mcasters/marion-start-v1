@@ -45,7 +45,7 @@ HEADER
 /* desktop */
 @media (min-width: 769px) {
   .siteTitle {
-    padding: 3rem 0 5rem;
+    padding: 3rem 0 3rem;
   }
 }
 
