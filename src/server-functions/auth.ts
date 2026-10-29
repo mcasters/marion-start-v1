@@ -2,12 +2,12 @@ import bcrypt from "bcryptjs";
 import { Session } from "~/lib/type";
 import { db } from "~/db";
 import { createServerFn } from "@tanstack/react-start";
-import { useAppSession } from "~/utils/session";
+import { getAppSession } from "~/utils/session";
 
 export const getCurrentSessionFn = createServerFn({ method: "GET" }).handler(
   async () => {
-    const session = await useAppSession();
-    return session.data.userId ? (session.data as Session) : null;
+    const session = await getAppSession();
+    return session.userId ? (session as Session) : null;
   },
 );
 
@@ -21,17 +21,16 @@ export const loginFn = createServerFn({ method: "POST" })
     const isValid = await bcrypt.compare(data.password, user.password);
     if (!isValid) return { success: false, error: "Erreur d'authentification" };
 
-    const session = await useAppSession();
-    await session.update({
-      userId: user.id,
-      email: user.email,
-      isAdmin: !!user.isAdmin,
-    });
+    const session = await getAppSession();
+    session.userId = user.id;
+    session.email = user.email;
+    session.isAdmin = user.isAdmin;
+    await session.save();
     return { success: true, error: "" };
   });
 
 export const logoutFn = createServerFn({ method: "POST" }).handler(async () => {
-  const session = await useAppSession();
-  await session.clear();
+  const session = await getAppSession();
+  session.destroy();
   return { success: true, error: "" };
 });

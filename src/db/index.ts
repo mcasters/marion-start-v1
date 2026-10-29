@@ -1,7 +1,7 @@
 import { drizzle } from "drizzle-orm/mysql2";
 import { relations } from "./relations";
 import mysql from "mysql2/promise";
-import "dotenv/config";
+// import "dotenv/config";
 
 const connection = await mysql.createConnection({
   user: process.env.DB_USER,

@@ -9,51 +9,36 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as PresentationRouteImport } from './routes/presentation'
-import { Route as PostsRouteImport } from './routes/posts'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SculpturesIndexRouteImport } from './routes/sculptures/index'
-import { Route as PeinturesIndexRouteImport } from './routes/peintures/index'
-import { Route as DessinsIndexRouteImport } from './routes/dessins/index'
+import { Route as AdminRouteRouteImport } from './routes/admin/route'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as PostsRouteImport } from './routes/posts'
+import { Route as PresentationRouteImport } from './routes/presentation'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
-import { Route as PostsPostIdRouteImport } from './routes/posts.$postId'
-import { Route as ImagesSplatRouteImport } from './routes/images/$'
-import { Route as AdminSculpturesRouteImport } from './routes/admin/sculptures'
-import { Route as AdminPresentationRouteImport } from './routes/admin/presentation'
-import { Route as AdminPostsRouteImport } from './routes/admin/posts'
-import { Route as AdminPeinturesRouteImport } from './routes/admin/peintures'
-import { Route as AdminMetaRouteImport } from './routes/admin/meta'
-import { Route as AdminHomeRouteImport } from './routes/admin/home'
-import { Route as AdminDessinsRouteImport } from './routes/admin/dessins'
 import { Route as AdminContactRouteImport } from './routes/admin/contact'
-import { Route as SculpturesCategorieCategoryKeyRouteImport } from './routes/sculptures/categorie.$categoryKey'
-import { Route as SculpturesAnneeYearRouteImport } from './routes/sculptures/annee.$year'
-import { Route as PeinturesCategorieCategoryKeyRouteImport } from './routes/peintures/categorie.$categoryKey'
-import { Route as PeinturesAnneeYearRouteImport } from './routes/peintures/annee.$year'
-import { Route as DessinsCategorieCategoryKeyRouteImport } from './routes/dessins/categorie.$categoryKey'
+import { Route as AdminDessinsRouteImport } from './routes/admin/dessins'
+import { Route as AdminHomeRouteImport } from './routes/admin/home'
+import { Route as AdminMetaRouteImport } from './routes/admin/meta'
+import { Route as AdminPeinturesRouteImport } from './routes/admin/peintures'
+import { Route as AdminPostsRouteImport } from './routes/admin/posts'
+import { Route as AdminPresentationRouteImport } from './routes/admin/presentation'
+import { Route as AdminSculpturesRouteImport } from './routes/admin/sculptures'
+import { Route as DessinsIndexRouteImport } from './routes/dessins/index'
+import { Route as ImagesSplatRouteImport } from './routes/images/$'
+import { Route as PeinturesIndexRouteImport } from './routes/peintures/index'
+import { Route as PostsPostIdRouteImport } from './routes/posts.$postId'
+import { Route as SculpturesIndexRouteImport } from './routes/sculptures/index'
 import { Route as DessinsAnneeYearRouteImport } from './routes/dessins/annee.$year'
+import { Route as DessinsCategorieCategoryKeyRouteImport } from './routes/dessins/categorie.$categoryKey'
+import { Route as PeinturesAnneeYearRouteImport } from './routes/peintures/annee.$year'
+import { Route as PeinturesCategorieCategoryKeyRouteImport } from './routes/peintures/categorie.$categoryKey'
+import { Route as SculpturesAnneeYearRouteImport } from './routes/sculptures/annee.$year'
+import { Route as SculpturesCategorieCategoryKeyRouteImport } from './routes/sculptures/categorie.$categoryKey'
 
-const PresentationRoute = PresentationRouteImport.update({
-  id: '/presentation',
-  path: '/presentation',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PostsRoute = PostsRouteImport.update({
-  id: '/posts',
-  path: '/posts',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRouteRoute = AdminRouteRouteImport.update({
@@ -61,24 +46,24 @@ const AdminRouteRoute = AdminRouteRouteImport.update({
   path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SculpturesIndexRoute = SculpturesIndexRouteImport.update({
-  id: '/sculptures/',
-  path: '/sculptures/',
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PeinturesIndexRoute = PeinturesIndexRouteImport.update({
-  id: '/peintures/',
-  path: '/peintures/',
+const PostsRoute = PostsRouteImport.update({
+  id: '/posts',
+  path: '/posts',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DessinsIndexRoute = DessinsIndexRouteImport.update({
-  id: '/dessins/',
-  path: '/dessins/',
+const PresentationRoute = PresentationRouteImport.update({
+  id: '/presentation',
+  path: '/presentation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -86,44 +71,9 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const PostsPostIdRoute = PostsPostIdRouteImport.update({
-  id: '/$postId',
-  path: '/$postId',
-  getParentRoute: () => PostsRoute,
-} as any)
-const ImagesSplatRoute = ImagesSplatRouteImport.update({
-  id: '/images/$',
-  path: '/images/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminSculpturesRoute = AdminSculpturesRouteImport.update({
-  id: '/sculptures',
-  path: '/sculptures',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminPresentationRoute = AdminPresentationRouteImport.update({
-  id: '/presentation',
-  path: '/presentation',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminPostsRoute = AdminPostsRouteImport.update({
-  id: '/posts',
-  path: '/posts',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminPeinturesRoute = AdminPeinturesRouteImport.update({
-  id: '/peintures',
-  path: '/peintures',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminMetaRoute = AdminMetaRouteImport.update({
-  id: '/meta',
-  path: '/meta',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminHomeRoute = AdminHomeRouteImport.update({
-  id: '/home',
-  path: '/home',
+const AdminContactRoute = AdminContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminDessinsRoute = AdminDessinsRouteImport.update({
@@ -131,31 +81,64 @@ const AdminDessinsRoute = AdminDessinsRouteImport.update({
   path: '/dessins',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const AdminContactRoute = AdminContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
+const AdminHomeRoute = AdminHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const SculpturesCategorieCategoryKeyRoute =
-  SculpturesCategorieCategoryKeyRouteImport.update({
-    id: '/sculptures/categorie/$categoryKey',
-    path: '/sculptures/categorie/$categoryKey',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const SculpturesAnneeYearRoute = SculpturesAnneeYearRouteImport.update({
-  id: '/sculptures/annee/$year',
-  path: '/sculptures/annee/$year',
+const AdminMetaRoute = AdminMetaRouteImport.update({
+  id: '/meta',
+  path: '/meta',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminPeinturesRoute = AdminPeinturesRouteImport.update({
+  id: '/peintures',
+  path: '/peintures',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminPostsRoute = AdminPostsRouteImport.update({
+  id: '/posts',
+  path: '/posts',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminPresentationRoute = AdminPresentationRouteImport.update({
+  id: '/presentation',
+  path: '/presentation',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminSculpturesRoute = AdminSculpturesRouteImport.update({
+  id: '/sculptures',
+  path: '/sculptures',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const DessinsIndexRoute = DessinsIndexRouteImport.update({
+  id: '/dessins/',
+  path: '/dessins/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PeinturesCategorieCategoryKeyRoute =
-  PeinturesCategorieCategoryKeyRouteImport.update({
-    id: '/peintures/categorie/$categoryKey',
-    path: '/peintures/categorie/$categoryKey',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const PeinturesAnneeYearRoute = PeinturesAnneeYearRouteImport.update({
-  id: '/peintures/annee/$year',
-  path: '/peintures/annee/$year',
+const ImagesSplatRoute = ImagesSplatRouteImport.update({
+  id: '/images/$',
+  path: '/images/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PeinturesIndexRoute = PeinturesIndexRouteImport.update({
+  id: '/peintures/',
+  path: '/peintures/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PostsPostIdRoute = PostsPostIdRouteImport.update({
+  id: '/$postId',
+  path: '/$postId',
+  getParentRoute: () => PostsRoute,
+} as any)
+const SculpturesIndexRoute = SculpturesIndexRouteImport.update({
+  id: '/sculptures/',
+  path: '/sculptures/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DessinsAnneeYearRoute = DessinsAnneeYearRouteImport.update({
+  id: '/dessins/annee/$year',
+  path: '/dessins/annee/$year',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DessinsCategorieCategoryKeyRoute =
@@ -164,11 +147,28 @@ const DessinsCategorieCategoryKeyRoute =
     path: '/dessins/categorie/$categoryKey',
     getParentRoute: () => rootRouteImport,
   } as any)
-const DessinsAnneeYearRoute = DessinsAnneeYearRouteImport.update({
-  id: '/dessins/annee/$year',
-  path: '/dessins/annee/$year',
+const PeinturesAnneeYearRoute = PeinturesAnneeYearRouteImport.update({
+  id: '/peintures/annee/$year',
+  path: '/peintures/annee/$year',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PeinturesCategorieCategoryKeyRoute =
+  PeinturesCategorieCategoryKeyRouteImport.update({
+    id: '/peintures/categorie/$categoryKey',
+    path: '/peintures/categorie/$categoryKey',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const SculpturesAnneeYearRoute = SculpturesAnneeYearRouteImport.update({
+  id: '/sculptures/annee/$year',
+  path: '/sculptures/annee/$year',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SculpturesCategorieCategoryKeyRoute =
+  SculpturesCategorieCategoryKeyRouteImport.update({
+    id: '/sculptures/categorie/$categoryKey',
+    path: '/sculptures/categorie/$categoryKey',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -361,32 +361,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/presentation': {
-      id: '/presentation'
-      path: '/presentation'
-      fullPath: '/presentation'
-      preLoaderRoute: typeof PresentationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/posts': {
-      id: '/posts'
-      path: '/posts'
-      fullPath: '/posts'
-      preLoaderRoute: typeof PostsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -396,32 +375,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/sculptures/': {
-      id: '/sculptures/'
-      path: '/sculptures'
-      fullPath: '/sculptures/'
-      preLoaderRoute: typeof SculpturesIndexRouteImport
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/peintures/': {
-      id: '/peintures/'
-      path: '/peintures'
-      fullPath: '/peintures/'
-      preLoaderRoute: typeof PeinturesIndexRouteImport
+    '/posts': {
+      id: '/posts'
+      path: '/posts'
+      fullPath: '/posts'
+      preLoaderRoute: typeof PostsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dessins/': {
-      id: '/dessins/'
-      path: '/dessins'
-      fullPath: '/dessins/'
-      preLoaderRoute: typeof DessinsIndexRouteImport
+    '/presentation': {
+      id: '/presentation'
+      path: '/presentation'
+      fullPath: '/presentation'
+      preLoaderRoute: typeof PresentationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -431,60 +410,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/posts/$postId': {
-      id: '/posts/$postId'
-      path: '/$postId'
-      fullPath: '/posts/$postId'
-      preLoaderRoute: typeof PostsPostIdRouteImport
-      parentRoute: typeof PostsRoute
-    }
-    '/images/$': {
-      id: '/images/$'
-      path: '/images/$'
-      fullPath: '/images/$'
-      preLoaderRoute: typeof ImagesSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/sculptures': {
-      id: '/admin/sculptures'
-      path: '/sculptures'
-      fullPath: '/admin/sculptures'
-      preLoaderRoute: typeof AdminSculpturesRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/presentation': {
-      id: '/admin/presentation'
-      path: '/presentation'
-      fullPath: '/admin/presentation'
-      preLoaderRoute: typeof AdminPresentationRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/posts': {
-      id: '/admin/posts'
-      path: '/posts'
-      fullPath: '/admin/posts'
-      preLoaderRoute: typeof AdminPostsRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/peintures': {
-      id: '/admin/peintures'
-      path: '/peintures'
-      fullPath: '/admin/peintures'
-      preLoaderRoute: typeof AdminPeinturesRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/meta': {
-      id: '/admin/meta'
-      path: '/meta'
-      fullPath: '/admin/meta'
-      preLoaderRoute: typeof AdminMetaRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/admin/home': {
-      id: '/admin/home'
-      path: '/home'
-      fullPath: '/admin/home'
-      preLoaderRoute: typeof AdminHomeRouteImport
+    '/admin/contact': {
+      id: '/admin/contact'
+      path: '/contact'
+      fullPath: '/admin/contact'
+      preLoaderRoute: typeof AdminContactRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/admin/dessins': {
@@ -494,39 +424,88 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDessinsRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/admin/contact': {
-      id: '/admin/contact'
-      path: '/contact'
-      fullPath: '/admin/contact'
-      preLoaderRoute: typeof AdminContactRouteImport
+    '/admin/home': {
+      id: '/admin/home'
+      path: '/home'
+      fullPath: '/admin/home'
+      preLoaderRoute: typeof AdminHomeRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/sculptures/categorie/$categoryKey': {
-      id: '/sculptures/categorie/$categoryKey'
-      path: '/sculptures/categorie/$categoryKey'
-      fullPath: '/sculptures/categorie/$categoryKey'
-      preLoaderRoute: typeof SculpturesCategorieCategoryKeyRouteImport
+    '/admin/meta': {
+      id: '/admin/meta'
+      path: '/meta'
+      fullPath: '/admin/meta'
+      preLoaderRoute: typeof AdminMetaRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/peintures': {
+      id: '/admin/peintures'
+      path: '/peintures'
+      fullPath: '/admin/peintures'
+      preLoaderRoute: typeof AdminPeinturesRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/posts': {
+      id: '/admin/posts'
+      path: '/posts'
+      fullPath: '/admin/posts'
+      preLoaderRoute: typeof AdminPostsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/presentation': {
+      id: '/admin/presentation'
+      path: '/presentation'
+      fullPath: '/admin/presentation'
+      preLoaderRoute: typeof AdminPresentationRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/sculptures': {
+      id: '/admin/sculptures'
+      path: '/sculptures'
+      fullPath: '/admin/sculptures'
+      preLoaderRoute: typeof AdminSculpturesRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/dessins/': {
+      id: '/dessins/'
+      path: '/dessins'
+      fullPath: '/dessins/'
+      preLoaderRoute: typeof DessinsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/sculptures/annee/$year': {
-      id: '/sculptures/annee/$year'
-      path: '/sculptures/annee/$year'
-      fullPath: '/sculptures/annee/$year'
-      preLoaderRoute: typeof SculpturesAnneeYearRouteImport
+    '/images/$': {
+      id: '/images/$'
+      path: '/images/$'
+      fullPath: '/images/$'
+      preLoaderRoute: typeof ImagesSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/peintures/categorie/$categoryKey': {
-      id: '/peintures/categorie/$categoryKey'
-      path: '/peintures/categorie/$categoryKey'
-      fullPath: '/peintures/categorie/$categoryKey'
-      preLoaderRoute: typeof PeinturesCategorieCategoryKeyRouteImport
+    '/peintures/': {
+      id: '/peintures/'
+      path: '/peintures'
+      fullPath: '/peintures/'
+      preLoaderRoute: typeof PeinturesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/peintures/annee/$year': {
-      id: '/peintures/annee/$year'
-      path: '/peintures/annee/$year'
-      fullPath: '/peintures/annee/$year'
-      preLoaderRoute: typeof PeinturesAnneeYearRouteImport
+    '/posts/$postId': {
+      id: '/posts/$postId'
+      path: '/$postId'
+      fullPath: '/posts/$postId'
+      preLoaderRoute: typeof PostsPostIdRouteImport
+      parentRoute: typeof PostsRoute
+    }
+    '/sculptures/': {
+      id: '/sculptures/'
+      path: '/sculptures'
+      fullPath: '/sculptures/'
+      preLoaderRoute: typeof SculpturesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dessins/annee/$year': {
+      id: '/dessins/annee/$year'
+      path: '/dessins/annee/$year'
+      fullPath: '/dessins/annee/$year'
+      preLoaderRoute: typeof DessinsAnneeYearRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dessins/categorie/$categoryKey': {
@@ -536,11 +515,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DessinsCategorieCategoryKeyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dessins/annee/$year': {
-      id: '/dessins/annee/$year'
-      path: '/dessins/annee/$year'
-      fullPath: '/dessins/annee/$year'
-      preLoaderRoute: typeof DessinsAnneeYearRouteImport
+    '/peintures/annee/$year': {
+      id: '/peintures/annee/$year'
+      path: '/peintures/annee/$year'
+      fullPath: '/peintures/annee/$year'
+      preLoaderRoute: typeof PeinturesAnneeYearRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/peintures/categorie/$categoryKey': {
+      id: '/peintures/categorie/$categoryKey'
+      path: '/peintures/categorie/$categoryKey'
+      fullPath: '/peintures/categorie/$categoryKey'
+      preLoaderRoute: typeof PeinturesCategorieCategoryKeyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sculptures/annee/$year': {
+      id: '/sculptures/annee/$year'
+      path: '/sculptures/annee/$year'
+      fullPath: '/sculptures/annee/$year'
+      preLoaderRoute: typeof SculpturesAnneeYearRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sculptures/categorie/$categoryKey': {
+      id: '/sculptures/categorie/$categoryKey'
+      path: '/sculptures/categorie/$categoryKey'
+      fullPath: '/sculptures/categorie/$categoryKey'
+      preLoaderRoute: typeof SculpturesCategorieCategoryKeyRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
