@@ -3,7 +3,7 @@
   "description": "Marion Casters portfolio",
   "repository": "marion-start-v1",
   "homepage": "https://marioncasters.fr",
-  "version": "3.0.0",
+  "version": "1.0.0",
   "private": true,
   "sideEffects": false,
   "author": "Marion Casters",
