@@ -7,6 +7,7 @@ export async function getRouter() {
   return createRouter({
     routeTree,
     defaultPreload: "intent",
+    defaultPreloadStaleTime: 60_000,
     defaultErrorComponent: DefaultCatchBoundary,
     defaultNotFoundComponent: () => <NotFound />,
     scrollRestoration: true,

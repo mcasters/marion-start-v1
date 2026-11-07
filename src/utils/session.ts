@@ -3,7 +3,7 @@ import { getCookie, setCookie } from '@tanstack/react-start/server'
 import { Session } from "~/lib/type";
 
 export function getAppSession(ttl = 7 * 24 * 60 * 60) {
-  const password = process.env.AUTH_SECRET
+  const password = process.env.SESSION_SECRET
   if (!password || password.length < 32) {
     throw new Error('SESSION_SECRET must be at least 32 characters')
   }
