@@ -13,8 +13,8 @@ export default function LoginForm() {
     try {
       const res = await loginFn({ data: credentials });
       if (res.success) {
-        router.invalidate();
-        router.navigate({ to: "/admin" });
+        await router.invalidate();
+        await router.navigate({ to: "/admin" });
       } else setError(res.error);
     } catch (error) {
       setError(String(error));
